@@ -12,7 +12,6 @@ set -e
 INSTALL_DIR="/opt/openclaw-agent"
 REPO_URL="https://raw.githubusercontent.com/leo88188/openclaw-agent/main"
 PORT="9966"
-TOKEN=""
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -21,7 +20,6 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# 始终自动生成强 Token
 TOKEN=$(openssl rand -hex 32)
 echo "🔑 Token: $TOKEN"
 
@@ -38,9 +36,11 @@ curl -sSL "${REPO_URL}/openclaw_agent.py" -o "${INSTALL_DIR}/openclaw_agent.py"
 curl -sSL "${REPO_URL}/requirements.txt" -o "${INSTALL_DIR}/requirements.txt"
 echo "  ✅ 下载完成"
 
-# 2. 安装依赖
+# 2. 创建 venv 并安装依赖
 echo "🔧 安装 Python 依赖..."
-pip3 install -q -r "${INSTALL_DIR}/requirements.txt" 2>/dev/null || pip install -q -r "${INSTALL_DIR}/requirements.txt"
+apt-get install -y -qq python3-venv > /dev/null 2>&1 || true
+python3 -m venv "${INSTALL_DIR}/venv"
+"${INSTALL_DIR}/venv/bin/pip" install -q -r "${INSTALL_DIR}/requirements.txt"
 echo "  ✅ 依赖安装完成"
 
 # 3. 检测 OpenClaw 运行用户
@@ -61,7 +61,7 @@ User=${OPENCLAW_USER}
 Environment=OPENCLAW_AGENT_TOKEN=${TOKEN}
 Environment=OPENCLAW_AGENT_PORT=${PORT}
 Environment=OPENCLAW_HOME=${OPENCLAW_HOME}
-ExecStart=/usr/bin/python3 ${INSTALL_DIR}/openclaw_agent.py
+ExecStart=${INSTALL_DIR}/venv/bin/python3 ${INSTALL_DIR}/openclaw_agent.py
 Restart=always
 RestartSec=5
 
