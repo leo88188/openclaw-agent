@@ -185,7 +185,16 @@ async def config_validate():
 
 @app.post("/gateway/restart", dependencies=[auth])
 async def gateway_restart():
-    return await run_cmd("openclaw gateway restart", timeout=90)
+    r = await run_cmd("openclaw gateway restart", timeout=90)
+    if r["ok"]:
+        return r
+    # fallback: kill + nohup run
+    await run_cmd("pkill -f openclaw-gateway || true", timeout=10)
+    await asyncio.sleep(1)
+    r2 = await run_cmd("nohup openclaw gateway run --force </dev/null >>/tmp/openclaw-gw.log 2>&1 &", timeout=10)
+    await asyncio.sleep(2)
+    chk = await run_cmd("pgrep -f openclaw-gateway && echo ok || echo fail", timeout=5)
+    return {"ok": "ok" in chk.get("stdout", ""), "stdout": "fallback restart: " + chk.get("stdout", ""), "stderr": r.get("stderr", "")}
 
 
 SAFE_COMMANDS = {
