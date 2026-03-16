@@ -423,6 +423,15 @@ async def feishu_status():
     return {"running": running, "config": _feishu_cfg if running else None, "logs": logs}
 
 
+# ── Sessions ─────────────────────────────────────────────
+@app.get("/sessions", dependencies=[auth])
+async def sessions(active: int = 0):
+    cmd = "openclaw sessions --all-agents --json"
+    if active > 0:
+        cmd += f" --active {active}"
+    return await run_cmd(cmd)
+
+
 # ── 自更新 ───────────────────────────────────────────────
 REPO_URL = "https://raw.githubusercontent.com/leo88188/openclaw-agent/main"
 INSTALL_DIR = os.path.dirname(os.path.abspath(__file__))
