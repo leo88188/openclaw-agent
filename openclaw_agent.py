@@ -396,6 +396,49 @@ async def feishu_status():
     return {"running": running, "config": _feishu_cfg if running else None, "logs": logs}
 
 
+# ── 自更新 ───────────────────────────────────────────────
+REPO_URL = "https://raw.githubusercontent.com/leo88188/openclaw-agent/main"
+INSTALL_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+@app.post("/upgrade", dependencies=[auth])
+async def upgrade():
+    """从 GitHub 拉取最新代码并重启服务"""
+    import urllib.request
+    files = ["openclaw_agent.py", "requirements.txt"]
+    updated = []
+    for f in files:
+        url = f"{REPO_URL}/{f}"
+        local = os.path.join(INSTALL_DIR, f)
+        try:
+            old = Path(local).read_text(encoding="utf-8") if os.path.exists(local) else ""
+            urllib.request.urlretrieve(url, local)
+            new = Path(local).read_text(encoding="utf-8")
+            if old != new:
+                updated.append(f)
+        except Exception as e:
+            return {"ok": False, "error": f"下载 {f} 失败: {e}"}
+    if not updated:
+        return {"ok": True, "msg": "已是最新版本", "updated": []}
+    # 更新依赖
+    venv_pip = os.path.join(INSTALL_DIR, "venv", "bin", "pip")
+    if os.path.exists(venv_pip):
+        result = await run_cmd(f"{venv_pip} install -q -r {os.path.join(INSTALL_DIR, 'requirements.txt')}")
+        if not result["ok"]:
+            return {"ok": False, "error": f"依赖安装失败: {result['stderr']}"}
+    # 重启服务
+    await run_cmd("systemctl restart openclaw-agent")
+    return {"ok": True, "msg": "更新完成，服务重启中", "updated": updated}
+
+
+@app.get("/version", dependencies=[auth])
+async def version():
+    """返回当前代码的最后修改时间作为版本标识"""
+    agent_file = os.path.join(INSTALL_DIR, "openclaw_agent.py")
+    mtime = os.path.getmtime(agent_file) if os.path.exists(agent_file) else 0
+    return {"version": datetime.fromtimestamp(mtime).strftime("%Y-%m-%d %H:%M:%S"), "install_dir": INSTALL_DIR}
+
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("OPENCLAW_AGENT_PORT", "9966"))
