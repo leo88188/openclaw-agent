@@ -446,7 +446,7 @@ async def upgrade():
     files = ["openclaw_agent.py", "requirements.txt"]
     updated = []
     for f in files:
-        url = f"{REPO_URL}/{f}"
+        url = f"{REPO_URL}/{f}?t={int(datetime.now().timestamp())}"
         local = os.path.join(INSTALL_DIR, f)
         try:
             old = Path(local).read_text(encoding="utf-8") if os.path.exists(local) else ""
