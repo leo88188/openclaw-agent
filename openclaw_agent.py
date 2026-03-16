@@ -432,6 +432,35 @@ async def sessions(active: int = 0):
     return await run_cmd(cmd)
 
 
+# ── Cron ─────────────────────────────────────────────────
+@app.get("/cron", dependencies=[auth])
+async def cron_list():
+    return await run_cmd("openclaw cron list --all --json")
+
+@app.post("/cron/enable", dependencies=[auth])
+async def cron_enable(req: dict):
+    return await run_cmd(f"openclaw cron enable {req['id']}")
+
+@app.post("/cron/disable", dependencies=[auth])
+async def cron_disable(req: dict):
+    return await run_cmd(f"openclaw cron disable {req['id']}")
+
+@app.post("/cron/run", dependencies=[auth])
+async def cron_run(req: dict):
+    return await run_cmd(f"openclaw cron run {req['id']}", timeout=120)
+
+@app.post("/cron/rm", dependencies=[auth])
+async def cron_rm(req: dict):
+    return await run_cmd(f"openclaw cron rm {req['id']}")
+
+@app.get("/cron/runs", dependencies=[auth])
+async def cron_runs(id: str = "", limit: int = 20):
+    cmd = f"openclaw cron runs --limit {limit}"
+    if id:
+        cmd += f" --id {id}"
+    return await run_cmd(cmd)
+
+
 # ── 自更新 ───────────────────────────────────────────────
 REPO_URL = "https://raw.githubusercontent.com/leo88188/openclaw-agent/main"
 INSTALL_DIR = os.path.dirname(os.path.abspath(__file__))
