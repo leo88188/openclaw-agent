@@ -80,10 +80,31 @@ async def verify_auth(
 
 
 # ── 工具 ─────────────────────────────────────────────────
+# 扩展 PATH 确保能找到 openclaw (npm global)
+def _build_env():
+    env = os.environ.copy()
+    extra = ["/usr/local/bin", "/usr/bin", os.path.expanduser("~/.local/bin")]
+    # 自动探测 nvm node 路径
+    nvm_dir = os.path.expanduser("~/.nvm/versions/node")
+    if os.path.isdir(nvm_dir):
+        versions = sorted(os.listdir(nvm_dir), reverse=True)
+        if versions:
+            extra.append(os.path.join(nvm_dir, versions[0], "bin"))
+    # npm global bin
+    npm_prefix = os.path.expanduser("~/.npm-global/bin")
+    if os.path.isdir(npm_prefix):
+        extra.append(npm_prefix)
+    env["PATH"] = ":".join(extra) + ":" + env.get("PATH", "")
+    env["OPENCLAW_HOME"] = OPENCLAW_HOME
+    return env
+
+_ENV = _build_env()
+
+
 async def run_cmd(cmd: str, timeout: int = 60) -> dict:
     try:
         proc = await asyncio.create_subprocess_shell(
-            cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+            cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, env=_ENV
         )
         stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=timeout)
         return {
