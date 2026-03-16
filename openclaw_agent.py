@@ -83,7 +83,7 @@ async def verify_auth(
 # 扩展 PATH 确保能找到 openclaw (npm global)
 def _build_env():
     env = os.environ.copy()
-    extra = ["/usr/local/bin", "/usr/bin", os.path.expanduser("~/.local/bin")]
+    extra = ["/usr/local/bin", "/usr/bin", "/snap/bin", os.path.expanduser("~/.local/bin")]
     # 自动探测 nvm node 路径
     nvm_dir = os.path.expanduser("~/.nvm/versions/node")
     if os.path.isdir(nvm_dir):
@@ -94,6 +94,18 @@ def _build_env():
     npm_prefix = os.path.expanduser("~/.npm-global/bin")
     if os.path.isdir(npm_prefix):
         extra.append(npm_prefix)
+    # 尝试从 pgrep 找 openclaw 实际路径
+    try:
+        import subprocess as _sp
+        out = _sp.check_output(["pgrep", "-a", "openclaw"], text=True, timeout=3).strip()
+        for line in out.splitlines():
+            parts = line.split()
+            if len(parts) >= 2:
+                bin_dir = os.path.dirname(parts[1])
+                if bin_dir and bin_dir not in extra:
+                    extra.append(bin_dir)
+    except Exception:
+        pass
     env["PATH"] = ":".join(extra) + ":" + env.get("PATH", "")
     env["OPENCLAW_HOME"] = OPENCLAW_HOME
     return env
@@ -213,8 +225,6 @@ async def run_command(req: RunReq):
         cmd = (req.custom_cmd or "").strip()
         if not cmd:
             raise HTTPException(400, "Empty command")
-        if not cmd.startswith("openclaw "):
-            raise HTTPException(403, "Only openclaw commands allowed")
     else:
         cmd = SAFE_COMMANDS.get(req.command)
         if not cmd:
