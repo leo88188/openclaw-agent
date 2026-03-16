@@ -249,6 +249,61 @@ async def get_logs(
     return {"channel": channel or "all", "content": result["stdout"], "stderr": result.get("stderr", "")}
 
 
+# ── Auth Profiles ──────────────────────────────────────────
+@app.get("/auth-profiles", dependencies=[auth])
+async def auth_profiles_get():
+    """Read all agent auth-profiles, return unified provider key list."""
+    agents_dir = os.path.join(OPENCLAW_HOME, ".openclaw", "agents")
+    profiles = {}  # provider:profileId -> {key, agents:[]}
+    for ap in Path(agents_dir).glob("*/agent/auth-profiles.json"):
+        agent_id = ap.parent.parent.name
+        try:
+            data = json.loads(ap.read_text("utf-8"))
+        except Exception:
+            continue
+        for pid, p in data.get("profiles", {}).items():
+            if p.get("type") != "api_key":
+                continue
+            provider = p.get("provider", pid.split(":")[0])
+            key = p.get("key", "")
+            if pid not in profiles:
+                profiles[pid] = {"provider": provider, "key": key, "agents": []}
+            profiles[pid]["agents"].append(agent_id)
+    return {"profiles": profiles}
+
+
+class AuthProfilesSaveReq(BaseModel):
+    profiles: list  # [{provider, key}]
+
+
+@app.post("/auth-profiles", dependencies=[auth])
+async def auth_profiles_save(req: AuthProfilesSaveReq):
+    """Write provider API keys to ALL agent auth-profiles.json."""
+    agents_dir = os.path.join(OPENCLAW_HOME, ".openclaw", "agents")
+    new_profiles = {}
+    for item in req.profiles:
+        provider = item.get("provider", "").strip()
+        key = item.get("key", "").strip()
+        if not provider or not key:
+            continue
+        pid = f"{provider}:default"
+        new_profiles[pid] = {"type": "api_key", "provider": provider, "key": key}
+    updated = []
+    for ap in Path(agents_dir).glob("*/agent/auth-profiles.json"):
+        try:
+            data = json.loads(ap.read_text("utf-8"))
+        except Exception:
+            data = {"version": 1, "profiles": {}}
+        # Remove old api_key profiles that are being replaced
+        for pid in list(data.get("profiles", {}).keys()):
+            if data["profiles"][pid].get("type") == "api_key" and pid in new_profiles:
+                pass  # will be overwritten
+        data.setdefault("profiles", {}).update(new_profiles)
+        ap.write_text(json.dumps(data, indent=2), "utf-8")
+        updated.append(ap.parent.parent.name)
+    return {"ok": True, "updated": updated}
+
+
 @app.get("/env-keys", dependencies=[auth])
 async def env_keys_get():
     try:
