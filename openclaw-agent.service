@@ -1,0 +1,15 @@
+[Unit]
+Description=OpenClaw Agent - Remote Management Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Environment=OPENCLAW_AGENT_TOKEN=changeme
+Environment=OPENCLAW_AGENT_PORT=9966
+ExecStart=/usr/bin/python3 /opt/openclaw-agent/openclaw_agent.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
