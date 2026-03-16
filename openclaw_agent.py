@@ -83,29 +83,18 @@ async def verify_auth(
 # 扩展 PATH 确保能找到 openclaw (npm global)
 def _build_env():
     env = os.environ.copy()
-    extra = ["/usr/local/bin", "/usr/bin", "/snap/bin", os.path.expanduser("~/.local/bin")]
-    # 自动探测 nvm node 路径
-    nvm_dir = os.path.expanduser("~/.nvm/versions/node")
+    home = os.path.expanduser("~")
+    extra = ["/usr/local/bin", "/usr/bin", "/snap/bin", f"{home}/.local/bin"]
+    # nvm node
+    nvm_dir = f"{home}/.nvm/versions/node"
     if os.path.isdir(nvm_dir):
         versions = sorted(os.listdir(nvm_dir), reverse=True)
         if versions:
             extra.append(os.path.join(nvm_dir, versions[0], "bin"))
-    # npm global bin
-    npm_prefix = os.path.expanduser("~/.npm-global/bin")
-    if os.path.isdir(npm_prefix):
-        extra.append(npm_prefix)
-    # 尝试从 pgrep 找 openclaw 实际路径
-    try:
-        import subprocess as _sp
-        out = _sp.check_output(["pgrep", "-a", "openclaw"], text=True, timeout=3).strip()
-        for line in out.splitlines():
-            parts = line.split()
-            if len(parts) >= 2:
-                bin_dir = os.path.dirname(parts[1])
-                if bin_dir and bin_dir not in extra:
-                    extra.append(bin_dir)
-    except Exception:
-        pass
+    # 常见全局包管理器路径
+    for p in [f"{home}/.npm-global/bin", f"{home}/.local/share/pnpm", f"{home}/.yarn/bin", f"{home}/.volta/bin"]:
+        if os.path.isdir(p):
+            extra.append(p)
     env["PATH"] = ":".join(extra) + ":" + env.get("PATH", "")
     env["OPENCLAW_HOME"] = OPENCLAW_HOME
     return env
