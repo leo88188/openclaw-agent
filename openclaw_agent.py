@@ -137,7 +137,14 @@ def _resolve_workspace(agent_id: str = "main") -> str:
 # ── 健康检查（无需鉴权）────────────────────────────────
 @app.get("/health")
 async def health():
-    return {"status": "ok", "time": datetime.now().isoformat()}
+    # 检测 openclaw 进程是否在运行
+    result = await run_cmd("pgrep -f 'openclaw' > /dev/null 2>&1 && echo running || echo stopped", timeout=5)
+    openclaw_running = "running" in result.get("stdout", "")
+    return {
+        "status": "ok",
+        "time": datetime.now().isoformat(),
+        "openclaw": "running" if openclaw_running else "stopped",
+    }
 
 
 # ── 以下接口均需鉴权 ─────────────────────────────────────
