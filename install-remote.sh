@@ -76,16 +76,18 @@ systemctl restart openclaw-agent
 sleep 2
 
 # 6. 验证
-IP=$(hostname -I 2>/dev/null | awk '{print $1}' || echo "127.0.0.1")
+INTERNAL_IP=$(hostname -I 2>/dev/null | awk '{print $1}' || echo "127.0.0.1")
+PUBLIC_IP=$(curl -sf -m 3 ifconfig.me 2>/dev/null || curl -sf -m 3 ip.sb 2>/dev/null || echo "$INTERNAL_IP")
 if systemctl is-active --quiet openclaw-agent; then
     echo ""
     echo "========================================="
     echo "✅ 安装成功！"
     echo ""
     echo "在管理平台「新增实例」中填写:"
-    echo "  Agent URL:   http://${IP}:${PORT}"
+    echo "  Agent URL:   http://${PUBLIC_IP}:${PORT}"
     echo "  Agent Token: ${TOKEN}"
     echo ""
+    echo "  (内网IP: ${INTERNAL_IP})"
     echo "⚠️  请确保安全组/防火墙已放行 TCP ${PORT}"
     echo "========================================="
 else
