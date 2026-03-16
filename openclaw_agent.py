@@ -2,51 +2,92 @@
 OpenClaw Agent - 轻量远程管理服务
 
 部署在每台 OpenClaw 实例上，提供 HTTP API 供管理平台调用，替代 SSH 方式。
+鉴权: Bearer Token + 可选 HMAC-SHA256 签名（防重放、防篡改）
 """
 import os
 import json
+import hmac
+import hashlib
 import asyncio
+import time
+import threading
 import subprocess
-from datetime import date, datetime
+from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-from fastapi import FastAPI, Header, HTTPException, Query, Body
+from fastapi import FastAPI, Depends, Header, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 # ── 配置 ─────────────────────────────────────────────────
 AGENT_TOKEN = os.getenv("OPENCLAW_AGENT_TOKEN", "changeme")
-OPENCLAW_HOME = os.getenv("OPENCLAW_HOME", os.path.expanduser("~/.openclaw"))
-CONFIG_PATH = os.getenv("OPENCLAW_CONFIG", os.path.join(OPENCLAW_HOME, "config.json"))
+OPENCLAW_HOME = os.getenv("OPENCLAW_HOME", os.path.expanduser("~"))
+OPENCLAW_DOT_DIR = os.path.join(OPENCLAW_HOME, ".openclaw")
+CONFIG_PATH = os.getenv("OPENCLAW_CONFIG", os.path.join(OPENCLAW_DOT_DIR, "openclaw.json"))
+LOG_DIR = os.getenv("OPENCLAW_LOG_DIR", os.path.join(OPENCLAW_DOT_DIR, "logs"))
 ENV_CONF_PATH = os.getenv(
     "OPENCLAW_ENV_CONF",
     os.path.expanduser("~/.config/systemd/user/openclaw-gateway.service.d/provider-models.conf"),
 )
-LOG_DIR = os.getenv("OPENCLAW_LOG_DIR", "/tmp/openclaw")
+TIMESTAMP_TOLERANCE = int(os.getenv("OPENCLAW_AGENT_TIMESTAMP_TOLERANCE", "300"))  # 秒
 
 app = FastAPI(title="OpenClaw Agent", version="0.1.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
-# ── 认证 ─────────────────────────────────────────────────
-def verify_token(authorization: str = Header("")):
-    token = authorization.replace("Bearer ", "") if authorization.startswith("Bearer ") else authorization
+# ── 缓存 body 供签名校验 ─────────────────────────────────
+@app.middleware("http")
+async def cache_body(request: Request, call_next):
+    if request.method == "POST":
+        request.state.body = await request.body()
+    else:
+        request.state.body = b""
+    return await call_next(request)
+
+
+# ── 认证: Bearer Token + 可选 HMAC 签名 ─────────────────
+async def verify_auth(
+    request: Request,
+    authorization: str = Header(""),
+    x_timestamp: str = Header(""),
+    x_nonce: str = Header(""),
+    x_signature: str = Header(""),
+):
+    """
+    双重鉴权:
+    1. Bearer Token — 必须
+    2. HMAC-SHA256 签名 — 可选（有 X-Signature 头时校验）
+       签名算法: hmac_sha256(token, "{timestamp}\\n{nonce}\\n{md5(body)}")
+    """
+    token = authorization.removeprefix("Bearer ").strip()
     if token != AGENT_TOKEN:
-        raise HTTPException(status_code=401, detail="Unauthorized")
+        raise HTTPException(401, "Unauthorized")
+    if not x_signature:
+        return
+    try:
+        ts = int(x_timestamp)
+    except (ValueError, TypeError):
+        raise HTTPException(401, "Invalid timestamp")
+    if abs(time.time() - ts) > TIMESTAMP_TOLERANCE:
+        raise HTTPException(401, "Request expired")
+    body_raw = getattr(request.state, "body", b"")
+    body_md5 = hashlib.md5(body_raw).hexdigest() if body_raw else ""
+    sign_payload = f"{x_timestamp}\n{x_nonce}\n{body_md5}"
+    expected = hmac.new(AGENT_TOKEN.encode(), sign_payload.encode(), hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(x_signature, expected):
+        raise HTTPException(401, "Invalid signature")
 
 
 # ── 工具 ─────────────────────────────────────────────────
 async def run_cmd(cmd: str, timeout: int = 60) -> dict:
-    """执行本地命令"""
     try:
         proc = await asyncio.create_subprocess_shell(
             cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
         stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=timeout)
         return {
-            "ok": proc.returncode == 0,
-            "code": proc.returncode,
+            "ok": proc.returncode == 0, "code": proc.returncode,
             "stdout": stdout.decode("utf-8", errors="replace").strip(),
             "stderr": stderr.decode("utf-8", errors="replace").strip(),
         }
@@ -56,16 +97,34 @@ async def run_cmd(cmd: str, timeout: int = 60) -> dict:
         return {"ok": False, "code": -1, "stdout": "", "stderr": str(e)}
 
 
-# ── 健康检查 ─────────────────────────────────────────────
+def _resolve_workspace(agent_id: str = "main") -> str:
+    default_ws = os.path.join(OPENCLAW_HOME, "workspace")
+    try:
+        cfg = json.loads(Path(CONFIG_PATH).read_text(encoding="utf-8"))
+        agents = cfg.get("agents", {})
+        for ag in agents.get("list", []):
+            if ag.get("id") == agent_id and ag.get("workspace"):
+                return ag["workspace"]
+        dw = agents.get("defaults", {}).get("workspace")
+        if dw:
+            return dw
+    except Exception:
+        pass
+    return default_ws
+
+
+# ── 健康检查（无需鉴权）────────────────────────────────
 @app.get("/health")
 async def health():
     return {"status": "ok", "time": datetime.now().isoformat()}
 
 
-# ── 配置文件管理 ─────────────────────────────────────────
-@app.get("/config")
-async def config_get(authorization: str = Header("")):
-    verify_token(authorization)
+# ── 以下接口均需鉴权 ─────────────────────────────────────
+auth = Depends(verify_auth)
+
+
+@app.get("/config", dependencies=[auth])
+async def config_get():
     try:
         return json.loads(Path(CONFIG_PATH).read_text(encoding="utf-8"))
     except FileNotFoundError:
@@ -79,9 +138,8 @@ class ConfigSaveReq(BaseModel):
     backup: bool = True
 
 
-@app.post("/config")
-async def config_save(req: ConfigSaveReq, authorization: str = Header("")):
-    verify_token(authorization)
+@app.post("/config", dependencies=[auth])
+async def config_save(req: ConfigSaveReq):
     path = Path(CONFIG_PATH)
     if req.backup and path.exists():
         bak = path.with_suffix(f".bak.{datetime.now().strftime('%Y%m%d%H%M%S')}")
@@ -90,20 +148,16 @@ async def config_save(req: ConfigSaveReq, authorization: str = Header("")):
     return {"ok": True}
 
 
-@app.post("/config/validate")
-async def config_validate(authorization: str = Header("")):
-    verify_token(authorization)
+@app.post("/config/validate", dependencies=[auth])
+async def config_validate():
     return await run_cmd("openclaw config validate")
 
 
-# ── 网关控制 ─────────────────────────────────────────────
-@app.post("/gateway/restart")
-async def gateway_restart(authorization: str = Header("")):
-    verify_token(authorization)
+@app.post("/gateway/restart", dependencies=[auth])
+async def gateway_restart():
     return await run_cmd("openclaw gateway restart", timeout=90)
 
 
-# ── 命令执行 ─────────────────────────────────────────────
 SAFE_COMMANDS = {
     "status": "openclaw status",
     "doctor": "openclaw doctor --deep --yes",
@@ -121,13 +175,12 @@ SAFE_COMMANDS = {
 
 
 class RunReq(BaseModel):
-    command: str  # SAFE_COMMANDS key 或 "custom"
+    command: str
     custom_cmd: Optional[str] = None
 
 
-@app.post("/run")
-async def run_command(req: RunReq, authorization: str = Header("")):
-    verify_token(authorization)
+@app.post("/run", dependencies=[auth])
+async def run_command(req: RunReq):
     if req.command == "custom":
         cmd = (req.custom_cmd or "").strip()
         if not cmd:
@@ -143,28 +196,24 @@ async def run_command(req: RunReq, authorization: str = Header("")):
     return result
 
 
-# ── 日志 ─────────────────────────────────────────────────
-@app.get("/logs")
+@app.get("/logs", dependencies=[auth])
 async def get_logs(
-    date: str = Query("", description="YYYY-MM-DD, empty=today"),
     lines: int = Query(200, ge=10, le=5000),
-    authorization: str = Header(""),
+    channel: str = Query("", description="渠道名: feishu/telegram/all 等，空=全部日志"),
+    json_fmt: bool = Query(False, alias="json", description="JSON格式输出"),
 ):
-    verify_token(authorization)
-    log_date = date or datetime.now().strftime("%Y-%m-%d")
-    log_path = os.path.join(LOG_DIR, f"openclaw-{log_date}.log")
-    try:
-        # 用 tail 避免读大文件
-        result = await run_cmd(f"tail -n {lines} {log_path}")
-        return {"date": log_date, "path": log_path, "content": result["stdout"]}
-    except Exception as e:
-        return {"date": log_date, "path": log_path, "content": f"[Error: {e}]"}
+    if channel:
+        cmd = f"openclaw channels logs --channel {channel} --lines {lines}"
+    else:
+        cmd = f"openclaw logs --limit {lines}"
+    if json_fmt:
+        cmd += " --json"
+    result = await run_cmd(cmd, timeout=30)
+    return {"channel": channel or "all", "content": result["stdout"], "stderr": result.get("stderr", "")}
 
 
-# ── 环境变量 (API Keys) ─────────────────────────────────
-@app.get("/env-keys")
-async def env_keys_get(authorization: str = Header("")):
-    verify_token(authorization)
+@app.get("/env-keys", dependencies=[auth])
+async def env_keys_get():
     try:
         content = Path(ENV_CONF_PATH).read_text(encoding="utf-8")
     except FileNotFoundError:
@@ -181,12 +230,11 @@ async def env_keys_get(authorization: str = Header("")):
 
 
 class EnvKeysSaveReq(BaseModel):
-    keys: list  # [{"name": "KEY", "value": "val"}, ...]
+    keys: list
 
 
-@app.post("/env-keys")
-async def env_keys_save(req: EnvKeysSaveReq, authorization: str = Header("")):
-    verify_token(authorization)
+@app.post("/env-keys", dependencies=[auth])
+async def env_keys_save(req: EnvKeysSaveReq):
     lines = ["[Service]"]
     for item in req.keys:
         name = item.get("name", "").strip()
@@ -201,26 +249,8 @@ async def env_keys_save(req: EnvKeysSaveReq, authorization: str = Header("")):
     return {"ok": True}
 
 
-# ── 工作区文件 ───────────────────────────────────────────
-def _resolve_workspace(agent_id: str = "main") -> str:
-    """从 config.json 解析 agent 的 workspace 路径"""
-    default_ws = os.path.join(OPENCLAW_HOME, "workspace")
-    try:
-        cfg = json.loads(Path(CONFIG_PATH).read_text(encoding="utf-8"))
-        for ag in cfg.get("agents", {}).get("list", []):
-            if ag.get("id") == agent_id:
-                return ag.get("workspace", default_ws)
-    except Exception:
-        pass
-    return default_ws
-
-
-@app.get("/workspace/files")
-async def workspace_files(
-    agent_id: str = Query("main"),
-    authorization: str = Header(""),
-):
-    verify_token(authorization)
+@app.get("/workspace/files", dependencies=[auth])
+async def workspace_files(agent_id: str = Query("main")):
     ws = _resolve_workspace(agent_id)
     key_files = ["AGENTS.md", "SOUL.md", "USER.md", "IDENTITY.md", "MEMORY.md",
                  "TOOLS.md", "HEARTBEAT.md", "BOOTSTRAP.md"]
@@ -229,27 +259,18 @@ async def workspace_files(
         p = os.path.join(ws, f)
         result.append({"name": f, "exists": os.path.isfile(p),
                         "size": os.path.getsize(p) if os.path.isfile(p) else 0})
-    # memory 日志
     mem_dir = os.path.join(ws, "memory")
     mem_files = []
     if os.path.isdir(mem_dir):
-        mem_files = sorted(
-            [f for f in os.listdir(mem_dir) if f.endswith(".md")], reverse=True
-        )[:20]
+        mem_files = sorted([f for f in os.listdir(mem_dir) if f.endswith(".md")], reverse=True)[:20]
     return {"agent_id": agent_id, "workspace": ws, "files": result, "memory_files": mem_files}
 
 
-@app.get("/workspace/file")
-async def workspace_file_read(
-    filename: str = Query(...),
-    agent_id: str = Query("main"),
-    authorization: str = Header(""),
-):
-    verify_token(authorization)
+@app.get("/workspace/file", dependencies=[auth])
+async def workspace_file_read(filename: str = Query(...), agent_id: str = Query("main")):
     if ".." in filename or filename.startswith("/"):
         raise HTTPException(403, "Invalid path")
-    ws = _resolve_workspace(agent_id)
-    path = os.path.join(ws, filename)
+    path = os.path.join(_resolve_workspace(agent_id), filename)
     try:
         return {"filename": filename, "content": Path(path).read_text(encoding="utf-8")}
     except FileNotFoundError:
@@ -262,19 +283,119 @@ class FileSaveReq(BaseModel):
     agent_id: str = "main"
 
 
-@app.post("/workspace/file")
-async def workspace_file_save(req: FileSaveReq, authorization: str = Header("")):
-    verify_token(authorization)
+@app.post("/workspace/file", dependencies=[auth])
+async def workspace_file_save(req: FileSaveReq):
     if ".." in req.filename or req.filename.startswith("/"):
         raise HTTPException(403, "Invalid path")
-    ws = _resolve_workspace(req.agent_id)
-    path = Path(os.path.join(ws, req.filename))
+    path = Path(os.path.join(_resolve_workspace(req.agent_id), req.filename))
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(req.content, encoding="utf-8")
     return {"ok": True}
 
 
-# ── 启动 ─────────────────────────────────────────────────
+# ── 飞书长连接临时监听 ───────────────────────────────────
+_feishu_proc: Optional[subprocess.Popen] = None
+_feishu_log: list = []          # 最近日志行
+_feishu_cfg: dict = {}          # 当前运行参数
+_feishu_lock = threading.Lock()
+_FEISHU_LOG_MAX = 200
+
+
+def _feishu_reader(proc: subprocess.Popen):
+    """后台线程读取子进程 stdout/stderr"""
+    for stream in (proc.stdout, proc.stderr):
+        if not stream:
+            continue
+        for raw in stream:
+            line = raw.decode("utf-8", errors="replace").rstrip("\n")
+            with _feishu_lock:
+                _feishu_log.append(line)
+                if len(_feishu_log) > _FEISHU_LOG_MAX:
+                    _feishu_log.pop(0)
+
+
+class FeishuStartReq(BaseModel):
+    app_id: str
+    app_secret: str
+    log_level: str = "INFO"
+
+
+@app.post("/feishu/start", dependencies=[auth])
+async def feishu_start(req: FeishuStartReq):
+    global _feishu_proc, _feishu_cfg
+    if _feishu_proc and _feishu_proc.poll() is None:
+        raise HTTPException(409, "飞书监听已在运行中，请先停止")
+    # 写临时脚本文件
+    import tempfile
+    script = f"""import json, sys, signal
+import lark_oapi as lark
+from lark_oapi.api.im.v1 import P2ImMessageReceiveV1
+
+def handle(data):
+    e = data.event
+    m = e.message if e else None
+    s = e.sender if e else None
+    sid = getattr(s.sender_id, 'open_id', '') if s and s.sender_id else ''
+    print(json.dumps({{
+        'event_type': getattr(data.header, 'event_type', ''),
+        'message_id': getattr(m, 'message_id', ''),
+        'chat_id': getattr(m, 'chat_id', ''),
+        'chat_type': getattr(m, 'chat_type', ''),
+        'message_type': getattr(m, 'message_type', ''),
+        'sender_id': sid,
+        'content': getattr(m, 'content', ''),
+    }}, ensure_ascii=False), flush=True)
+
+signal.signal(signal.SIGTERM, lambda *_: sys.exit(0))
+eh = lark.EventDispatcherHandler.builder('', '', lark.LogLevel.{req.log_level.upper()}).register_p2_im_message_receive_v1(handle).build()
+c = lark.ws.Client(app_id='{req.app_id}', app_secret='{req.app_secret}', log_level=lark.LogLevel.{req.log_level.upper()}, event_handler=eh)
+print('[feishu-ws] starting...', flush=True)
+c.start()
+"""
+    tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False, prefix="feishu_ws_")
+    tmp.write(script)
+    tmp.close()
+    with _feishu_lock:
+        _feishu_log.clear()
+    _feishu_proc = subprocess.Popen(
+        ["python3", tmp.name],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+    )
+    _feishu_cfg = {"app_id": req.app_id, "log_level": req.log_level, "pid": _feishu_proc.pid, "_script": tmp.name}
+    t = threading.Thread(target=_feishu_reader, args=(_feishu_proc,), daemon=True)
+    t.start()
+    return {"ok": True, "pid": _feishu_proc.pid}
+
+
+@app.post("/feishu/stop", dependencies=[auth])
+async def feishu_stop():
+    global _feishu_proc, _feishu_cfg
+    if not _feishu_proc or _feishu_proc.poll() is not None:
+        _feishu_proc = None
+        return {"ok": True, "msg": "未在运行"}
+    _feishu_proc.terminate()
+    try:
+        _feishu_proc.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        _feishu_proc.kill()
+    # 清理临时脚本
+    sf = _feishu_cfg.get("_script")
+    if sf:
+        try: os.unlink(sf)
+        except OSError: pass
+    _feishu_proc = None
+    _feishu_cfg = {}
+    return {"ok": True}
+
+
+@app.get("/feishu/status", dependencies=[auth])
+async def feishu_status():
+    running = _feishu_proc is not None and _feishu_proc.poll() is None
+    with _feishu_lock:
+        logs = list(_feishu_log)
+    return {"running": running, "config": _feishu_cfg if running else None, "logs": logs}
+
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("OPENCLAW_AGENT_PORT", "9966"))
