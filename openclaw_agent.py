@@ -12,6 +12,7 @@ import asyncio
 import time
 import threading
 import subprocess
+import shlex
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -452,6 +453,21 @@ async def cron_run(req: dict):
 @app.post("/cron/rm", dependencies=[auth])
 async def cron_rm(req: dict):
     return await run_cmd(f"openclaw cron rm {req['id']}")
+
+@app.post("/cron/edit", dependencies=[auth])
+async def cron_edit(req: dict):
+    job_id = req.pop("id")
+    parts = [f"openclaw cron edit {job_id}"]
+    for k, v in req.items():
+        if k == "name":        parts.append(f"--name {shlex.quote(str(v))}")
+        elif k == "cron":      parts.append(f"--cron {shlex.quote(str(v))}")
+        elif k == "tz":        parts.append(f"--tz {shlex.quote(str(v))}")
+        elif k == "message":   parts.append(f"--message {shlex.quote(str(v))}")
+        elif k == "description": parts.append(f"--description {shlex.quote(str(v))}")
+        elif k == "agent":     parts.append(f"--agent {shlex.quote(str(v))}")
+        elif k == "model":     parts.append(f"--model {shlex.quote(str(v))}")
+        elif k == "timeout_seconds": parts.append(f"--timeout-seconds {int(v)}")
+    return await run_cmd(" ".join(parts))
 
 @app.get("/cron/runs", dependencies=[auth])
 async def cron_runs(id: str = "", limit: int = 20):
