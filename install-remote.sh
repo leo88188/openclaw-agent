@@ -1,10 +1,11 @@
 #!/bin/bash
 # OpenClaw Agent 一键远程安装
-# 用法: curl -sSL https://raw.githubusercontent.com/leo88188/openclaw-agent/main/install-remote.sh | bash -s -- --token YOUR_TOKEN
+# 用法: curl -sSL https://raw.githubusercontent.com/leo88188/openclaw-agent/main/install-remote.sh | bash
 #
 # 参数:
-#   --token TOKEN   认证 Token（必填或自动生成）
 #   --port  PORT    监听端口（默认 9966）
+#
+# Token 自动生成（openssl rand -hex 32），安装完成后显示
 
 set -e
 
@@ -15,13 +16,14 @@ TOKEN=""
 
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --token) TOKEN="$2"; shift 2 ;;
         --port)  PORT="$2"; shift 2 ;;
         *) shift ;;
     esac
 done
 
-[ -z "$TOKEN" ] && TOKEN=$(openssl rand -hex 16) && echo "🔑 自动生成 Token: $TOKEN"
+# 始终自动生成强 Token
+TOKEN=$(openssl rand -hex 32)
+echo "🔑 Token: $TOKEN"
 
 echo ""
 echo "========== 安装 OpenClaw Agent =========="
