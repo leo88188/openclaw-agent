@@ -717,7 +717,7 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
                         for c in content:
                             if isinstance(c, dict):
                                 if c.get("type") == "text":
-                                    text = c.get("text", "")[:200]
+                                    text = c.get("text", "")
                                     break
                                 elif c.get("type") == "tool_use":
                                     text = f"[tool: {c.get('name', '?')}]"
@@ -726,15 +726,16 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
                                     text = "[tool_result]"
                                     break
                             elif isinstance(c, str):
-                                text = c[:200]
+                                text = c
                                 break
                     elif isinstance(content, str):
-                        text = content[:200]
+                        text = content
                     # Strip memory prefix
-                    if text.startswith("<relevant-memories>"):
-                        text = re.sub(r'^<relevant-memories>.*?</relevant-memories>\s*', '', text, flags=re.DOTALL)
-                        if not text:
-                            text = "(含记忆上下文)"
+                    if "<relevant-memories>" in text:
+                        idx = text.find("</relevant-memories>")
+                        text = text[idx+20:].strip() if idx >= 0 else ""
+                    if not text and role == "user":
+                        text = "(含记忆上下文)"
                     text = text.replace("\n", " ")[:200]
                     result["messages"].append({"ts": ts[:19], "role": role, "text": text})
                     result["stats"]["total"] += 1
