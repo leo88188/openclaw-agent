@@ -533,6 +533,44 @@ async def models_list_api():
     return {"models": models, "total": len(models)}
 
 
+# ── Pairing 配对管理 ──────────────────────────────────────
+
+@app.get("/pairing/list", dependencies=[auth])
+async def pairing_list():
+    """获取待审批配对请求和已授权用户列表"""
+    import glob
+    cred_dir = os.path.join(OPENCLAW_DOT_DIR, "credentials")
+    # 待审批
+    pairing_file = os.path.join(cred_dir, "feishu-pairing.json")
+    requests = []
+    if os.path.exists(pairing_file):
+        with open(pairing_file) as f:
+            requests = json.load(f).get("requests", [])
+    # 已授权
+    allowed = {}
+    for fp in glob.glob(os.path.join(cred_dir, "feishu-*-allowFrom.json")):
+        name = os.path.basename(fp).replace("feishu-", "").replace("-allowFrom.json", "")
+        with open(fp) as f:
+            allowed[name] = json.load(f).get("allowFrom", [])
+    return {"requests": requests, "allowed": allowed}
+
+
+class PairingApproveReq(BaseModel):
+    code: str
+    account: Optional[str] = None
+
+
+@app.post("/pairing/approve", dependencies=[auth])
+async def pairing_approve(req: PairingApproveReq):
+    """审批配对请求"""
+    cmd = f"openclaw pairing approve feishu {shlex.quote(req.code)}"
+    if req.account:
+        cmd += f" --account {shlex.quote(req.account)}"
+    cmd += " --notify"
+    result = await run_cmd(cmd, timeout=30)
+    return result
+
+
 @app.get("/models/probe", dependencies=[auth])
 async def models_probe_api(models: Optional[str] = Query(None)):
     """批量探测模型，可选传 models 参数（逗号分隔）指定探测哪些模型"""
