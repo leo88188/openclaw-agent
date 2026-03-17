@@ -697,6 +697,7 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
         pass
 
     # Read jsonl conversation
+    _pending_tools = {}  # id → tool name, for linking toolCall to toolResult
     try:
         with open(jsonl_path, "r", encoding="utf-8") as f:
             for line in f:
@@ -712,44 +713,60 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
                     role = msg.get("role", "")
                     content = msg.get("content", [])
 
-                    # toolResult role → parse as tool call
+                    # toolResult role → parse as tool result
                     if role == "toolResult":
                         result["stats"]["tool"] += 1
                         tool_text = ""
                         if isinstance(content, list):
                             for c in content:
                                 if isinstance(c, dict) and c.get("type") == "text":
-                                    tool_text = c.get("text", "")[:300]
+                                    tool_text = c.get("text", "")[:500]
                                     break
                         elif isinstance(content, str):
-                            tool_text = content[:300]
-                        summary = "[工具调用结果]"
+                            tool_text = content[:500]
+                        # Resolve tool name from pending calls
+                        tool_use_id = msg.get("toolUseId", "")
+                        tool_name = _pending_tools.pop(tool_use_id, "") if tool_use_id else ""
+                        # Parse result
+                        summary = ""
                         try:
-                            tr = json.loads(tool_text) if tool_text.startswith("{") else {}
-                            parts = []
-                            if tr.get("runId"): parts.append(f"runId={tr['runId'][:8]}…")
-                            if tr.get("status"): parts.append(tr["status"])
-                            if tr.get("reply"): parts.append(tr["reply"].replace("\n"," ")[:80])
-                            if parts: summary = " | ".join(parts)
+                            tr = json.loads(tool_text) if tool_text.strip().startswith("{") else None
+                            if tr and isinstance(tr, dict):
+                                parts = []
+                                if tr.get("runId"): parts.append(f"runId={tr['runId'][:8]}…")
+                                if tr.get("status"): parts.append(tr["status"])
+                                if tr.get("error"): parts.append(tr["error"].replace("\n"," ")[:80])
+                                elif tr.get("reply"): parts.append(tr["reply"].replace("\n"," ")[:80])
+                                if parts: summary = " | ".join(parts)
                         except Exception:
-                            summary = tool_text.replace("\n"," ")[:100] if tool_text else "[工具调用结果]"
-                        result["messages"].append({"ts": ts[:19], "role": "tool", "text": summary})
+                            pass
+                        if not summary:
+                            summary = tool_text.replace("\n", " ")[:120] if tool_text else "(空)"
+                        prefix = f"🔧 {tool_name} → " if tool_name else ""
+                        result["messages"].append({"ts": ts[:19], "role": "tool", "text": f"{prefix}{summary}"})
                         continue
 
-                    # Extract text preview
+                    # Extract text + toolCall from assistant content
                     text = ""
+                    tool_calls = []
                     if isinstance(content, list):
                         for c in content:
                             if isinstance(c, dict):
-                                if c.get("type") == "text":
+                                ct = c.get("type", "")
+                                if ct == "text" and not text:
                                     text = c.get("text", "")
-                                    break
-                                elif c.get("type") == "tool_use":
-                                    text = f"[tool: {c.get('name', '?')}]"
-                                    break
-                            elif isinstance(c, str):
+                                elif ct in ("toolCall", "tool_use"):
+                                    tn = c.get("name", "?")
+                                    tid = c.get("id", "")
+                                    args = c.get("arguments", c.get("input", {}))
+                                    if tid:
+                                        _pending_tools[tid] = tn
+                                    arg_s = ""
+                                    if isinstance(args, dict):
+                                        arg_s = " ".join(f"{k}={json.dumps(v,ensure_ascii=False)}" for k,v in list(args.items())[:3])[:120]
+                                    tool_calls.append(f"{tn}({arg_s})")
+                            elif isinstance(c, str) and not text:
                                 text = c
-                                break
                     elif isinstance(content, str):
                         text = content
                     # Strip injected prefixes
@@ -761,6 +778,10 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
                     if not text and role == "user":
                         text = "(系统上下文注入)"
                     text = text.replace("\n", " ")[:200]
+                    # Append tool calls to assistant text
+                    if tool_calls and role == "assistant":
+                        tc_text = "  ".join(f"🔨{t}" for t in tool_calls)
+                        text = f"{text}  {tc_text}" if text else tc_text
                     result["messages"].append({"ts": ts[:19], "role": role, "text": text})
                     result["stats"]["total"] += 1
                     if role == "user":
