@@ -488,6 +488,102 @@ async def feishu_status():
     return {"running": running, "config": _feishu_cfg if running else None, "logs": logs}
 
 
+# ── 模型管理 ─────────────────────────────────────────────
+def _load_config() -> dict:
+    try:
+        return json.loads(Path(CONFIG_PATH).read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _load_auth_profiles() -> dict:
+    """加载所有 agent 的 auth-profiles，返回 {provider: apiKey}"""
+    agents_dir = os.path.join(OPENCLAW_DOT_DIR, "agents")
+    keys = {}
+    for ap in Path(agents_dir).glob("*/agent/auth-profiles.json"):
+        try:
+            data = json.loads(ap.read_text("utf-8"))
+            for pid, p in data.get("profiles", {}).items():
+                provider = p.get("provider", "")
+                key = p.get("apiKey") or p.get("key") or ""
+                if provider and key and provider not in keys:
+                    keys[provider] = key
+        except Exception:
+            continue
+    return keys
+
+
+@app.get("/models/list", dependencies=[auth])
+async def models_list_api():
+    """获取已配置模型列表"""
+    result = await run_cmd("openclaw models list --all", timeout=30)
+    return result
+
+
+@app.get("/models/probe", dependencies=[auth])
+async def models_probe_api():
+    """批量探测所有模型"""
+    result = await run_cmd("openclaw models status --probe --status-plain", timeout=120)
+    return result
+
+
+class ProbeOneReq(BaseModel):
+    model: str  # 格式: provider/model_id
+
+
+@app.post("/models/probe-one", dependencies=[auth])
+async def models_probe_one_api(req: ProbeOneReq):
+    """探测单个模型 — agent 本地读配置并直接请求 provider"""
+    import urllib.request
+    import urllib.error
+    import ssl
+
+    parts = req.model.split("/", 1)
+    if len(parts) < 2:
+        return {"status": "error", "latency_ms": 0, "error": f"模型格式应为 provider/model_id，收到: {req.model}"}
+
+    provider, model_id = parts[0], parts[1]
+    cfg = _load_config()
+    providers = cfg.get("models", {}).get("providers", {})
+    p = providers.get(provider, {})
+    base_url = p.get("baseUrl", "")
+    if not base_url:
+        return {"status": "error", "latency_ms": 0, "error": f"Provider {provider} 未配置 baseUrl"}
+
+    auth_keys = _load_auth_profiles()
+    api_key = auth_keys.get(provider, "")
+    if not api_key:
+        return {"status": "error", "latency_ms": 0, "error": f"Provider {provider} 未配置 API Key"}
+
+    url = base_url.rstrip("/") + "/chat/completions"
+    body = json.dumps({"model": model_id, "messages": [{"role": "user", "content": "hi"}],
+                        "max_tokens": 1, "stream": False}).encode()
+    headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
+    ctx = ssl._create_unverified_context()
+    req_obj = urllib.request.Request(url, data=body, headers=headers)
+
+    t0 = time.time()
+    try:
+        resp = urllib.request.urlopen(req_obj, timeout=30, context=ctx)
+        data = json.loads(resp.read())
+        ms = int((time.time() - t0) * 1000)
+        if data.get("choices") or data.get("id"):
+            return {"status": "ok", "latency_ms": ms, "error": ""}
+        return {"status": "error", "latency_ms": ms, "error": str(data)[:300]}
+    except urllib.error.HTTPError as e:
+        ms = int((time.time() - t0) * 1000)
+        body_text = e.read().decode("utf-8", "ignore")[:500]
+        try:
+            err = json.loads(body_text).get("error", {})
+            msg = err.get("message", "") if isinstance(err, dict) else str(err)
+        except Exception:
+            msg = body_text
+        return {"status": "error", "latency_ms": ms, "error": msg}
+    except Exception as e:
+        ms = int((time.time() - t0) * 1000)
+        return {"status": "error", "latency_ms": ms, "error": str(e)[:300]}
+
+
 # ── Sessions ─────────────────────────────────────────────
 @app.get("/sessions", dependencies=[auth])
 async def sessions(active: int = 0):
