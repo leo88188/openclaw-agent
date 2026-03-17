@@ -514,11 +514,23 @@ def _load_auth_profiles() -> dict:
 
 
 @app.get("/models/list", dependencies=[auth])
-async def models_list_api(all: bool = Query(False, description="是否包含全部模型")):
-    """获取已配置模型列表"""
-    cmd = "openclaw models list --all" if all else "openclaw models list"
-    result = await run_cmd(cmd, timeout=30)
-    return result
+async def models_list_api():
+    """从配置文件读取模型池，返回所有已配置的模型"""
+    cfg = _load_config()
+    providers = cfg.get("models", {}).get("providers", {})
+    models = []
+    for provider_name, provider_cfg in providers.items():
+        base_url = provider_cfg.get("baseUrl", "")
+        for m in provider_cfg.get("models", []):
+            model_id = m.get("id") or m.get("name") or (m if isinstance(m, str) else "")
+            if model_id:
+                models.append({
+                    "model": f"{provider_name}/{model_id}",
+                    "provider": provider_name,
+                    "model_id": model_id,
+                    "base_url": base_url,
+                })
+    return {"models": models, "total": len(models)}
 
 
 @app.get("/models/probe", dependencies=[auth])
