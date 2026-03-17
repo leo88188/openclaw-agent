@@ -668,6 +668,97 @@ async def sessions(active: int = 0):
     return await run_cmd(cmd)
 
 
+@app.get("/session-detail", dependencies=[auth])
+async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
+    """Read session metadata + conversation summary from jsonl."""
+    import re
+    agents_dir = os.path.join(OPENCLAW_HOME, ".openclaw", "agents")
+    store_path = os.path.join(agents_dir, agent, "sessions", "sessions.json")
+    jsonl_path = os.path.join(agents_dir, agent, "sessions", f"{session_id}.jsonl")
+
+    result = {"meta": None, "messages": [], "stats": {"total": 0, "user": 0, "assistant": 0, "tool": 0}}
+
+    # Read metadata from sessions.json
+    try:
+        store = json.loads(Path(store_path).read_text("utf-8"))
+        for key, val in store.items():
+            if val.get("sessionId") == session_id:
+                result["meta"] = {
+                    "key": key, "sessionId": session_id,
+                    "updatedAt": val.get("updatedAt"),
+                    "chatType": val.get("chatType"),
+                    "origin": val.get("origin", {}),
+                    "compactionCount": val.get("compactionCount", 0),
+                    "abortedLastRun": val.get("abortedLastRun", False),
+                    "sessionFile": val.get("sessionFile", jsonl_path),
+                }
+                break
+    except Exception:
+        pass
+
+    # Read jsonl conversation
+    try:
+        with open(jsonl_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                obj = json.loads(line)
+                t = obj.get("type", "")
+                ts = obj.get("timestamp", "")
+
+                if t == "message":
+                    msg = obj.get("message", {})
+                    role = msg.get("role", "")
+                    content = msg.get("content", [])
+                    # Extract text preview
+                    text = ""
+                    if isinstance(content, list):
+                        for c in content:
+                            if isinstance(c, dict):
+                                if c.get("type") == "text":
+                                    text = c.get("text", "")[:200]
+                                    break
+                                elif c.get("type") == "tool_use":
+                                    text = f"[tool: {c.get('name', '?')}]"
+                                    break
+                                elif c.get("type") == "tool_result":
+                                    text = "[tool_result]"
+                                    break
+                            elif isinstance(c, str):
+                                text = c[:200]
+                                break
+                    elif isinstance(content, str):
+                        text = content[:200]
+                    # Strip memory prefix
+                    if text.startswith("<relevant-memories>"):
+                        text = re.sub(r'^<relevant-memories>.*?</relevant-memories>\s*', '', text, flags=re.DOTALL)
+                        if not text:
+                            text = "(含记忆上下文)"
+                    text = text.replace("\n", " ")[:200]
+                    result["messages"].append({"ts": ts[:19], "role": role, "text": text})
+                    result["stats"]["total"] += 1
+                    if role == "user":
+                        result["stats"]["user"] += 1
+                    elif role == "assistant":
+                        result["stats"]["assistant"] += 1
+                elif t == "model_change":
+                    result["messages"].append({"ts": ts[:19], "role": "system", "text": f"模型切换 → {obj.get('provider','')}/{obj.get('modelId','')}"})
+                elif t in ("toolResult", "tool_result"):
+                    result["stats"]["tool"] += 1
+
+        # Only keep last 50 messages for display
+        if len(result["messages"]) > 50:
+            result["messages"] = result["messages"][-50:]
+            result["truncated"] = True
+    except FileNotFoundError:
+        result["error"] = "会话文件不存在"
+    except Exception as e:
+        result["error"] = str(e)
+
+    return result
+
+
 # ── Cron ─────────────────────────────────────────────────
 @app.get("/cron", dependencies=[auth])
 async def cron_list():
