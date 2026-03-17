@@ -668,36 +668,11 @@ async def sessions(active: int = 0):
     return await run_cmd(cmd)
 
 
-@app.get("/session-detail", dependencies=[auth])
-async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
-    """Read session metadata + conversation summary from jsonl."""
-    import re
-    agents_dir = os.path.join(OPENCLAW_HOME, ".openclaw", "agents")
-    store_path = os.path.join(agents_dir, agent, "sessions", "sessions.json")
-    jsonl_path = os.path.join(agents_dir, agent, "sessions", f"{session_id}.jsonl")
-
-    result = {"meta": None, "messages": [], "stats": {"total": 0, "user": 0, "assistant": 0, "tool": 0}}
-
-    # Read metadata from sessions.json
-    try:
-        store = json.loads(Path(store_path).read_text("utf-8"))
-        for key, val in store.items():
-            if val.get("sessionId") == session_id:
-                result["meta"] = {
-                    "key": key, "sessionId": session_id,
-                    "updatedAt": val.get("updatedAt"),
-                    "chatType": val.get("chatType"),
-                    "origin": val.get("origin", {}),
-                    "compactionCount": val.get("compactionCount", 0),
-                    "abortedLastRun": val.get("abortedLastRun", False),
-                    "sessionFile": val.get("sessionFile", jsonl_path),
-                }
-                break
-    except Exception:
-        pass
-
-    # Read jsonl conversation
-    _pending_tools = {}  # id → tool name, for linking toolCall to toolResult
+def _parse_jsonl(jsonl_path: str, agent_label: str = ""):
+    """Parse a session JSONL file into messages list and stats."""
+    messages = []
+    stats = {"total": 0, "user": 0, "assistant": 0, "tool": 0}
+    _pending_tools = {}
     try:
         with open(jsonl_path, "r", encoding="utf-8") as f:
             for line in f:
@@ -713,9 +688,8 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
                     role = msg.get("role", "")
                     content = msg.get("content", [])
 
-                    # toolResult role → parse as tool result
                     if role == "toolResult":
-                        result["stats"]["tool"] += 1
+                        stats["tool"] += 1
                         tool_text = ""
                         if isinstance(content, list):
                             for c in content:
@@ -724,10 +698,8 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
                                     break
                         elif isinstance(content, str):
                             tool_text = content[:500]
-                        # Resolve tool name from pending calls
                         tool_use_id = msg.get("toolUseId", "")
                         tool_name = _pending_tools.pop(tool_use_id, "") if tool_use_id else ""
-                        # Parse result
                         summary = ""
                         try:
                             tr = json.loads(tool_text) if tool_text.strip().startswith("{") else None
@@ -743,10 +715,11 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
                         if not summary:
                             summary = tool_text.replace("\n", " ")[:120] if tool_text else "(空)"
                         prefix = f"🔧 {tool_name} → " if tool_name else ""
-                        result["messages"].append({"ts": ts[:19], "role": "tool", "text": f"{prefix}{summary}"})
+                        m = {"ts": ts[:19], "role": "tool", "text": f"{prefix}{summary}"}
+                        if agent_label: m["agent"] = agent_label
+                        messages.append(m)
                         continue
 
-                    # Extract text + toolCall from assistant content
                     text = ""
                     tool_calls = []
                     if isinstance(content, list):
@@ -759,8 +732,7 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
                                     tn = c.get("name", "?")
                                     tid = c.get("id", "")
                                     args = c.get("arguments", c.get("input", {}))
-                                    if tid:
-                                        _pending_tools[tid] = tn
+                                    if tid: _pending_tools[tid] = tn
                                     arg_s = ""
                                     if isinstance(args, dict):
                                         arg_s = " ".join(f"{k}={json.dumps(v,ensure_ascii=False)}" for k,v in list(args.items())[:3])[:120]
@@ -769,7 +741,6 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
                                 text = c
                     elif isinstance(content, str):
                         text = content
-                    # Strip injected prefixes
                     if "<relevant-memories>" in text:
                         idx = text.find("</relevant-memories>")
                         text = text[idx+20:].strip() if idx >= 0 else ""
@@ -778,27 +749,104 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
                     if not text and role == "user":
                         text = "(系统上下文注入)"
                     text = text.replace("\n", " ")[:200]
-                    # Append tool calls to assistant text
                     if tool_calls and role == "assistant":
                         tc_text = "  ".join(f"🔨{t}" for t in tool_calls)
                         text = f"{text}  {tc_text}" if text else tc_text
-                    result["messages"].append({"ts": ts[:19], "role": role, "text": text})
-                    result["stats"]["total"] += 1
-                    if role == "user":
-                        result["stats"]["user"] += 1
-                    elif role == "assistant":
-                        result["stats"]["assistant"] += 1
+                    m = {"ts": ts[:19], "role": role, "text": text}
+                    if agent_label: m["agent"] = agent_label
+                    messages.append(m)
+                    stats["total"] += 1
+                    if role == "user": stats["user"] += 1
+                    elif role == "assistant": stats["assistant"] += 1
                 elif t == "model_change":
-                    result["messages"].append({"ts": ts[:19], "role": "system", "text": f"模型切换 → {obj.get('provider','')}/{obj.get('modelId','')}"})
-
-        # Only keep last 50 messages for display
-        if len(result["messages"]) > 50:
-            result["messages"] = result["messages"][-50:]
-            result["truncated"] = True
+                    m = {"ts": ts[:19], "role": "system", "text": f"模型切换 → {obj.get('provider','')}/{obj.get('modelId','')}"}
+                    if agent_label: m["agent"] = agent_label
+                    messages.append(m)
     except FileNotFoundError:
-        result["error"] = "会话文件不存在"
+        pass
     except Exception as e:
-        result["error"] = str(e)
+        pass
+    return messages, stats
+
+
+def _read_session_meta(store_path: str, session_id: str, jsonl_path: str):
+    try:
+        store = json.loads(Path(store_path).read_text("utf-8"))
+        for key, val in store.items():
+            if val.get("sessionId") == session_id:
+                return {
+                    "key": key, "sessionId": session_id,
+                    "updatedAt": val.get("updatedAt"),
+                    "chatType": val.get("chatType"),
+                    "subject": val.get("subject", ""),
+                    "origin": val.get("origin", {}),
+                    "compactionCount": val.get("compactionCount", 0),
+                    "abortedLastRun": val.get("abortedLastRun", False),
+                    "sessionFile": val.get("sessionFile", jsonl_path),
+                }
+    except Exception:
+        pass
+    return None
+
+
+@app.get("/session-detail", dependencies=[auth])
+async def session_detail(agent: str = Query(...), session_id: str = Query(...), group: bool = Query(False)):
+    """Read session detail. group=true merges all agents in the same group chat."""
+    agents_dir = os.path.join(OPENCLAW_HOME, ".openclaw", "agents")
+    store_path = os.path.join(agents_dir, agent, "sessions", "sessions.json")
+    jsonl_path = os.path.join(agents_dir, agent, "sessions", f"{session_id}.jsonl")
+
+    meta = _read_session_meta(store_path, session_id, jsonl_path)
+    result = {"meta": meta, "messages": [], "stats": {"total": 0, "user": 0, "assistant": 0, "tool": 0}}
+
+    if group and meta and meta.get("chatType") == "group" and meta.get("subject"):
+        # Find all agents with sessions in the same group
+        subject = meta["subject"]
+        group_agents = []  # [(agent_name, session_id, jsonl_path)]
+        try:
+            for d in sorted(os.listdir(agents_dir)):
+                sp = os.path.join(agents_dir, d, "sessions", "sessions.json")
+                if not os.path.isfile(sp): continue
+                st = json.loads(Path(sp).read_text("utf-8"))
+                for k, v in st.items():
+                    if v.get("subject") == subject and v.get("chatType") == "group":
+                        sid = v["sessionId"]
+                        jp = os.path.join(agents_dir, d, "sessions", f"{sid}.jsonl")
+                        if os.path.isfile(jp):
+                            group_agents.append((d, sid, jp))
+                        break
+        except Exception:
+            pass
+        result["groupAgents"] = [a[0] for a in group_agents]
+        # Merge messages from all agents
+        all_msgs = []
+        agg_stats = {"total": 0, "user": 0, "assistant": 0, "tool": 0}
+        seen_user = set()  # deduplicate user messages (same ts+text across agents)
+        for a_name, a_sid, a_jp in group_agents:
+            msgs, st = _parse_jsonl(a_jp, agent_label=a_name)
+            for m in msgs:
+                if m["role"] == "user":
+                    key = (m["ts"], m["text"][:60])
+                    if key in seen_user: continue
+                    seen_user.add(key)
+                all_msgs.append(m)
+            agg_stats["assistant"] += st["assistant"]
+            agg_stats["tool"] += st["tool"]
+        # Sort by timestamp
+        all_msgs.sort(key=lambda x: x["ts"])
+        agg_stats["user"] = sum(1 for m in all_msgs if m["role"] == "user")
+        agg_stats["total"] = agg_stats["user"] + agg_stats["assistant"]
+        result["messages"] = all_msgs[-80:] if len(all_msgs) > 80 else all_msgs
+        result["truncated"] = len(all_msgs) > 80
+        result["stats"] = agg_stats
+    else:
+        msgs, stats = _parse_jsonl(jsonl_path)
+        result["messages"] = msgs[-50:] if len(msgs) > 50 else msgs
+        result["truncated"] = len(msgs) > 50
+        result["stats"] = stats
+
+    if not os.path.isfile(jsonl_path) and not result.get("messages"):
+        result["error"] = "会话文件不存在"
 
     return result
 
