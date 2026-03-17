@@ -533,6 +533,24 @@ async def models_list_api():
     return {"models": models, "total": len(models)}
 
 
+# ── 实时状态 ──────────────────────────────────────────────
+
+@app.get("/status", dependencies=[auth])
+async def agent_status():
+    """获取 openclaw status --json 并结构化返回"""
+    result = await run_cmd("openclaw status --json", timeout=30)
+    stdout = result.get("stdout", "")
+    # 提取 JSON
+    start = stdout.find("{")
+    if start < 0:
+        return {"raw": stdout, "parsed": False}
+    try:
+        data = json.loads(stdout[start:])
+        return {"parsed": True, **data}
+    except json.JSONDecodeError:
+        return {"raw": stdout[start:], "parsed": False}
+
+
 # ── Pairing 配对管理 ──────────────────────────────────────
 
 @app.get("/pairing/list", dependencies=[auth])
