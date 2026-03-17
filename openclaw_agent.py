@@ -534,9 +534,15 @@ async def models_list_api():
 
 
 @app.get("/models/probe", dependencies=[auth])
-async def models_probe_api():
-    """批量探测所有模型"""
-    result = await run_cmd("openclaw models status --probe --status-plain", timeout=120)
+async def models_probe_api(models: Optional[str] = Query(None)):
+    """批量探测模型，可选传 models 参数（逗号分隔）指定探测哪些模型"""
+    cmd = "openclaw models status --probe --status-plain"
+    if models:
+        for m in models.split(","):
+            m = m.strip()
+            if m:
+                cmd += f" {shlex.quote(m)}"
+    result = await run_cmd(cmd, timeout=120)
     return result
 
 
