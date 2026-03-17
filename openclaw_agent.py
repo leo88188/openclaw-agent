@@ -514,9 +514,10 @@ def _load_auth_profiles() -> dict:
 
 
 @app.get("/models/list", dependencies=[auth])
-async def models_list_api():
+async def models_list_api(all: bool = Query(False, description="是否包含全部模型")):
     """获取已配置模型列表"""
-    result = await run_cmd("openclaw models list --all", timeout=30)
+    cmd = "openclaw models list --all" if all else "openclaw models list"
+    result = await run_cmd(cmd, timeout=30)
     return result
 
 
