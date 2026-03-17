@@ -730,12 +730,14 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
                                 break
                     elif isinstance(content, str):
                         text = content
-                    # Strip memory prefix
+                    # Strip injected prefixes
                     if "<relevant-memories>" in text:
                         idx = text.find("</relevant-memories>")
                         text = text[idx+20:].strip() if idx >= 0 else ""
+                    if text.startswith("Conversation info (untrusted metadata)"):
+                        text = ""
                     if not text and role == "user":
-                        text = "(含记忆上下文)"
+                        text = "(系统上下文注入)"
                     text = text.replace("\n", " ")[:200]
                     result["messages"].append({"ts": ts[:19], "role": role, "text": text})
                     result["stats"]["total"] += 1
@@ -747,6 +749,29 @@ async def session_detail(agent: str = Query(...), session_id: str = Query(...)):
                     result["messages"].append({"ts": ts[:19], "role": "system", "text": f"模型切换 → {obj.get('provider','')}/{obj.get('modelId','')}"})
                 elif t in ("toolResult", "tool_result"):
                     result["stats"]["tool"] += 1
+                    # Extract runId and status from tool result
+                    msg = obj.get("message", {})
+                    content = msg.get("content", [])
+                    tool_text = ""
+                    if isinstance(content, list):
+                        for c in content:
+                            if isinstance(c, dict) and c.get("type") == "tool_result":
+                                tool_text = c.get("content", "")[:300]
+                                break
+                    if not tool_text:
+                        tool_text = str(content)[:300] if content else ""
+                    # Parse JSON to extract key fields
+                    summary = "[工具调用结果]"
+                    try:
+                        tr = json.loads(tool_text) if tool_text.startswith("{") else {}
+                        parts = []
+                        if tr.get("runId"): parts.append(f"runId={tr['runId'][:8]}…")
+                        if tr.get("status"): parts.append(tr["status"])
+                        if tr.get("reply"): parts.append(tr["reply"][:80])
+                        if parts: summary = " | ".join(parts)
+                    except Exception:
+                        summary = tool_text[:100] if tool_text else "[工具调用结果]"
+                    result["messages"].append({"ts": ts[:19], "role": "tool", "text": summary})
 
         # Only keep last 50 messages for display
         if len(result["messages"]) > 50:
