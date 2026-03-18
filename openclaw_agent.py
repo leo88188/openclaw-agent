@@ -162,8 +162,6 @@ async def health():
         "status": "ok",
         "time": datetime.now().isoformat(),
         "openclaw": "running" if openclaw_running else "stopped",
-        "config_path": CONFIG_PATH,
-        "config_found": os.path.isfile(CONFIG_PATH),
     }
 
 
