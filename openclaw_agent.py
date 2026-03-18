@@ -219,7 +219,7 @@ SAFE_COMMANDS = {
     "channels-status": "openclaw channels status --probe",
     "models-status": "openclaw models status --probe",
     "models-list": "openclaw models list --all",
-    "memory-index": "openclaw memory index --all",
+    "memory-index": "openclaw memory index",
     "pairing-list": "openclaw pairing list",
     "cron-list": "openclaw cron list",
     "hooks-list": "openclaw hooks list",
