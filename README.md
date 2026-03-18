@@ -47,7 +47,33 @@ curl -sSL https://raw.githubusercontent.com/leo88188/openclaw-agent/main/install
 curl -sSL https://raw.githubusercontent.com/leo88188/openclaw-agent/main/install-remote.sh | sudo bash -s -- --port 9966
 ```
 
-> ⚠️ 此脚本仅支持 Linux（使用 systemd 管理服务），不支持 macOS。macOS 请使用方式三手动安装。
+> ⚠️ 此脚本仅支持 Linux（使用 systemd 管理服务），不支持 macOS。macOS 请使用方式一(b)。
+
+### 方式一(b)：macOS 一键安装
+
+```bash
+curl -sSL https://raw.githubusercontent.com/leo88188/openclaw-agent/main/install-mac.sh | bash
+```
+
+指定端口：
+
+```bash
+curl -sSL https://raw.githubusercontent.com/leo88188/openclaw-agent/main/install-mac.sh | bash -s -- --port 9966
+```
+
+使用 launchd 管理服务（macOS 原生），开机自启，无需 sudo。
+
+管理命令：
+```bash
+# 查看日志
+tail -f ~/.openclaw-agent/agent.log
+# 停止服务
+launchctl bootout gui/$(id -u)/com.openclaw.agent
+# 启动服务
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.openclaw.agent.plist
+# 卸载
+launchctl bootout gui/$(id -u)/com.openclaw.agent && rm -rf ~/.openclaw-agent ~/Library/LaunchAgents/com.openclaw.agent.plist
+```
 
 安装完成后会显示 Agent URL 和 Token，直接复制到管理平台「新增实例」中即可。
 
