@@ -26,6 +26,22 @@ AGENT_TOKEN = os.getenv("OPENCLAW_AGENT_TOKEN", "changeme")
 OPENCLAW_HOME = os.getenv("OPENCLAW_HOME", os.path.expanduser("~"))
 OPENCLAW_DOT_DIR = os.path.join(OPENCLAW_HOME, ".openclaw")
 CONFIG_PATH = os.getenv("OPENCLAW_CONFIG", os.path.join(OPENCLAW_DOT_DIR, "openclaw.json"))
+
+# 自动搜索配置文件
+if not os.path.isfile(CONFIG_PATH):
+    _candidates = [
+        os.path.join(OPENCLAW_HOME, ".openclaw", "openclaw.json"),
+        os.path.expanduser("~/.openclaw/openclaw.json"),
+        os.path.expanduser("~/.openclaw-dev/openclaw.json"),
+        os.path.expanduser("~/.config/openclaw/openclaw.json"),
+        "/etc/openclaw/openclaw.json",
+    ]
+    for _c in _candidates:
+        if os.path.isfile(_c):
+            CONFIG_PATH = _c
+            OPENCLAW_DOT_DIR = os.path.dirname(_c)
+            OPENCLAW_HOME = os.path.dirname(OPENCLAW_DOT_DIR)
+            break
 LOG_DIR = os.getenv("OPENCLAW_LOG_DIR", os.path.join(OPENCLAW_DOT_DIR, "logs"))
 ENV_CONF_PATH = os.getenv(
     "OPENCLAW_ENV_CONF",
@@ -146,6 +162,8 @@ async def health():
         "status": "ok",
         "time": datetime.now().isoformat(),
         "openclaw": "running" if openclaw_running else "stopped",
+        "config_path": CONFIG_PATH,
+        "config_found": os.path.isfile(CONFIG_PATH),
     }
 
 
@@ -941,4 +959,6 @@ async def version():
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("OPENCLAW_AGENT_PORT", "9966"))
+    print(f"📂 CONFIG_PATH: {CONFIG_PATH} ({'✅ found' if os.path.isfile(CONFIG_PATH) else '❌ not found'})")
+    print(f"📂 OPENCLAW_HOME: {OPENCLAW_HOME}")
     uvicorn.run(app, host="0.0.0.0", port=port)
