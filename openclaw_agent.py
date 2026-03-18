@@ -1074,7 +1074,9 @@ async def acp_ccr_start(req: dict = {}):
         chk = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=3)
         if chk.get("stdout", "").strip():
             return {"ok": True, "msg": "CCR 服务已启动 (端口 3456)"}
-    return {"ok": False, "msg": "CCR 启动超时，查看日志: ~/.claude-code-router/ccr.log"}
+    # 失败时读取日志
+    log = await run_cmd("tail -30 ~/.claude-code-router/ccr.log 2>/dev/null || echo '日志文件不存在'", timeout=3)
+    return {"ok": False, "msg": "CCR 启动超时", "log": log.get("stdout", "").strip()[:2000]}
 
 
 @app.get("/acp/ccr/status", dependencies=[auth])
