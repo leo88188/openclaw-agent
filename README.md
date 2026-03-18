@@ -124,6 +124,27 @@ docker run -d \
   openclaw-agent
 ```
 
+## 停止与卸载
+
+Linux 和 macOS 通用脚本，自动检测系统类型：
+
+```bash
+# 仅停止服务
+bash uninstall.sh
+
+# 停止并删除所有文件（Linux 需 sudo）
+bash uninstall.sh --remove
+```
+
+或远程执行：
+```bash
+# 停止
+curl -sSL https://raw.githubusercontent.com/leo88188/openclaw-agent/main/uninstall.sh | bash
+
+# 彻底卸载
+curl -sSL https://raw.githubusercontent.com/leo88188/openclaw-agent/main/uninstall.sh | bash -s -- --remove
+```
+
 ## 环境变量
 
 | 变量 | 默认值 | 说明 |
