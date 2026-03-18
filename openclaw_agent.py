@@ -942,7 +942,14 @@ async def upgrade():
         if not result["ok"]:
             return {"ok": False, "error": f"依赖安装失败: {result['stderr']}"}
     # 重启服务
-    await run_cmd("systemctl restart openclaw-agent")
+    import platform
+    if platform.system() == "Darwin":
+        uid = os.getuid()
+        label = "com.openclaw.agent"
+        plist = os.path.expanduser(f"~/Library/LaunchAgents/{label}.plist")
+        await run_cmd(f"launchctl bootout gui/{uid}/{label}; sleep 1; launchctl bootstrap gui/{uid} {plist}")
+    else:
+        await run_cmd("systemctl restart openclaw-agent")
     return {"ok": True, "msg": "更新完成，服务重启中", "updated": updated}
 
 
