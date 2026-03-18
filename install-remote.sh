@@ -1,11 +1,12 @@
 #!/bin/bash
 # OpenClaw Agent 一键远程安装
-# 用法: curl -sSL https://raw.githubusercontent.com/leo88188/openclaw-agent/main/install-remote.sh | bash
+# 用法: curl -sSL https://raw.githubusercontent.com/leo88188/openclaw-agent/main/install-remote.sh | sudo bash
 #
 # 参数:
 #   --port  PORT    监听端口（默认 9966）
 #
 # Token 自动生成（openssl rand -hex 32），安装完成后显示
+# 注意: 仅支持 Linux（systemd），不支持 macOS
 
 set -e
 
