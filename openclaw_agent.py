@@ -1067,24 +1067,28 @@ async def acp_ccr_start(req: dict = {}):
     # 先停掉已有的
     await run_cmd("command -v ccr >/dev/null && ccr stop 2>/dev/null || true", timeout=5)
     await run_cmd("lsof -ti :3456 | xargs kill -9 2>/dev/null || true", timeout=5)
+    await asyncio.sleep(1)
     # 清理 claude 认证缓存（避免冲突）
     if req.get("clean_auth", False):
         await run_cmd("rm -rf ~/.claude/auth* ~/.claude/.credentials* ~/.claude/statsig* ~/.claude/oauth* ~/.claude/session* 2>/dev/null || true", timeout=3)
-    # 后台启动 ccr
-    import platform
-    if platform.system() == "Darwin":
-        start_cmd = "(nohup ccr start > ~/.claude-code-router/ccr.log 2>&1 &)"
-    else:
-        start_cmd = "nohup ccr start > ~/.claude-code-router/ccr.log 2>&1 & disown 2>/dev/null || true"
-    await run_cmd(start_cmd, timeout=5)
-    # 等待启动
-    for _ in range(10):
+    # 后台启动 ccr — 用 Popen 直接 detach，不走 run_cmd（ccr 是前台程序）
+    import subprocess
+    log_path = os.path.expanduser("~/.claude-code-router/ccr.log")
+    os.makedirs(os.path.dirname(log_path), exist_ok=True)
+    log_f = open(log_path, "w")
+    subprocess.Popen(
+        "exec ccr start", shell=True,
+        stdout=log_f, stderr=log_f, stdin=subprocess.DEVNULL,
+        start_new_session=True, env={**os.environ, **({"PATH": _ENV["PATH"]} if "PATH" in _ENV else {})}
+    )
+    # 轮询端口 3456
+    for i in range(15):
         await asyncio.sleep(1)
         chk = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=3)
         if chk.get("stdout", "").strip():
             return {"ok": True, "msg": "CCR 服务已启动 (端口 3456)"}
     # 失败时读取日志
-    log = await run_cmd("tail -30 ~/.claude-code-router/ccr.log 2>/dev/null || echo '日志文件不存在'", timeout=3)
+    log = await run_cmd(f"tail -30 {log_path} 2>/dev/null || echo '日志文件不存在'", timeout=3)
     return {"ok": False, "msg": "CCR 启动超时", "log": log.get("stdout", "").strip()[:2000]}
 
 
