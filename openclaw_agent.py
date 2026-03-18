@@ -1052,6 +1052,15 @@ async def acp_ccr_config(req: dict):
     return {"ok": True, "path": cfg_path, "providers": len(providers)}
 
 
+@app.post("/acp/ccr/stop", dependencies=[auth])
+async def acp_ccr_stop():
+    """停止 CCR 服务"""
+    await run_cmd("command -v ccr >/dev/null && ccr stop 2>/dev/null || true", timeout=5)
+    await run_cmd("lsof -ti :3456 | xargs kill -9 2>/dev/null || true", timeout=5)
+    chk = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=3)
+    stopped = not chk.get("stdout", "").strip()
+    return {"ok": stopped, "msg": "已停止" if stopped else "端口 3456 仍在监听"}
+
 @app.post("/acp/ccr/start", dependencies=[auth])
 async def acp_ccr_start(req: dict = {}):
     """启动/重启 Claude Code Router 服务"""
