@@ -1059,6 +1059,9 @@ async def acp_ccr_stop():
     await run_cmd("lsof -ti :3456 | xargs kill -9 2>/dev/null || true", timeout=5)
     chk = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=3)
     stopped = not chk.get("stdout", "").strip()
+    if stopped:
+        os.environ.pop("ANTHROPIC_BASE_URL", None)
+        _ENV.pop("ANTHROPIC_BASE_URL", None)
     return {"ok": stopped, "msg": "已停止" if stopped else "端口 3456 仍在监听"}
 
 @app.post("/acp/ccr/start", dependencies=[auth])
@@ -1086,6 +1089,18 @@ async def acp_ccr_start(req: dict = {}):
         await asyncio.sleep(1)
         chk = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=3)
         if chk.get("stdout", "").strip():
+            # CCR 启动成功，写入环境变量让 Claude Code 走 CCR
+            env_line = 'export ANTHROPIC_BASE_URL="http://localhost:3456"'
+            profile = os.path.expanduser("~/.profile")
+            try:
+                existing = open(profile).read() if os.path.isfile(profile) else ""
+                if "ANTHROPIC_BASE_URL" not in existing:
+                    with open(profile, "a") as f:
+                        f.write(f"\n# Claude Code Router\n{env_line}\n")
+            except Exception:
+                pass
+            os.environ["ANTHROPIC_BASE_URL"] = "http://localhost:3456"
+            _ENV["ANTHROPIC_BASE_URL"] = "http://localhost:3456"
             return {"ok": True, "msg": "CCR 服务已启动 (端口 3456)"}
     # 失败时读取日志
     log = await run_cmd(f"tail -30 {log_path} 2>/dev/null || echo '日志文件不存在'", timeout=3)
