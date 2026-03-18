@@ -956,17 +956,30 @@ async def upgrade():
 @app.get("/acp/detect", dependencies=[auth])
 async def acp_detect():
     """检测 ACP 编程工具安装状态"""
+    import platform
+    is_mac = platform.system() == "Darwin"
     tools = {
-        "kiro-cli":  {"install": "curl -fsSL https://kiro.dev/install.sh | bash", "desc": "Kiro CLI - AWS AI 编程助手"},
-        "codex":     {"install": "npm install -g @openai/codex", "desc": "OpenAI Codex CLI"},
-        "claude":    {"install": "npm install -g @anthropic-ai/claude-code", "desc": "Claude Code - Anthropic 编程助手"},
-        "gemini":    {"install": "npm install -g @anthropic-ai/gemini-cli", "desc": "Gemini CLI - Google 编程助手"},
-        "opencode":  {"install": "npm install -g opencode", "desc": "OpenCode CLI"},
-        "pi":        {"install": "npm install -g @anthropic-ai/pi", "desc": "Pi CLI"},
+        "kiro-cli":  {"install_cmd": "curl -fsSL https://kiro.dev/install.sh | bash", "desc": "Kiro CLI - AWS AI 编程助手"},
+        "codex":     {"install_cmd": "npm install -g @openai/codex", "desc": "OpenAI Codex CLI"},
+        "claude":    {"install_cmd": "npm install -g @anthropic-ai/claude-code", "desc": "Claude Code - Anthropic 编程助手"},
+        "gemini":    {"install_cmd": "npm install -g @anthropic-ai/gemini-cli", "desc": "Gemini CLI - Google 编程助手"},
+        "opencode":  {"install_cmd": "npm install -g opencode", "desc": "OpenCode CLI"},
+        "pi":        {"install_cmd": "npm install -g @anthropic-ai/pi", "desc": "Pi CLI"},
     }
     results = {}
+    # 先检测 node/npm
+    node_r = await run_cmd("command -v node && node --version 2>/dev/null || echo NOT_FOUND", timeout=5)
+    npm_r = await run_cmd("command -v npm && npm --version 2>/dev/null || echo NOT_FOUND", timeout=5)
+    results["_env"] = {
+        "os": platform.system(),
+        "arch": platform.machine(),
+        "node": node_r.get("stdout", "").strip()[:100],
+        "npm": npm_r.get("stdout", "").strip()[:100],
+        "has_node": "NOT_FOUND" not in node_r.get("stdout", ""),
+        "has_npm": "NOT_FOUND" not in npm_r.get("stdout", ""),
+    }
     for name, meta in tools.items():
-        r = await run_cmd(f"which {name} 2>/dev/null", timeout=5)
+        r = await run_cmd(f"command -v {name} 2>/dev/null", timeout=5)
         path = r.get("stdout", "").strip() if r.get("ok") else ""
         ver = ""
         if path:
@@ -974,24 +987,30 @@ async def acp_detect():
             ver = rv.get("stdout", "").strip()[:80]
         results[name] = {"installed": bool(path), "path": path, "version": ver, **meta}
     # acpx 插件
-    acpx = await run_cmd("openclaw plugins list 2>/dev/null | grep -i acpx || echo ''", timeout=10)
+    acpx = await run_cmd("command -v openclaw >/dev/null 2>&1 && openclaw plugins list 2>/dev/null | grep -i acpx || echo ''", timeout=10)
     results["_acpx_plugin"] = {"installed": "acpx" in acpx.get("stdout", ""), "raw": acpx.get("stdout", "").strip()[:200]}
     return results
+
+
+# 安装命令映射（macOS 和 Linux 通用）
+_ACP_INSTALL = {
+    "kiro-cli": "curl -fsSL https://kiro.dev/install.sh | bash",
+    "codex":    "npm install -g @openai/codex",
+    "claude":   "npm install -g @anthropic-ai/claude-code",
+    "gemini":   "npm install -g @google/gemini-cli",
+    "opencode": "npm install -g opencode",
+    "pi":       "npm install -g @anthropic-ai/pi",
+    "acpx":     "command -v openclaw >/dev/null && openclaw plugins install acpx && openclaw config set plugins.entries.acpx.enabled true",
+}
 
 
 @app.post("/acp/install", dependencies=[auth])
 async def acp_install(req: dict):
     """安装 ACP 工具"""
     name = req.get("tool", "")
-    allowed = {"kiro-cli", "codex", "claude", "gemini", "opencode", "pi", "acpx"}
-    if name not in allowed:
+    if name not in _ACP_INSTALL:
         raise HTTPException(400, f"不支持安装: {name}")
-    if name == "acpx":
-        cmd = "openclaw plugins install acpx && openclaw config set plugins.entries.acpx.enabled true"
-    elif name == "kiro-cli":
-        cmd = "curl -fsSL https://kiro.dev/install.sh | bash"
-    else:
-        cmd = f"npm install -g @openai/codex" if name == "codex" else f"npm install -g {name}"
+    cmd = _ACP_INSTALL[name]
     result = await run_cmd(cmd, timeout=120)
     return result
 
