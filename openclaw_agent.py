@@ -961,8 +961,9 @@ async def acp_detect():
     tools = {
         "kiro-cli":  {"install_cmd": "curl -fsSL https://kiro.dev/install.sh | bash", "desc": "Kiro CLI - AWS AI 编程助手"},
         "codex":     {"install_cmd": "npm install -g @openai/codex", "desc": "OpenAI Codex CLI"},
-        "claude":    {"install_cmd": "npm install -g @anthropic-ai/claude-code", "desc": "Claude Code - Anthropic 编程助手"},
-        "gemini":    {"install_cmd": "npm install -g @anthropic-ai/gemini-cli", "desc": "Gemini CLI - Google 编程助手"},
+        "claude":    {"install_cmd": "npm install -g @anthropic-ai/claude-code @musistudio/claude-code-router", "desc": "Claude Code + Router（通过 CCR 支持多模型）"},
+        "ccr":       {"install_cmd": "npm install -g @musistudio/claude-code-router", "desc": "Claude Code Router — Claude Code 多模型路由"},
+        "gemini":    {"install_cmd": "npm install -g @google/gemini-cli", "desc": "Gemini CLI - Google 编程助手"},
         "opencode":  {"install_cmd": "npm install -g opencode", "desc": "OpenCode CLI"},
         "pi":        {"install_cmd": "npm install -g @anthropic-ai/pi", "desc": "Pi CLI"},
     }
@@ -989,6 +990,13 @@ async def acp_detect():
     # acpx 插件
     acpx = await run_cmd("command -v openclaw >/dev/null 2>&1 && openclaw plugins list 2>/dev/null | grep -i acpx || echo ''", timeout=10)
     results["_acpx_plugin"] = {"installed": "acpx" in acpx.get("stdout", ""), "raw": acpx.get("stdout", "").strip()[:200]}
+    # CCR 服务状态
+    ccr_port = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=5)
+    ccr_cfg_exists = os.path.isfile(os.path.expanduser("~/.claude-code-router/config.json"))
+    results["_ccr_service"] = {
+        "running": bool(ccr_port.get("stdout", "").strip()),
+        "config_exists": ccr_cfg_exists,
+    }
     return results
 
 
@@ -996,7 +1004,8 @@ async def acp_detect():
 _ACP_INSTALL = {
     "kiro-cli": "curl -fsSL https://kiro.dev/install.sh | bash",
     "codex":    "npm install -g @openai/codex",
-    "claude":   "npm install -g @anthropic-ai/claude-code",
+    "claude":   "npm install -g @anthropic-ai/claude-code @musistudio/claude-code-router",
+    "ccr":      "npm install -g @musistudio/claude-code-router",
     "gemini":   "npm install -g @google/gemini-cli",
     "opencode": "npm install -g opencode",
     "pi":       "npm install -g @anthropic-ai/pi",
@@ -1013,6 +1022,81 @@ async def acp_install(req: dict):
     cmd = _ACP_INSTALL[name]
     result = await run_cmd(cmd, timeout=120)
     return result
+
+
+@app.post("/acp/ccr/config", dependencies=[auth])
+async def acp_ccr_config(req: dict):
+    """生成 Claude Code Router 配置文件
+    接收 providers 数组和 router 配置，写入 ~/.claude-code-router/config.json
+    """
+    providers = req.get("providers", [])
+    router = req.get("router", {})
+    if not providers:
+        raise HTTPException(400, "至少需要一个 provider")
+    ccr_dir = os.path.expanduser("~/.claude-code-router")
+    os.makedirs(ccr_dir, exist_ok=True)
+    config = {
+        "LOG": True,
+        "LOG_LEVEL": "info",
+        "API_TIMEOUT_MS": req.get("timeout", 600000),
+        "Providers": providers,
+        "Router": router or {"default": f"{providers[0]['name']},{providers[0].get('models',[''])[0]}"},
+    }
+    cfg_path = os.path.join(ccr_dir, "config.json")
+    # 备份旧配置
+    if os.path.isfile(cfg_path):
+        bak = cfg_path + f".bak.{int(time.time())}"
+        os.rename(cfg_path, bak)
+    with open(cfg_path, "w") as f:
+        json.dump(config, f, indent=2, ensure_ascii=False)
+    return {"ok": True, "path": cfg_path, "providers": len(providers)}
+
+
+@app.post("/acp/ccr/start", dependencies=[auth])
+async def acp_ccr_start(req: dict = {}):
+    """启动/重启 Claude Code Router 服务"""
+    # 先停掉已有的
+    await run_cmd("command -v ccr >/dev/null && ccr stop 2>/dev/null || true", timeout=5)
+    await run_cmd("lsof -ti :3456 | xargs kill -9 2>/dev/null || true", timeout=5)
+    # 清理 claude 认证缓存（避免冲突）
+    if req.get("clean_auth", False):
+        await run_cmd("rm -rf ~/.claude/auth* ~/.claude/.credentials* ~/.claude/statsig* ~/.claude/oauth* ~/.claude/session* 2>/dev/null || true", timeout=3)
+    # 后台启动 ccr
+    import platform
+    if platform.system() == "Darwin":
+        start_cmd = "(nohup ccr start > ~/.claude-code-router/ccr.log 2>&1 &)"
+    else:
+        start_cmd = "nohup ccr start > ~/.claude-code-router/ccr.log 2>&1 & disown 2>/dev/null || true"
+    await run_cmd(start_cmd, timeout=5)
+    # 等待启动
+    for _ in range(10):
+        await asyncio.sleep(1)
+        chk = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=3)
+        if chk.get("stdout", "").strip():
+            return {"ok": True, "msg": "CCR 服务已启动 (端口 3456)"}
+    return {"ok": False, "msg": "CCR 启动超时，查看日志: ~/.claude-code-router/ccr.log"}
+
+
+@app.get("/acp/ccr/status", dependencies=[auth])
+async def acp_ccr_status():
+    """检查 CCR 服务状态"""
+    chk = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=3)
+    running = bool(chk.get("stdout", "").strip())
+    cfg_path = os.path.expanduser("~/.claude-code-router/config.json")
+    cfg_exists = os.path.isfile(cfg_path)
+    cfg = {}
+    if cfg_exists:
+        try:
+            with open(cfg_path) as f:
+                cfg = json.load(f)
+        except Exception:
+            pass
+    return {
+        "running": running,
+        "config_exists": cfg_exists,
+        "providers": [p.get("name") for p in cfg.get("Providers", [])],
+        "router": cfg.get("Router", {}),
+    }
 
 
 @app.get("/version", dependencies=[auth])
