@@ -1333,6 +1333,30 @@ def _persist_ccr_env():
         pass
 
 
+async def _ensure_ccr_service():
+    """Linux: 确保 CCR 有 systemd service（自动重启守护）。返回是否新创建。"""
+    import platform
+    if platform.system() == "Darwin":
+        return False
+    svc_path = "/etc/systemd/system/ccr.service"
+    if os.path.isfile(svc_path):
+        return False
+    ccr_bin = (await run_cmd("command -v ccr", timeout=3)).get("stdout", "").strip()
+    if not ccr_bin:
+        return False
+    svc = (
+        "[Unit]\nDescription=Claude Code Router\nAfter=network.target\n\n"
+        f"[Service]\nType=simple\nExecStart={ccr_bin} start\n"
+        "Restart=always\nRestartSec=3\n"
+        f"Environment=HOME={os.path.expanduser('~')}\n"
+        "Environment=PATH=/usr/local/bin:/usr/bin:/bin\n\n"
+        "[Install]\nWantedBy=multi-user.target\n"
+    )
+    Path(svc_path).write_text(svc, encoding="utf-8")
+    await run_cmd("systemctl daemon-reload && systemctl enable ccr", timeout=10)
+    return True
+
+
 @app.post("/acp/ccr/start", dependencies=[auth])
 async def acp_ccr_start(req: dict = {}):
     """启动/重启 Claude Code Router 服务"""
@@ -1347,6 +1371,7 @@ async def acp_ccr_start(req: dict = {}):
         await run_cmd("rm -rf ~/.claude/auth* ~/.claude/.credentials* ~/.claude/statsig* ~/.claude/oauth* ~/.claude/session* 2>/dev/null || true", timeout=3)
     # Linux 优先用 systemctl
     if not is_mac:
+        await _ensure_ccr_service()
         svc_r = await run_cmd("systemctl cat ccr 2>/dev/null", timeout=3)
         if svc_r.get("ok") and "ccr" in svc_r.get("stdout", ""):
             await run_cmd("systemctl restart ccr", timeout=10)
@@ -1535,7 +1560,11 @@ async def acp_health():
     ccr_cfg_exists = os.path.isfile(os.path.expanduser("~/.claude-code-router/config.json"))
     ccr_r = await run_cmd("curl -s --connect-timeout 3 http://localhost:3456/health", timeout=5)
     ccr_ok = "ok" in ccr_r.get("stdout", "").lower()
-    checks.append({"name": "CCR 服务", "ok": ccr_ok or not ccr_cfg_exists, "detail": ccr_r.get("stdout", "").strip()[:100] if ccr_cfg_exists else "未配置（非必须）", "optional": not ccr_cfg_exists})
+    ccr_detail = ccr_r.get("stdout", "").strip()[:100] if ccr_cfg_exists else "未配置（非必须）"
+    if ccr_cfg_exists and not is_mac:
+        has_svc = os.path.isfile("/etc/systemd/system/ccr.service")
+        ccr_detail += " (systemd 守护)" if has_svc else " ⚠ 无 systemd 守护，可能意外退出"
+    checks.append({"name": "CCR 服务", "ok": ccr_ok or not ccr_cfg_exists, "detail": ccr_detail, "optional": not ccr_cfg_exists})
     # 3. Gateway 环境变量
     gw_pid_r = await run_cmd("pgrep -f 'openclaw.*gateway' | head -1", timeout=3)
     gw_pid = gw_pid_r.get("stdout", "").strip()
@@ -1651,15 +1680,18 @@ async def acp_fix():
                 json.dump(cfg, f, indent=2, ensure_ascii=False)
     except Exception:
         pass
-    # 4. CCR（仅当配置存在时启动）
+    # 4. CCR（仅当配置存在时）
     ccr_cfg = os.path.expanduser("~/.claude-code-router/config.json")
     if os.path.isfile(ccr_cfg):
+        if await _ensure_ccr_service():
+            results.append("CCR systemd service 已创建并启用")
+        # 启动 CCR
         ccr_r = await run_cmd("curl -s --connect-timeout 2 http://localhost:3456/health", timeout=3)
         if "ok" not in ccr_r.get("stdout", "").lower():
             if is_mac:
                 await run_cmd("nohup ccr start > /tmp/ccr.log 2>&1 &", timeout=3)
             else:
-                await run_cmd("systemctl start ccr 2>/dev/null || nohup ccr start > /tmp/ccr.log 2>&1 &", timeout=5)
+                await run_cmd("systemctl restart ccr 2>/dev/null || nohup ccr start > /tmp/ccr.log 2>&1 &", timeout=10)
             results.append("CCR 已启动")
     # 5. 重启 gateway
     if is_mac:
