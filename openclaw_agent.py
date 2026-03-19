@@ -1973,11 +1973,10 @@ async def acpx_logs(limit: int = 20):
                             t = update.get("content", {}).get("text", "")
                             if t:
                                 text_chunks.append(t)
-                        elif su == "tool_use":
-                            tools.append({"name": update.get("name", ""), "input": str(update.get("input", ""))[:200]})
-                        elif su == "tool_result":
-                            if update.get("isError"):
-                                errors.append(str(update.get("content", ""))[:200])
+                        elif su == "tool_call":
+                            tools.append({"name": update.get("title", update.get("_meta", {}).get("claudeCode", {}).get("toolName", "")), "input": str(update.get("rawInput", ""))[:200]})
+                        elif su == "tool_call_update" and update.get("status") == "failed":
+                            errors.append(str(update.get("rawOutput", ""))[:200])
                         elif su == "usage_update":
                             token_usage = update.get("usage", {})
                     # result 里的 stopReason
@@ -1992,10 +1991,10 @@ async def acpx_logs(limit: int = 20):
         entries.append({
             "id": sid,
             "name": meta.get("name", ""),
-            "agent": meta.get("agent", ""),
+            "agent": meta.get("agent_command", meta.get("agent", "")),
             "cwd": meta.get("cwd", ""),
-            "state": meta.get("state", ""),
-            "created": meta.get("createdAt", ""),
+            "state": "closed" if meta.get("closed_at") else "active",
+            "created": meta.get("created_at", meta.get("createdAt", "")),
             "mtime": datetime.fromtimestamp(f.stat().st_mtime).isoformat(),
             "text": full_text[:500],
             "text_len": len(full_text),
