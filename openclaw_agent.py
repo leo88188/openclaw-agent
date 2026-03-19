@@ -1323,7 +1323,8 @@ async def acp_ccr_stop():
     return {"ok": stopped, "msg": "已停止" if stopped else "端口 3456 仍在监听"}
 
 def _persist_ccr_env():
-    """将 CCR 环境变量持久化到 ~/.openclaw/.env 和 ~/.profile，并写入内存"""
+    """将 CCR 环境变量持久化到所有需要的位置，并写入内存"""
+    import platform
     pairs = {"ANTHROPIC_BASE_URL": "http://localhost:3456", "ANTHROPIC_API_KEY": "sk-ant-placeholder-for-ccr"}
     # 写内存
     for k, v in pairs.items():
@@ -1353,6 +1354,25 @@ def _persist_ccr_env():
                 f.write("\n# Claude Code Router\n" + "\n".join(lines) + "\n")
     except Exception:
         pass
+    # macOS: 注入 gateway plist
+    if platform.system() == "Darwin":
+        plist_path = os.path.expanduser("~/Library/LaunchAgents/ai.openclaw.gateway.plist")
+        if os.path.isfile(plist_path):
+            try:
+                import plistlib
+                with open(plist_path, "rb") as f:
+                    plist = plistlib.load(f)
+                env_dict = plist.setdefault("EnvironmentVariables", {})
+                plist_changed = False
+                for k, v in pairs.items():
+                    if env_dict.get(k) != v:
+                        env_dict[k] = v
+                        plist_changed = True
+                if plist_changed:
+                    with open(plist_path, "wb") as f:
+                        plistlib.dump(plist, f)
+            except Exception:
+                pass
 
 
 async def _ensure_ccr_service():
@@ -1426,6 +1446,9 @@ async def acp_ccr_start(req: dict = {}):
             _persist_ccr_env()
             os.environ["ANTHROPIC_BASE_URL"] = "http://localhost:3456"
             _ENV["ANTHROPIC_BASE_URL"] = "http://localhost:3456"
+            # 重启 gateway 让环境变量生效
+            if is_mac:
+                await run_cmd("launchctl kickstart -k gui/$(id -u)/ai.openclaw.gateway 2>/dev/null || true", timeout=10)
             return {"ok": True, "msg": "CCR 服务已启动 (端口 3456)"}
     # 失败时读取日志
     log = await run_cmd(f"tail -30 {log_path} 2>/dev/null || echo '日志文件不存在'", timeout=3)
