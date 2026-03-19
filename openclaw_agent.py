@@ -1442,7 +1442,7 @@ async def _safe_write_config(cfg: dict) -> tuple[bool, str]:
 
 
 async def _ensure_acpx_config():
-    """确保 openclaw.json 里 acpx 插件的 command 和 expectedVersion 已设置"""
+    """确保 openclaw.json 里 acpx 插件的 command/expectedVersion/queueOwnerTtlSeconds 已设置"""
     acpx_path = await _find_acpx()
     if not acpx_path:
         return False
@@ -1450,10 +1450,15 @@ async def _ensure_acpx_config():
         with open(CONFIG_PATH) as f:
             cfg = json.load(f)
         pc = cfg.setdefault("plugins", {}).setdefault("entries", {}).setdefault("acpx", {}).setdefault("config", {})
-        if pc.get("command") == acpx_path and pc.get("expectedVersion") == "any":
+        changed = False
+        if pc.get("command") != acpx_path:
+            pc["command"] = acpx_path; changed = True
+        if pc.get("expectedVersion") != "any":
+            pc["expectedVersion"] = "any"; changed = True
+        if pc.get("queueOwnerTtlSeconds") != 0:
+            pc["queueOwnerTtlSeconds"] = 0; changed = True
+        if not changed:
             return False
-        pc["command"] = acpx_path
-        pc["expectedVersion"] = "any"
         ok, err = await _safe_write_config(cfg)
         if not ok:
             logger.warning("acpx config validate 失败，已回滚: %s", err)
@@ -1717,8 +1722,10 @@ async def acp_health():
     # 6. acpx 插件 command 配置（避免 pnpm 深层路径问题）
     acpx_cmd = acpx_plugin_cfg.get("command", "")
     acpx_ver = acpx_plugin_cfg.get("expectedVersion", "")
-    cmd_ok = bool(acpx_cmd) and acpx_ver == "any"
-    checks.append({"name": "acpx 插件路径", "ok": cmd_ok, "detail": f"command={acpx_cmd or '未设置'}, expectedVersion={acpx_ver or '未设置'}"})
+    acpx_ttl = acpx_plugin_cfg.get("queueOwnerTtlSeconds")
+    cmd_ok = bool(acpx_cmd) and acpx_ver == "any" and acpx_ttl == 0
+    detail = f"command={acpx_cmd or '未设置'}, expectedVersion={acpx_ver or '未设置'}, ttl={acpx_ttl if acpx_ttl is not None else '未设置(默认0.1s)'}"
+    checks.append({"name": "acpx 插件路径", "ok": cmd_ok, "detail": detail})
     # all_ok 不计 optional 项
     all_ok = all(c["ok"] for c in checks if not c.get("optional"))
     return {"checks": checks, "all_ok": all_ok}
@@ -1777,9 +1784,10 @@ async def acp_fix():
         acpx_path = await _find_acpx()
         if acpx_path:
             pc = cfg.setdefault("plugins", {}).setdefault("entries", {}).setdefault("acpx", {}).setdefault("config", {})
-            if pc.get("command") != acpx_path or pc.get("expectedVersion") != "any":
+            if pc.get("command") != acpx_path or pc.get("expectedVersion") != "any" or pc.get("queueOwnerTtlSeconds") != 0:
                 pc["command"] = acpx_path
                 pc["expectedVersion"] = "any"
+                pc["queueOwnerTtlSeconds"] = 0
                 changed = True
                 results.append(f"acpx 插件路径 → {acpx_path}")
         if changed:
