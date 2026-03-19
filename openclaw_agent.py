@@ -1036,6 +1036,24 @@ async def acp_install(req: dict):
     return result
 
 
+@app.post("/acp/install-brew", dependencies=[auth])
+async def acp_install_brew():
+    """安装 Homebrew（仅 macOS）"""
+    import platform
+    if platform.system() != "Darwin":
+        return {"ok": True, "msg": "非 macOS，无需安装 Homebrew", "skipped": True}
+    chk = await run_cmd("command -v brew", timeout=3)
+    if chk.get("ok"):
+        ver = await run_cmd("brew --version 2>/dev/null | head -1", timeout=5)
+        return {"ok": True, "msg": f"Homebrew 已安装: {ver.get('stdout', '').strip()}", "skipped": True}
+    r = await run_cmd('NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"', timeout=300)
+    # Apple Silicon 需要加 PATH
+    await run_cmd('[ -f /opt/homebrew/bin/brew ] && echo \'eval "$(/opt/homebrew/bin/brew shellenv)"\' >> ~/.zprofile && eval "$(/opt/homebrew/bin/brew shellenv)"', timeout=5)
+    ver = await run_cmd("brew --version 2>/dev/null | head -1", timeout=5)
+    ok = ver.get("ok", False)
+    return {"ok": ok, "msg": ver.get("stdout", "").strip() if ok else "安装失败", "detail": r.get("stderr", "")[:500]}
+
+
 @app.post("/acp/install-node", dependencies=[auth])
 async def acp_install_node():
     """安装 Node.js 20 LTS（macOS 用 brew，Linux 用 NodeSource）"""
@@ -1046,6 +1064,9 @@ async def acp_install_node():
     if chk.get("ok") and chk.get("stdout", "").strip():
         return {"ok": True, "msg": f"Node.js 已安装: {chk['stdout'].strip()}", "skipped": True}
     if is_mac:
+        # 确保 brew 存在
+        if not (await run_cmd("command -v brew", timeout=3)).get("ok"):
+            return {"ok": False, "msg": "macOS 需要先安装 Homebrew，请调用 /acp/install-brew"}
         r = await run_cmd("brew install node@20 && brew link node@20 --force --overwrite 2>/dev/null || true", timeout=180)
     else:
         # 检测包管理器
@@ -1075,6 +1096,8 @@ async def acp_install_git():
     if chk.get("ok") and chk.get("stdout", "").strip():
         return {"ok": True, "msg": f"Git 已安装: {chk['stdout'].strip()}", "skipped": True}
     if is_mac:
+        if not (await run_cmd("command -v brew", timeout=3)).get("ok"):
+            return {"ok": False, "msg": "macOS 需要先安装 Homebrew，请调用 /acp/install-brew"}
         r = await run_cmd("brew install git", timeout=120)
     else:
         has_apt = (await run_cmd("command -v apt-get", timeout=3)).get("ok")
