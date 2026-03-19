@@ -1090,6 +1090,9 @@ async def acp_install(req: dict):
     result = await run_cmd(cmd, timeout=120)
     if mirror_used:
         result["mirror"] = mirror_used
+    # 安装涉及 acpx 的工具后，自动设置 acpx 插件路径
+    if name in ("acpx", "claude", "ccr") and result.get("ok"):
+        await _ensure_acpx_config()
     # 安装 claude/ccr 后自动确保 CCR systemd 守护 + 环境变量持久化
     if name in ("claude", "ccr") and result.get("ok"):
         if os.path.isfile(os.path.expanduser("~/.claude-code-router/config.json")):
@@ -1397,6 +1400,26 @@ async def _ensure_ccr_service():
     Path(svc_path).write_text(svc, encoding="utf-8")
     await run_cmd("systemctl daemon-reload && systemctl enable ccr", timeout=10)
     return True
+
+
+async def _ensure_acpx_config():
+    """确保 openclaw.json 里 acpx 插件的 command 和 expectedVersion 已设置"""
+    acpx_path = await _find_acpx()
+    if not acpx_path:
+        return False
+    try:
+        with open(CONFIG_PATH) as f:
+            cfg = json.load(f)
+        pc = cfg.setdefault("plugins", {}).setdefault("entries", {}).setdefault("acpx", {}).setdefault("config", {})
+        if pc.get("command") == acpx_path and pc.get("expectedVersion") == "any":
+            return False
+        pc["command"] = acpx_path
+        pc["expectedVersion"] = "any"
+        with open(CONFIG_PATH, "w") as f:
+            json.dump(cfg, f, indent=2, ensure_ascii=False)
+        return True
+    except Exception:
+        return False
 
 
 @app.post("/acp/ccr/start", dependencies=[auth])
