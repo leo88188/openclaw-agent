@@ -1629,35 +1629,34 @@ async def acp_fix():
             results.append(f"acpx symlink → {real_path}")
     elif not acpx_path:
         results.append("⚠ acpx 未找到，请确认 OpenClaw 已安装")
-    # 2. 环境变量持久化
-    if is_mac:
-        env_file = os.path.expanduser("~/.openclaw/.env")
-        os.makedirs(os.path.dirname(env_file), exist_ok=True)
-        existing = Path(env_file).read_text("utf-8") if os.path.exists(env_file) else ""
+    # 2. 环境变量持久化（两处都写：agent 用 .env，gateway 用 systemd override）
+    env_file = os.path.expanduser("~/.openclaw/.env")
+    os.makedirs(os.path.dirname(env_file), exist_ok=True)
+    existing = Path(env_file).read_text("utf-8") if os.path.exists(env_file) else ""
+    ef_changed = False
+    if "ANTHROPIC_API_KEY" not in existing:
+        existing += "\nANTHROPIC_API_KEY=sk-ant-placeholder-for-ccr"
+        ef_changed = True
+    if "ANTHROPIC_BASE_URL" not in existing:
+        existing += "\nANTHROPIC_BASE_URL=http://localhost:3456"
+        ef_changed = True
+    if ef_changed:
+        Path(env_file).write_text(existing.strip() + "\n", "utf-8")
+        results.append("环境变量已写入 ~/.openclaw/.env")
+    if not is_mac:
+        ovr = os.path.expanduser("~/.config/systemd/user/openclaw-gateway.service.d/override.conf")
+        os.makedirs(os.path.dirname(ovr), exist_ok=True)
+        content = Path(ovr).read_text("utf-8") if os.path.isfile(ovr) else "[Service]\n"
         changed = False
-        if "ANTHROPIC_API_KEY" not in existing:
-            existing += "\nANTHROPIC_API_KEY=sk-ant-placeholder-for-ccr"
+        if "ANTHROPIC_API_KEY" not in content:
+            content += "Environment=ANTHROPIC_API_KEY=sk-ant-placeholder-for-ccr\n"
             changed = True
-        if "ANTHROPIC_BASE_URL" not in existing:
-            existing += "\nANTHROPIC_BASE_URL=http://localhost:3456"
+        if "ANTHROPIC_BASE_URL" not in content:
+            content += "Environment=ANTHROPIC_BASE_URL=http://localhost:3456\n"
             changed = True
         if changed:
-            Path(env_file).write_text(existing.strip() + "\n", "utf-8")
-            results.append("环境变量已写入 ~/.openclaw/.env")
-    else:
-        ovr = os.path.expanduser("~/.config/systemd/user/openclaw-gateway.service.d/override.conf")
-        if os.path.isfile(ovr):
-            content = Path(ovr).read_text("utf-8")
-            changed = False
-            if "ANTHROPIC_API_KEY" not in content:
-                content += "\nEnvironment=ANTHROPIC_API_KEY=sk-ant-placeholder-for-ccr"
-                changed = True
-            if "ANTHROPIC_BASE_URL" not in content:
-                content += "\nEnvironment=ANTHROPIC_BASE_URL=http://localhost:3456"
-                changed = True
-            if changed:
-                Path(ovr).write_text(content, "utf-8")
-                results.append("环境变量已写入 systemd override")
+            Path(ovr).write_text(content, "utf-8")
+            results.append("环境变量已写入 systemd override")
     # 3. ACP allowedAgents + acpx 插件 command
     try:
         with open(CONFIG_PATH) as f:
