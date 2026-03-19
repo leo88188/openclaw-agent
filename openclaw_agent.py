@@ -1640,10 +1640,16 @@ async def acp_health():
     base_url_ok, api_key_ok = False, False
     if gw_pid:
         if platform.system() == "Darwin":
-            env_r = await run_cmd(f"ps eww -p {gw_pid} 2>/dev/null", timeout=3)
+            # macOS: ps eww 不可靠，检查 plist + .env
+            env_out = ""
+            for fp in [os.path.expanduser("~/Library/LaunchAgents/ai.openclaw.gateway.plist"),
+                        os.path.expanduser("~/.openclaw/.env")]:
+                if os.path.isfile(fp):
+                    try: env_out += Path(fp).read_text("utf-8")
+                    except Exception: pass
         else:
             env_r = await run_cmd(f"cat /proc/{gw_pid}/environ 2>/dev/null | tr '\\0' '\\n'", timeout=3)
-        env_out = env_r.get("stdout", "")
+            env_out = env_r.get("stdout", "")
         base_url_ok = "ANTHROPIC_BASE_URL" in env_out
         api_key_ok = "ANTHROPIC_API_KEY" in env_out
     checks.append({"name": "ANTHROPIC_BASE_URL", "ok": base_url_ok, "detail": "localhost:3456" if base_url_ok else "未设置"})
