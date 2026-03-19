@@ -1939,6 +1939,74 @@ async def acpx_sessions(req: dict):
     return {"ok": r.get("ok", False), "output": r.get("stdout", "").strip()[:3000], "action": action, "client": client, "name": name}
 
 
+@app.get("/acp/acpx/logs", dependencies=[auth])
+async def acpx_logs(limit: int = 20):
+    """读取 acpx session 日志，返回最近的 session 列表及内容摘要"""
+    sessions_dir = os.path.expanduser("~/.acpx/sessions")
+    if not os.path.isdir(sessions_dir):
+        return {"ok": False, "error": "~/.acpx/sessions 不存在"}
+    # 收集所有 session json 元数据 + stream 文件
+    entries = []
+    for f in sorted(Path(sessions_dir).glob("*.json"), key=lambda p: p.stat().st_mtime, reverse=True)[:limit]:
+        sid = f.stem
+        try:
+            meta = json.loads(f.read_text("utf-8"))
+        except Exception:
+            meta = {}
+        stream_file = f.with_suffix(".stream.ndjson")
+        text_chunks, tools, errors = [], [], []
+        token_usage = {}
+        if stream_file.exists():
+            try:
+                for line in stream_file.read_text("utf-8").splitlines():
+                    if not line.strip():
+                        continue
+                    try:
+                        d = json.loads(line)
+                    except Exception:
+                        continue
+                    params = d.get("params", {})
+                    update = params.get("update", {})
+                    if isinstance(update, dict):
+                        su = update.get("sessionUpdate", "")
+                        if su == "agent_message_chunk":
+                            t = update.get("content", {}).get("text", "")
+                            if t:
+                                text_chunks.append(t)
+                        elif su == "tool_use":
+                            tools.append({"name": update.get("name", ""), "input": str(update.get("input", ""))[:200]})
+                        elif su == "tool_result":
+                            if update.get("isError"):
+                                errors.append(str(update.get("content", ""))[:200])
+                        elif su == "usage_update":
+                            token_usage = update.get("usage", {})
+                    # result 里的 stopReason
+                    result = d.get("result", {})
+                    if result.get("stopReason"):
+                        meta["stopReason"] = result["stopReason"]
+                        if result.get("usage"):
+                            token_usage = result["usage"]
+            except Exception:
+                pass
+        full_text = "".join(text_chunks)
+        entries.append({
+            "id": sid,
+            "name": meta.get("name", ""),
+            "agent": meta.get("agent", ""),
+            "cwd": meta.get("cwd", ""),
+            "state": meta.get("state", ""),
+            "created": meta.get("createdAt", ""),
+            "mtime": datetime.fromtimestamp(f.stat().st_mtime).isoformat(),
+            "text": full_text[:500],
+            "text_len": len(full_text),
+            "tools": tools[:20],
+            "errors": errors[:10],
+            "usage": token_usage,
+            "stopReason": meta.get("stopReason", ""),
+        })
+    return {"ok": True, "sessions": entries}
+
+
 def _find_last_json(text: str) -> dict:
     """从末尾反向查找包含 payloads/meta/sessions 的最大 JSON"""
     rpos = len(text) - 1
