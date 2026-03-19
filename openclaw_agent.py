@@ -1482,11 +1482,18 @@ async def acp_health():
     """ACP 链路健康检查"""
     import platform
     checks = []
-    # 1. acpx CLI
+    # 1. acpx CLI + 版本对比
     acpx_path = await _find_acpx()
     if acpx_path:
         ver_r = await run_cmd(f"'{acpx_path}' --version 2>/dev/null", timeout=5)
-        checks.append({"name": "acpx CLI", "ok": True, "detail": f"已安装 ({ver_r.get('stdout', '').strip()[:50]})"})
+        local_ver = ver_r.get("stdout", "").strip()[:50]
+        latest_r = await run_cmd("npm view acpx version 2>/dev/null", timeout=10)
+        latest_ver = latest_r.get("stdout", "").strip()[:50]
+        upgradable = bool(latest_ver) and latest_ver != local_ver
+        detail = f"已安装 ({local_ver})"
+        if upgradable:
+            detail += f" → 最新 {latest_ver}"
+        checks.append({"name": "acpx CLI", "ok": True, "detail": detail, "upgradable": upgradable, "local_version": local_ver, "latest_version": latest_ver})
     else:
         checks.append({"name": "acpx CLI", "ok": False, "detail": "未找到 acpx"})
     # 2. CCR 服务（仅当配置存在时检查，非必须项）
@@ -1623,6 +1630,38 @@ async def acp_fix():
         await run_cmd("XDG_RUNTIME_DIR=/run/user/$(id -u) systemctl --user daemon-reload; XDG_RUNTIME_DIR=/run/user/$(id -u) systemctl --user restart openclaw-gateway", timeout=10)
     results.append("Gateway 已重启")
     return {"ok": True, "results": results}
+
+
+@app.post("/acp/upgrade-acpx", dependencies=[auth])
+async def acp_upgrade_acpx():
+    """更新 OpenClaw（连带更新内嵌 acpx）"""
+    # 检测包管理器
+    pnpm_r = await run_cmd("command -v pnpm && pnpm list -g openclaw 2>/dev/null | grep openclaw", timeout=10)
+    if "openclaw" in pnpm_r.get("stdout", ""):
+        cmd = "pnpm add -g openclaw@latest"
+    else:
+        cmd = "npm install -g openclaw@latest"
+    # 镜像检测
+    mirror = ""
+    if "npm" in cmd:
+        reg = await run_cmd("npm config get registry 2>/dev/null", timeout=5)
+        if "npmmirror" not in reg.get("stdout", "") and not await _can_reach("registry.npmjs.org"):
+            await run_cmd("npm config set registry https://registry.npmmirror.com", timeout=5)
+            mirror = "npmmirror"
+    result = await run_cmd(cmd, timeout=180)
+    # 更新后重建 symlink
+    acpx_path = await _find_acpx()
+    if acpx_path and "/usr/local/bin" not in acpx_path:
+        real_r = await run_cmd(f"readlink -f '{acpx_path}' 2>/dev/null || python3 -c \"import os;print(os.path.realpath('{acpx_path}'))\"", timeout=3)
+        real = real_r.get("stdout", "").strip()
+        if real and os.path.isfile(real):
+            await run_cmd(f"ln -sf '{real}' /usr/local/bin/acpx 2>/dev/null || sudo ln -sf '{real}' /usr/local/bin/acpx", timeout=5)
+    # 新版本号
+    ver_r = await run_cmd("acpx --version 2>/dev/null", timeout=5)
+    result["new_version"] = ver_r.get("stdout", "").strip()[:50]
+    if mirror:
+        result["mirror"] = mirror
+    return result
 
 
 _ACPX_CLIENTS = {"codex", "claude", "gemini", "opencode", "pi"}
