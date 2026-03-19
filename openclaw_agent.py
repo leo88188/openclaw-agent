@@ -1002,6 +1002,13 @@ async def acp_detect():
             rv = await run_cmd(f"{name} --version 2>/dev/null || echo unknown", timeout=5)
             ver = rv.get("stdout", "").strip()[:80]
         results[name] = {"installed": bool(path), "path": path, "version": ver, **meta}
+    # acpx CLI
+    acpx_path = await _find_acpx()
+    acpx_ver = ""
+    if acpx_path:
+        rv = await run_cmd(f"'{acpx_path}' --version 2>/dev/null", timeout=5)
+        acpx_ver = rv.get("stdout", "").strip()[:80]
+    results["_acpx_cli"] = {"installed": bool(acpx_path), "path": acpx_path, "version": acpx_ver}
     # acpx 插件
     acpx = await run_cmd("command -v openclaw >/dev/null 2>&1 && openclaw plugins list 2>/dev/null | grep -i acpx || echo ''", timeout=10)
     results["_acpx_plugin"] = {"installed": "acpx" in acpx.get("stdout", ""), "raw": acpx.get("stdout", "").strip()[:200]}
@@ -1411,19 +1418,42 @@ async def sessions_close(req: dict):
         return {"ok": False, "error": str(e)}
 
 
+async def _find_acpx() -> str:
+    """查找 acpx 可执行文件路径，优先全局 PATH，再找 OpenClaw 内置路径"""
+    r = await run_cmd("command -v acpx 2>/dev/null", timeout=3)
+    if r.get("ok") and r.get("stdout", "").strip():
+        return r["stdout"].strip()
+    # OpenClaw 内置路径（macOS brew / Linux npm global）
+    candidates = [
+        "/opt/homebrew/lib/node_modules/openclaw/extensions/acpx/node_modules/.bin/acpx",
+        "/usr/local/lib/node_modules/openclaw/extensions/acpx/node_modules/.bin/acpx",
+        "/usr/lib/node_modules/openclaw/extensions/acpx/node_modules/.bin/acpx",
+    ]
+    for p in candidates:
+        if os.path.isfile(p):
+            return p
+    # 兜底：find
+    r2 = await run_cmd("find /opt/homebrew /usr/local/lib /usr/lib -path '*/openclaw/extensions/acpx/node_modules/.bin/acpx' 2>/dev/null | head -1", timeout=5)
+    return r2.get("stdout", "").strip()
+
+
 @app.get("/acp/health", dependencies=[auth])
 async def acp_health():
     """ACP 链路健康检查"""
     import platform
     checks = []
-    # 1. acpx
-    acpx_r = await run_cmd("command -v acpx && acpx --version 2>/dev/null", timeout=5)
-    acpx_ok = acpx_r.get("ok", False)
-    checks.append({"name": "acpx", "ok": acpx_ok, "detail": acpx_r.get("stdout", "")[:100]})
-    # 2. CCR
+    # 1. acpx CLI
+    acpx_path = await _find_acpx()
+    if acpx_path:
+        ver_r = await run_cmd(f"'{acpx_path}' --version 2>/dev/null", timeout=5)
+        checks.append({"name": "acpx CLI", "ok": True, "detail": f"{acpx_path} ({ver_r.get('stdout', '').strip()[:50]})"})
+    else:
+        checks.append({"name": "acpx CLI", "ok": False, "detail": "未找到 acpx"})
+    # 2. CCR 服务（仅当配置存在时检查，非必须项）
+    ccr_cfg_exists = os.path.isfile(os.path.expanduser("~/.claude-code-router/config.json"))
     ccr_r = await run_cmd("curl -s --connect-timeout 3 http://localhost:3456/health", timeout=5)
-    ccr_ok = "ok" in ccr_r.get("stdout", "").lower() or ccr_r.get("ok", False)
-    checks.append({"name": "CCR 服务", "ok": ccr_ok, "detail": ccr_r.get("stdout", "")[:100]})
+    ccr_ok = "ok" in ccr_r.get("stdout", "").lower()
+    checks.append({"name": "CCR 服务", "ok": ccr_ok or not ccr_cfg_exists, "detail": ccr_r.get("stdout", "").strip()[:100] if ccr_cfg_exists else "未配置（非必须）", "optional": not ccr_cfg_exists})
     # 3. Gateway 环境变量
     gw_pid_r = await run_cmd("pgrep -f 'openclaw.*gateway' | head -1", timeout=3)
     gw_pid = gw_pid_r.get("stdout", "").strip()
@@ -1451,7 +1481,9 @@ async def acp_health():
         pass
     acp_ok = acp_cfg.get("enabled", False) and acp_cfg.get("backend") == "acpx"
     checks.append({"name": "ACP 配置", "ok": acp_ok, "detail": json.dumps(acp_cfg)[:200] if acp_cfg else "未配置"})
-    return {"checks": checks, "all_ok": all(c["ok"] for c in checks)}
+    # all_ok 不计 optional 项
+    all_ok = all(c["ok"] for c in checks if not c.get("optional"))
+    return {"checks": checks, "all_ok": all_ok}
 
 
 @app.post("/acp/fix", dependencies=[auth])
@@ -1460,18 +1492,20 @@ async def acp_fix():
     import platform
     is_mac = platform.system() == "Darwin"
     results = []
-    # 1. acpx symlink
-    find_r = await run_cmd("find $(pnpm root -g 2>/dev/null || echo '') -path '*/openclaw/extensions/acpx/node_modules/.bin/acpx' 2>/dev/null | head -1", timeout=10)
-    acpx_bin = find_r.get("stdout", "").strip()
-    if acpx_bin:
+    # 1. acpx symlink — 从 OpenClaw 内置路径查找
+    acpx_path = await _find_acpx()
+    if acpx_path and "/usr/local/bin" not in acpx_path:
+        # 解析真实路径
         if is_mac:
-            real_r = await run_cmd(f"python3 -c \"import os,sys;print(os.path.realpath(sys.argv[1]))\" '{acpx_bin}'", timeout=3)
+            real_r = await run_cmd(f"python3 -c \"import os;print(os.path.realpath('{acpx_path}'))\"", timeout=3)
         else:
-            real_r = await run_cmd(f"readlink -f '{acpx_bin}'", timeout=3)
+            real_r = await run_cmd(f"readlink -f '{acpx_path}'", timeout=3)
         real_path = real_r.get("stdout", "").strip()
-        if real_path:
-            await run_cmd(f"ln -sf '{real_path}' /usr/local/bin/acpx")
-            results.append("acpx symlink 已更新")
+        if real_path and os.path.isfile(real_path):
+            await run_cmd(f"sudo ln -sf '{real_path}' /usr/local/bin/acpx 2>/dev/null || ln -sf '{real_path}' /usr/local/bin/acpx", timeout=5)
+            results.append(f"acpx symlink → {real_path}")
+    elif not acpx_path:
+        results.append("⚠ acpx 未找到，请确认 OpenClaw 已安装")
     # 2. 环境变量持久化
     if is_mac:
         env_file = os.path.expanduser("~/.openclaw/.env")
@@ -1507,7 +1541,7 @@ async def acp_fix():
             cfg = json.load(f)
         acp = cfg.get("acp", {})
         aa = set(acp.get("allowedAgents", []))
-        need = {"claude", "claude-code"}
+        need = {"claude", "claude-code", "codex", "gemini"}
         if not need.issubset(aa):
             acp["allowedAgents"] = sorted(aa | need)
             cfg["acp"] = acp
@@ -1516,11 +1550,11 @@ async def acp_fix():
             results.append("allowedAgents 已修复")
     except Exception:
         pass
-    # 4. CCR
-    ccr_r = await run_cmd("curl -s --connect-timeout 2 http://localhost:3456/health", timeout=3)
-    if "ok" not in ccr_r.get("stdout", "").lower():
-        ccr_cfg = os.path.expanduser("~/.claude-code-router/config.json")
-        if os.path.isfile(ccr_cfg):
+    # 4. CCR（仅当配置存在时启动）
+    ccr_cfg = os.path.expanduser("~/.claude-code-router/config.json")
+    if os.path.isfile(ccr_cfg):
+        ccr_r = await run_cmd("curl -s --connect-timeout 2 http://localhost:3456/health", timeout=3)
+        if "ok" not in ccr_r.get("stdout", "").lower():
             await run_cmd("nohup ccr start > /tmp/ccr.log 2>&1 &", timeout=3)
             results.append("CCR 已启动")
     # 5. 重启 gateway
@@ -1530,6 +1564,81 @@ async def acp_fix():
         await run_cmd("XDG_RUNTIME_DIR=/run/user/$(id -u) systemctl --user daemon-reload; XDG_RUNTIME_DIR=/run/user/$(id -u) systemctl --user restart openclaw-gateway", timeout=10)
     results.append("Gateway 已重启")
     return {"ok": True, "results": results}
+
+
+_ACPX_CLIENTS = {"codex", "claude", "gemini", "opencode", "pi"}
+
+
+@app.post("/acp/acpx/exec", dependencies=[auth])
+async def acpx_exec(req: dict):
+    """通过 acpx 调用外部编程助手（codex/claude/gemini 等）"""
+    client = req.get("client", "").strip()
+    task = req.get("task", "").strip()
+    if client not in _ACPX_CLIENTS:
+        raise HTTPException(400, f"不支持的客户端: {client}，可选: {', '.join(sorted(_ACPX_CLIENTS))}")
+    if not task:
+        raise HTTPException(400, "task 不能为空")
+    acpx_path = await _find_acpx()
+    if not acpx_path:
+        return {"ok": False, "error": "acpx 未找到，请先运行 ACP 修复"}
+    session = req.get("session", "").strip()
+    cwd = req.get("cwd", "").strip()
+    approve = req.get("approve", "all")  # all | reads | deny
+    timeout_sec = min(int(req.get("timeout", 120)), 300)
+    safe_task = task.replace("\\", "\\\\").replace('"', '\\"').replace("$", "\\$").replace("`", "\\`")
+    # 构建命令
+    approve_flag = {"all": "--approve-all", "reads": "--approve-reads", "deny": "--deny-all"}.get(approve, "--approve-all")
+    cmd = f"'{acpx_path}' {approve_flag} --timeout {timeout_sec}"
+    if session:
+        cmd += f" {client} -s {session}"
+    else:
+        cmd += f" {client} exec"
+    if cwd:
+        cmd += f" --cwd '{cwd}'"
+    cmd += f' "{safe_task}" 2>&1'
+    result = await run_cmd(cmd, timeout=timeout_sec + 15)
+    stdout = result.get("stdout", "")
+    # 过滤 acpx 元信息，提取实际回复
+    lines = stdout.split("\n")
+    reply_lines = [l for l in lines if not l.startswith("[client]") and not l.startswith("[tool]") and not l.startswith("[thinking]") and l.strip() != "[done] end_turn"]
+    reply = "\n".join(reply_lines).strip()
+    return {
+        "ok": result.get("ok", False),
+        "reply": reply,
+        "raw": stdout[:5000],
+        "client": client,
+        "session": session,
+    }
+
+
+@app.post("/acp/acpx/sessions", dependencies=[auth])
+async def acpx_sessions(req: dict):
+    """管理 acpx 会话（list/new/close/ensure）"""
+    client = req.get("client", "").strip()
+    action = req.get("action", "list").strip()  # list | new | close | ensure
+    if client not in _ACPX_CLIENTS:
+        raise HTTPException(400, f"不支持的客户端: {client}")
+    acpx_path = await _find_acpx()
+    if not acpx_path:
+        return {"ok": False, "error": "acpx 未找到"}
+    name = req.get("name", "").strip()
+    if action == "list":
+        r = await run_cmd(f"'{acpx_path}' {client} sessions 2>&1", timeout=15)
+    elif action == "new":
+        if not name:
+            name = f"oc-{client}-{int(datetime.now().timestamp())}"
+        r = await run_cmd(f"'{acpx_path}' {client} sessions new --name {name} 2>&1", timeout=15)
+    elif action == "close":
+        if not name:
+            raise HTTPException(400, "关闭会话需要 name")
+        r = await run_cmd(f"'{acpx_path}' {client} sessions close {name} 2>&1", timeout=15)
+    elif action == "ensure":
+        if not name:
+            raise HTTPException(400, "ensure 需要 name")
+        r = await run_cmd(f"'{acpx_path}' {client} sessions ensure --name {name} 2>&1", timeout=15)
+    else:
+        raise HTTPException(400, f"不支持的操作: {action}")
+    return {"ok": r.get("ok", False), "output": r.get("stdout", "").strip()[:3000], "action": action, "client": client, "name": name}
 
 
 def _find_last_json(text: str) -> dict:
