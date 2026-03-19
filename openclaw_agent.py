@@ -1090,11 +1090,28 @@ async def acp_install(req: dict):
     result = await run_cmd(cmd, timeout=120)
     if mirror_used:
         result["mirror"] = mirror_used
-    # 安装 claude/ccr 后自动确保 CCR systemd 守护
+    # 安装 claude/ccr 后自动确保 CCR systemd 守护 + 环境变量持久化
     if name in ("claude", "ccr") and result.get("ok"):
         if os.path.isfile(os.path.expanduser("~/.claude-code-router/config.json")):
             if await _ensure_ccr_service():
                 result["ccr_service"] = "已创建 systemd 守护"
+        _persist_ccr_env()
+        # Linux: systemd override
+        import platform
+        if platform.system() != "Darwin":
+            ovr = os.path.expanduser("~/.config/systemd/user/openclaw-gateway.service.d/override.conf")
+            os.makedirs(os.path.dirname(ovr), exist_ok=True)
+            content = Path(ovr).read_text("utf-8") if os.path.isfile(ovr) else "[Service]\n"
+            changed = False
+            if "ANTHROPIC_API_KEY" not in content:
+                content += "Environment=ANTHROPIC_API_KEY=sk-ant-placeholder-for-ccr\n"
+                changed = True
+            if "ANTHROPIC_BASE_URL" not in content:
+                content += "Environment=ANTHROPIC_BASE_URL=http://localhost:3456\n"
+                changed = True
+            if changed:
+                Path(ovr).write_text(content, "utf-8")
+                result["env_override"] = "已写入 systemd override"
     return result
 
 
