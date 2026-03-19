@@ -1343,6 +1343,13 @@ async def acp_ccr_stop():
         _ENV.pop("ANTHROPIC_BASE_URL", None)
     return {"ok": stopped, "msg": "已停止" if stopped else "端口 3456 仍在监听"}
 
+def _is_pid_alive(pid: int) -> bool:
+    try:
+        os.kill(pid, 0)
+        return True
+    except (OSError, TypeError):
+        return False
+
 def _persist_ccr_env():
     """将 CCR 环境变量持久化到所有需要的位置，并写入内存"""
     import platform
@@ -2019,7 +2026,18 @@ async def acpx_logs(limit: int = 20):
             "prompts": prompts[:5],
             "stopReason": meta.get("stopReason", ""),
         })
-    return {"ok": True, "sessions": entries}
+    # queue owner 信息
+    queues = []
+    queues_dir = os.path.expanduser("~/.acpx/queues")
+    if os.path.isdir(queues_dir):
+        for lf in Path(queues_dir).glob("*.lock"):
+            try:
+                q = json.loads(lf.read_text("utf-8"))
+                q["alive"] = _is_pid_alive(q.get("pid", 0))
+                queues.append(q)
+            except Exception:
+                pass
+    return {"ok": True, "sessions": entries, "queues": queues}
 
 
 def _find_last_json(text: str) -> dict:
