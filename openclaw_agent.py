@@ -173,7 +173,10 @@ def _resolve_workspace(agent_id: str = "main") -> str:
     return default_ws
 
 
-# ── 健康检查（无需鉴权）────────────────────────────────
+# ── 鉴权 ─────────────────────────────────────────────────
+auth = Depends(verify_auth)
+
+
 @app.get("/health", dependencies=[auth])
 async def health():
     # 检测 openclaw 进程是否在运行
@@ -187,7 +190,6 @@ async def health():
 
 
 # ── 以下接口均需鉴权 ─────────────────────────────────────
-auth = Depends(verify_auth)
 
 
 @app.get("/config", dependencies=[auth])
