@@ -174,7 +174,7 @@ def _resolve_workspace(agent_id: str = "main") -> str:
 
 
 # ── 健康检查（无需鉴权）────────────────────────────────
-@app.get("/health")
+@app.get("/health", dependencies=[auth])
 async def health():
     # 检测 openclaw 进程是否在运行
     result = await run_cmd("pgrep -f 'openclaw' > /dev/null 2>&1 && echo running || echo stopped", timeout=5)
