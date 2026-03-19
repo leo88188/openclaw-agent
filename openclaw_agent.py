@@ -1090,7 +1090,12 @@ async def acp_install(req: dict):
         result["mirror"] = mirror_used
     # 安装涉及 acpx 的工具后，自动设置 acpx 插件路径
     if name in ("acpx", "claude", "ccr") and result.get("ok"):
-        await _ensure_acpx_config()
+        if await _ensure_acpx_config():
+            result["acpx_config"] = "已设置 acpx 插件 command + expectedVersion"
+        else:
+            # 可能 acpx 还没装，或 validate 失败
+            ap = await _find_acpx()
+            result["acpx_config"] = f"acpx 路径: {ap}" if ap else "⚠ 未找到 acpx，请先安装 acpx 插件"
     # 安装 claude/ccr 后自动确保 CCR systemd 守护 + 环境变量持久化
     if name in ("claude", "ccr") and result.get("ok"):
         if os.path.isfile(os.path.expanduser("~/.claude-code-router/config.json")):
@@ -1617,6 +1622,11 @@ async def _find_acpx() -> str:
         "/usr/local/lib/node_modules/openclaw/extensions/acpx/node_modules/.bin/acpx",
         "/usr/lib/node_modules/openclaw/extensions/acpx/node_modules/.bin/acpx",
     ]
+    # pnpm 全局路径
+    pnpm_r = await run_cmd("pnpm root -g 2>/dev/null", timeout=3)
+    pg = pnpm_r.get("stdout", "").strip()
+    if pg:
+        candidates.insert(0, os.path.join(pg, "openclaw/extensions/acpx/node_modules/.bin/acpx"))
     for p in candidates:
         if os.path.isfile(p):
             return p
