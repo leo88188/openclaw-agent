@@ -1693,20 +1693,8 @@ async def acp_fix():
             results.append(f"acpx symlink → {real_path}")
     elif not acpx_path:
         results.append("⚠ acpx 未找到，请确认 OpenClaw 已安装")
-    # 2. 环境变量持久化（两处都写：agent 用 .env，gateway 用 systemd override）
-    env_file = os.path.expanduser("~/.openclaw/.env")
-    os.makedirs(os.path.dirname(env_file), exist_ok=True)
-    existing = Path(env_file).read_text("utf-8") if os.path.exists(env_file) else ""
-    ef_changed = False
-    if "ANTHROPIC_API_KEY" not in existing:
-        existing += "\nANTHROPIC_API_KEY=sk-ant-placeholder-for-ccr"
-        ef_changed = True
-    if "ANTHROPIC_BASE_URL" not in existing:
-        existing += "\nANTHROPIC_BASE_URL=http://localhost:3456"
-        ef_changed = True
-    if ef_changed:
-        Path(env_file).write_text(existing.strip() + "\n", "utf-8")
-        results.append("环境变量已写入 ~/.openclaw/.env")
+    # 2. 环境变量持久化
+    _persist_ccr_env()
     if not is_mac:
         ovr = os.path.expanduser("~/.config/systemd/user/openclaw-gateway.service.d/override.conf")
         os.makedirs(os.path.dirname(ovr), exist_ok=True)
