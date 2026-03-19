@@ -1085,9 +1085,24 @@ async def acp_install(req: dict):
             if not await _can_reach("registry.npmjs.org"):
                 await run_cmd("npm config set registry https://registry.npmmirror.com", timeout=5)
                 mirror_used = "npmmirror（自动设置）"
+    # 会改 openclaw.json 的命令，先备份
+    if name == "acpx" and os.path.isfile(CONFIG_PATH):
+        bak = Path(CONFIG_PATH).with_suffix(f".bak.{datetime.now().strftime('%Y%m%d%H%M%S')}")
+        bak.write_text(Path(CONFIG_PATH).read_text("utf-8"), "utf-8")
     result = await run_cmd(cmd, timeout=120)
     if mirror_used:
         result["mirror"] = mirror_used
+    # openclaw config set 类命令会直接改 openclaw.json，需要 validate
+    if name == "acpx" and result.get("ok"):
+        v = await run_cmd("openclaw config validate", timeout=10)
+        if not v.get("ok") or "error" in (v.get("stdout", "") + v.get("stderr", "")).lower():
+            # 回滚
+            bak = sorted(Path(CONFIG_PATH).parent.glob("openclaw.bak.*"), key=lambda p: p.stat().st_mtime, reverse=True)
+            if bak:
+                Path(CONFIG_PATH).write_text(bak[0].read_text("utf-8"), "utf-8")
+            result["validate"] = f"⚠ validate 失败已回滚: {v.get('stderr') or v.get('stdout','')}"
+        else:
+            result["validate"] = "openclaw.json validate 通过"
     # 安装涉及 acpx 的工具后，自动设置 acpx 插件路径
     if name in ("acpx", "claude", "ccr") and result.get("ok"):
         if await _ensure_acpx_config():
