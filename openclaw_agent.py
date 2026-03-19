@@ -1513,14 +1513,21 @@ async def acp_health():
     plugin_ok = "acpx" in plugin_r.get("stdout", "").lower() and "loaded" in plugin_r.get("stdout", "").lower()
     checks.append({"name": "acpx 插件", "ok": plugin_ok, "detail": plugin_r.get("stdout", "").strip()[:150]})
     # 5. ACP 配置
-    acp_cfg = {}
+    acp_cfg, acpx_plugin_cfg = {}, {}
     try:
         with open(CONFIG_PATH) as f:
-            acp_cfg = json.load(f).get("acp", {})
+            full_cfg = json.load(f)
+            acp_cfg = full_cfg.get("acp", {})
+            acpx_plugin_cfg = full_cfg.get("plugins", {}).get("entries", {}).get("acpx", {}).get("config", {})
     except Exception:
         pass
     acp_ok = acp_cfg.get("enabled", False) and acp_cfg.get("backend") == "acpx"
     checks.append({"name": "ACP 配置", "ok": acp_ok, "detail": json.dumps(acp_cfg)[:200] if acp_cfg else "未配置"})
+    # 6. acpx 插件 command 配置（避免 pnpm 深层路径问题）
+    acpx_cmd = acpx_plugin_cfg.get("command", "")
+    acpx_ver = acpx_plugin_cfg.get("expectedVersion", "")
+    cmd_ok = bool(acpx_cmd) and acpx_ver == "any"
+    checks.append({"name": "acpx 插件路径", "ok": cmd_ok, "detail": f"command={acpx_cmd or '未设置'}, expectedVersion={acpx_ver or '未设置'}"})
     # all_ok 不计 optional 项
     all_ok = all(c["ok"] for c in checks if not c.get("optional"))
     return {"checks": checks, "all_ok": all_ok}
@@ -1575,19 +1582,31 @@ async def acp_fix():
             if changed:
                 Path(ovr).write_text(content, "utf-8")
                 results.append("环境变量已写入 systemd override")
-    # 3. ACP allowedAgents
+    # 3. ACP allowedAgents + acpx 插件 command
     try:
         with open(CONFIG_PATH) as f:
             cfg = json.load(f)
+        changed = False
         acp = cfg.get("acp", {})
         aa = set(acp.get("allowedAgents", []))
         need = {"claude", "claude-code", "codex", "gemini"}
         if not need.issubset(aa):
             acp["allowedAgents"] = sorted(aa | need)
             cfg["acp"] = acp
+            changed = True
+            results.append("allowedAgents 已修复")
+        # acpx 插件 command 配置
+        acpx_path = await _find_acpx()
+        if acpx_path:
+            pc = cfg.setdefault("plugins", {}).setdefault("entries", {}).setdefault("acpx", {}).setdefault("config", {})
+            if pc.get("command") != acpx_path or pc.get("expectedVersion") != "any":
+                pc["command"] = acpx_path
+                pc["expectedVersion"] = "any"
+                changed = True
+                results.append(f"acpx 插件路径 → {acpx_path}")
+        if changed:
             with open(CONFIG_PATH, "w") as f:
                 json.dump(cfg, f, indent=2, ensure_ascii=False)
-            results.append("allowedAgents 已修复")
     except Exception:
         pass
     # 4. CCR（仅当配置存在时启动）
