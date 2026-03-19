@@ -1751,7 +1751,7 @@ async def acp_fix():
             results.append("CCR 已启动")
     # 5. 重启 gateway
     if is_mac:
-        await run_cmd("GW=$(pgrep -f 'openclaw.*gateway' | head -1); [ -n \"$GW\" ] && kill $GW; sleep 2; nohup openclaw gateway > /tmp/oc-gw.log 2>&1 &", timeout=10)
+        await run_cmd("launchctl kickstart -k gui/$(id -u)/ai.openclaw.gateway 2>/dev/null || (GW=$(pgrep -f 'openclaw.*gateway' | head -1); [ -n \"$GW\" ] && kill $GW)", timeout=10)
     else:
         await run_cmd("XDG_RUNTIME_DIR=/run/user/$(id -u) systemctl --user daemon-reload; XDG_RUNTIME_DIR=/run/user/$(id -u) systemctl --user restart openclaw-gateway", timeout=10)
     results.append("Gateway 已重启")
