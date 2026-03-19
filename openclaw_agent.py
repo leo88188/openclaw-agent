@@ -136,7 +136,7 @@ async def run_cmd(cmd: str, timeout: int = 60) -> dict:
         return {"ok": False, "code": -1, "stdout": "", "stderr": str(e)}
 
 
-async def _can_reach(host: str, timeout: int = 5) -> bool:
+async def _can_reach(host: str, timeout: int = 15) -> bool:
     """检测是否能访问指定域名（用于判断是否需要国内镜像）"""
     r = await run_cmd(f"curl -s --connect-timeout {timeout} -o /dev/null -w '%{{http_code}}' https://{host}", timeout=timeout + 3)
     return r.get("stdout", "").strip() in ("200", "301", "302")
