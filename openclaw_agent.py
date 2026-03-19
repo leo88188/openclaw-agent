@@ -1049,10 +1049,10 @@ async def acp_detect():
     gstack_dir = os.path.expanduser("~/.claude/skills/gstack")
     results["_gstack"] = {"installed": os.path.isdir(gstack_dir)}
     # CCR 服务状态
-    ccr_port = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=5)
+    ccr_port = await run_cmd("curl -s --connect-timeout 2 http://localhost:3456/health", timeout=5)
     ccr_cfg_exists = os.path.isfile(os.path.expanduser("~/.claude-code-router/config.json"))
     results["_ccr_service"] = {
-        "running": bool(ccr_port.get("stdout", "").strip()),
+        "running": "ok" in ccr_port.get("stdout", "").lower(),
         "config_exists": ccr_cfg_exists,
     }
     return results
@@ -1435,8 +1435,8 @@ async def acp_ccr_start(req: dict = {}):
 @app.get("/acp/ccr/status", dependencies=[auth])
 async def acp_ccr_status():
     """检查 CCR 服务状态"""
-    chk = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=3)
-    running = bool(chk.get("stdout", "").strip())
+    chk = await run_cmd("curl -s --connect-timeout 2 http://localhost:3456/health", timeout=5)
+    running = "ok" in chk.get("stdout", "").lower()
     cfg_path = os.path.expanduser("~/.claude-code-router/config.json")
     cfg_exists = os.path.isfile(cfg_path)
     cfg = {}
