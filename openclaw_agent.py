@@ -1417,11 +1417,11 @@ async def acp_ccr_start(req: dict = {}):
         stdout=log_f, stderr=log_f, stdin=subprocess.DEVNULL,
         start_new_session=True, env={**os.environ, **({"PATH": _ENV["PATH"]} if "PATH" in _ENV else {})}
     )
-    # 轮询端口 3456
+    # 轮询健康检查
     for i in range(15):
         await asyncio.sleep(1)
-        chk = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=3)
-        if chk.get("stdout", "").strip():
+        chk = await run_cmd("curl -s --connect-timeout 1 http://localhost:3456/health", timeout=3)
+        if "ok" in chk.get("stdout", "").lower():
             # CCR 启动成功，持久化环境变量
             _persist_ccr_env()
             os.environ["ANTHROPIC_BASE_URL"] = "http://localhost:3456"
