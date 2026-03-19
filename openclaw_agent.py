@@ -136,6 +136,12 @@ async def run_cmd(cmd: str, timeout: int = 60) -> dict:
         return {"ok": False, "code": -1, "stdout": "", "stderr": str(e)}
 
 
+async def _can_reach(host: str, timeout: int = 5) -> bool:
+    """检测是否能访问指定域名（用于判断是否需要国内镜像）"""
+    r = await run_cmd(f"curl -s --connect-timeout {timeout} -o /dev/null -w '%{{http_code}}' https://{host}", timeout=timeout + 3)
+    return r.get("stdout", "").strip() in ("200", "301", "302")
+
+
 def _resolve_workspace(agent_id: str = "main") -> str:
     default_ws = os.path.join(OPENCLAW_HOME, "workspace")
     try:
@@ -1027,18 +1033,29 @@ _ACP_INSTALL = {
 
 @app.post("/acp/install", dependencies=[auth])
 async def acp_install(req: dict):
-    """安装 ACP 工具"""
+    """安装 ACP 工具，npm 安装前自动检测镜像"""
     name = req.get("tool", "")
     if name not in _ACP_INSTALL:
         raise HTTPException(400, f"不支持安装: {name}")
     cmd = _ACP_INSTALL[name]
+    mirror_used = ""
+    # npm install 类命令：先确保镜像可用
+    if "npm install" in cmd:
+        reg = await run_cmd("npm config get registry 2>/dev/null", timeout=5)
+        cur_reg = reg.get("stdout", "").strip()
+        if "npmmirror" not in cur_reg and "mirrors" not in cur_reg:
+            if not await _can_reach("registry.npmjs.org"):
+                await run_cmd("npm config set registry https://registry.npmmirror.com", timeout=5)
+                mirror_used = "npmmirror（自动设置）"
     result = await run_cmd(cmd, timeout=120)
+    if mirror_used:
+        result["mirror"] = mirror_used
     return result
 
 
 @app.post("/acp/install-brew", dependencies=[auth])
 async def acp_install_brew():
-    """安装 Homebrew（仅 macOS）"""
+    """安装 Homebrew（仅 macOS），大陆网络自动使用清华镜像"""
     import platform
     if platform.system() != "Darwin":
         return {"ok": True, "msg": "非 macOS，无需安装 Homebrew", "skipped": True}
@@ -1046,45 +1063,69 @@ async def acp_install_brew():
     if chk.get("ok"):
         ver = await run_cmd("brew --version 2>/dev/null | head -1", timeout=5)
         return {"ok": True, "msg": f"Homebrew 已安装: {ver.get('stdout', '').strip()}", "skipped": True}
-    r = await run_cmd('NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"', timeout=300)
+    mirror_used = ""
+    if await _can_reach("raw.githubusercontent.com"):
+        r = await run_cmd('NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"', timeout=300)
+    else:
+        # 大陆镜像：清华源
+        mirror_used = "清华镜像"
+        r = await run_cmd(
+            'export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git" '
+            'HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git" '
+            'HOMEBREW_INSTALL_FROM_API=1 NONINTERACTIVE=1 && '
+            '/bin/bash -c "$(curl -fsSL https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/install/raw/HEAD/install.sh)"',
+            timeout=300
+        )
     # Apple Silicon 需要加 PATH
     await run_cmd('[ -f /opt/homebrew/bin/brew ] && echo \'eval "$(/opt/homebrew/bin/brew shellenv)"\' >> ~/.zprofile && eval "$(/opt/homebrew/bin/brew shellenv)"', timeout=5)
     ver = await run_cmd("brew --version 2>/dev/null | head -1", timeout=5)
     ok = ver.get("ok", False)
-    return {"ok": ok, "msg": ver.get("stdout", "").strip() if ok else "安装失败", "detail": r.get("stderr", "")[:500]}
+    return {"ok": ok, "msg": ver.get("stdout", "").strip() if ok else "安装失败", "mirror": mirror_used, "detail": r.get("stderr", "")[:500]}
 
 
 @app.post("/acp/install-node", dependencies=[auth])
 async def acp_install_node():
-    """安装 Node.js 20 LTS（macOS 用 brew，Linux 用 NodeSource）"""
+    """安装 Node.js 20 LTS，大陆网络自动使用 npmmirror 兜底"""
     import platform
     is_mac = platform.system() == "Darwin"
     # 已安装则跳过
     chk = await run_cmd("command -v node && node --version 2>/dev/null", timeout=5)
     if chk.get("ok") and chk.get("stdout", "").strip():
         return {"ok": True, "msg": f"Node.js 已安装: {chk['stdout'].strip()}", "skipped": True}
+    mirror_used = ""
     if is_mac:
-        # 确保 brew 存在
         if not (await run_cmd("command -v brew", timeout=3)).get("ok"):
             return {"ok": False, "msg": "macOS 需要先安装 Homebrew，请调用 /acp/install-brew"}
         r = await run_cmd("brew install node@20 && brew link node@20 --force --overwrite 2>/dev/null || true", timeout=180)
     else:
-        # 检测包管理器
         has_apt = (await run_cmd("command -v apt-get", timeout=3)).get("ok")
         has_yum = (await run_cmd("command -v yum", timeout=3)).get("ok")
         has_dnf = (await run_cmd("command -v dnf", timeout=3)).get("ok")
-        if has_apt:
-            r = await run_cmd("curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt-get install -y nodejs", timeout=180)
-        elif has_dnf:
-            r = await run_cmd("curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash - && sudo dnf install -y nodejs", timeout=180)
-        elif has_yum:
-            r = await run_cmd("curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash - && sudo yum install -y nodejs", timeout=180)
+        can_reach_ns = await _can_reach("deb.nodesource.com")
+        if can_reach_ns:
+            # 海外源可达，用 NodeSource
+            if has_apt:
+                r = await run_cmd("curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt-get install -y nodejs", timeout=180)
+            elif has_dnf:
+                r = await run_cmd("curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash - && sudo dnf install -y nodejs", timeout=180)
+            elif has_yum:
+                r = await run_cmd("curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash - && sudo yum install -y nodejs", timeout=180)
+            else:
+                return {"ok": False, "msg": "未检测到 apt/yum/dnf 包管理器"}
         else:
-            return {"ok": False, "msg": "未检测到 apt/yum/dnf 包管理器"}
+            # 大陆网络：用 npmmirror 的 node 二进制安装
+            mirror_used = "npmmirror"
+            r = await run_cmd(
+                'ARCH=$(uname -m | sed "s/x86_64/x64/;s/aarch64/arm64/") && '
+                'curl -fsSL "https://npmmirror.com/mirrors/node/v20.18.0/node-v20.18.0-linux-${ARCH}.tar.xz" -o /tmp/node.tar.xz && '
+                'sudo tar -xJf /tmp/node.tar.xz -C /usr/local --strip-components=1 && '
+                'rm -f /tmp/node.tar.xz',
+                timeout=180
+            )
     # 验证
     ver = await run_cmd("node --version 2>/dev/null", timeout=5)
     ok = ver.get("ok", False)
-    return {"ok": ok, "msg": ver.get("stdout", "").strip() if ok else "安装失败", "detail": r.get("stderr", "")[:500]}
+    return {"ok": ok, "msg": ver.get("stdout", "").strip() if ok else "安装失败", "mirror": mirror_used, "detail": r.get("stderr", "")[:500]}
 
 
 @app.post("/acp/install-git", dependencies=[auth])
@@ -1139,16 +1180,23 @@ async def acp_npm_mirror(req: dict = {}):
 
 @app.post("/acp/install-gstack", dependencies=[auth])
 async def acp_install_gstack():
-    """安装 gstack 技能包到 ~/.claude/skills/gstack"""
+    """安装 gstack 技能包，大陆网络自动使用 ghproxy 镜像"""
     gstack_dir = os.path.expanduser("~/.claude/skills/gstack")
     skills_dir = os.path.expanduser("~/.claude/skills")
     os.makedirs(skills_dir, exist_ok=True)
     if os.path.isdir(gstack_dir):
         r = await run_cmd(f"cd {gstack_dir} && git pull 2>&1", timeout=30)
         return {"ok": True, "msg": "gstack 已更新", "detail": r.get("stdout", "").strip()[:300]}
-    r = await run_cmd(f"git clone https://github.com/garrytan/gstack.git {gstack_dir} 2>&1", timeout=60)
+    # 先尝试 GitHub，不通则用 ghproxy 镜像
+    mirror_used = ""
+    if await _can_reach("github.com"):
+        repo_url = "https://github.com/garrytan/gstack.git"
+    else:
+        mirror_used = "ghproxy"
+        repo_url = "https://ghproxy.com/https://github.com/garrytan/gstack.git"
+    r = await run_cmd(f"git clone {repo_url} {gstack_dir} 2>&1", timeout=60)
     ok = os.path.isdir(gstack_dir)
-    return {"ok": ok, "msg": "gstack 安装成功" if ok else "安装失败", "detail": r.get("stdout", r.get("stderr", "")).strip()[:500]}
+    return {"ok": ok, "msg": "gstack 安装成功" if ok else "安装失败", "mirror": mirror_used, "detail": r.get("stdout", r.get("stderr", "")).strip()[:500]}
 
 
 @app.post("/acp/clean-env", dependencies=[auth])
