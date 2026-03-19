@@ -1563,6 +1563,7 @@ async def _find_acpx() -> str:
 async def acp_health():
     """ACP 链路健康检查"""
     import platform
+    is_mac = platform.system() == "Darwin"
     checks = []
     # 1. acpx CLI + 版本对比
     acpx_path = await _find_acpx()
