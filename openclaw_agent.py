@@ -114,6 +114,21 @@ def _build_env():
             extra.append(p)
     env["PATH"] = ":".join(extra) + ":" + env.get("PATH", "")
     env["OPENCLAW_HOME"] = OPENCLAW_HOME
+    # 从持久化文件恢复 ACP 环境变量
+    for env_file in [os.path.join(home, ".openclaw", ".env"), os.path.join(home, ".profile")]:
+        if os.path.isfile(env_file):
+            try:
+                for line in open(env_file).readlines():
+                    line = line.strip()
+                    if line.startswith("#") or "=" not in line:
+                        continue
+                    line = line.removeprefix("export ").strip()
+                    k, _, v = line.partition("=")
+                    k, v = k.strip(), v.strip().strip('"').strip("'")
+                    if k in ("ANTHROPIC_BASE_URL", "ANTHROPIC_API_KEY") and v and k not in env:
+                        env[k] = v
+            except Exception:
+                pass
     return env
 
 _ENV = _build_env()
@@ -1267,6 +1282,39 @@ async def acp_ccr_stop():
         _ENV.pop("ANTHROPIC_BASE_URL", None)
     return {"ok": stopped, "msg": "已停止" if stopped else "端口 3456 仍在监听"}
 
+def _persist_ccr_env():
+    """将 CCR 环境变量持久化到 ~/.openclaw/.env 和 ~/.profile，并写入内存"""
+    pairs = {"ANTHROPIC_BASE_URL": "http://localhost:3456", "ANTHROPIC_API_KEY": "sk-ant-placeholder-for-ccr"}
+    # 写内存
+    for k, v in pairs.items():
+        os.environ[k] = v
+        _ENV[k] = v
+    # 写 ~/.openclaw/.env
+    env_file = os.path.expanduser("~/.openclaw/.env")
+    os.makedirs(os.path.dirname(env_file), exist_ok=True)
+    existing = Path(env_file).read_text("utf-8") if os.path.isfile(env_file) else ""
+    changed = False
+    for k, v in pairs.items():
+        if k not in existing:
+            existing += f"\n{k}={v}"
+            changed = True
+    if changed:
+        Path(env_file).write_text(existing.strip() + "\n", "utf-8")
+    # 写 ~/.profile
+    profile = os.path.expanduser("~/.profile")
+    try:
+        pf = open(profile).read() if os.path.isfile(profile) else ""
+        lines = []
+        for k, v in pairs.items():
+            if k not in pf:
+                lines.append(f'export {k}="{v}"')
+        if lines:
+            with open(profile, "a") as f:
+                f.write("\n# Claude Code Router\n" + "\n".join(lines) + "\n")
+    except Exception:
+        pass
+
+
 @app.post("/acp/ccr/start", dependencies=[auth])
 async def acp_ccr_start(req: dict = {}):
     """启动/重启 Claude Code Router 服务"""
@@ -1292,16 +1340,8 @@ async def acp_ccr_start(req: dict = {}):
         await asyncio.sleep(1)
         chk = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=3)
         if chk.get("stdout", "").strip():
-            # CCR 启动成功，写入环境变量让 Claude Code 走 CCR
-            env_line = 'export ANTHROPIC_BASE_URL="http://localhost:3456"'
-            profile = os.path.expanduser("~/.profile")
-            try:
-                existing = open(profile).read() if os.path.isfile(profile) else ""
-                if "ANTHROPIC_BASE_URL" not in existing:
-                    with open(profile, "a") as f:
-                        f.write(f"\n# Claude Code Router\n{env_line}\n")
-            except Exception:
-                pass
+            # CCR 启动成功，持久化环境变量
+            _persist_ccr_env()
             os.environ["ANTHROPIC_BASE_URL"] = "http://localhost:3456"
             _ENV["ANTHROPIC_BASE_URL"] = "http://localhost:3456"
             return {"ok": True, "msg": "CCR 服务已启动 (端口 3456)"}
