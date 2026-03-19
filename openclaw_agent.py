@@ -1090,6 +1090,11 @@ async def acp_install(req: dict):
     result = await run_cmd(cmd, timeout=120)
     if mirror_used:
         result["mirror"] = mirror_used
+    # 安装 claude/ccr 后自动确保 CCR systemd 守护
+    if name in ("claude", "ccr") and result.get("ok"):
+        if os.path.isfile(os.path.expanduser("~/.claude-code-router/config.json")):
+            if await _ensure_ccr_service():
+                result["ccr_service"] = "已创建 systemd 守护"
     return result
 
 
