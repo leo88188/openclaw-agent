@@ -968,7 +968,9 @@ async def upgrade():
         except SyntaxError as e:
             Path(agent_file).write_text(backups["openclaw_agent.py"], encoding="utf-8")
             return {"ok": False, "error": f"新代码语法错误，已回滚: {e}"}
-        chk = await run_cmd(f"cd {INSTALL_DIR} && python3 -c \"from uvicorn.importer import import_from_string; import_from_string('openclaw_agent:app'); print('ok')\"", timeout=15)
+        venv_py = os.path.join(INSTALL_DIR, "venv", "bin", "python3")
+        py = venv_py if os.path.exists(venv_py) else "python3"
+        chk = await run_cmd(f"cd {INSTALL_DIR} && {py} -c \"from uvicorn.importer import import_from_string; import_from_string('openclaw_agent:app'); print('ok')\"", timeout=15)
         if "ok" not in chk.get("stdout", ""):
             Path(agent_file).write_text(backups["openclaw_agent.py"], encoding="utf-8")
             return {"ok": False, "error": f"新代码验证失败，已回滚: {chk.get('stderr', '')[:200]}"}
