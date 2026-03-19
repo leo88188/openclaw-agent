@@ -955,7 +955,7 @@ async def upgrade():
 
 @app.get("/acp/detect", dependencies=[auth])
 async def acp_detect():
-    """检测 ACP 编程工具安装状态"""
+    """检测 ACP 编程工具及基础依赖安装状态"""
     import platform
     is_mac = platform.system() == "Darwin"
     tools = {
@@ -968,9 +968,13 @@ async def acp_detect():
         "pi":        {"install_cmd": "npm install -g @anthropic-ai/pi", "desc": "Pi CLI"},
     }
     results = {}
-    # 先检测 node/npm
+    # 基础依赖检测
     node_r = await run_cmd("command -v node && node --version 2>/dev/null || echo NOT_FOUND", timeout=5)
     npm_r = await run_cmd("command -v npm && npm --version 2>/dev/null || echo NOT_FOUND", timeout=5)
+    git_r = await run_cmd("command -v git && git --version 2>/dev/null || echo NOT_FOUND", timeout=5)
+    brew_r = await run_cmd("command -v brew && brew --version 2>/dev/null | head -1 || echo NOT_FOUND", timeout=5) if is_mac else {"stdout": "N/A"}
+    # npm 镜像
+    npm_reg = await run_cmd("npm config get registry 2>/dev/null || echo unknown", timeout=5) if "NOT_FOUND" not in npm_r.get("stdout", "") else {"stdout": ""}
     results["_env"] = {
         "os": platform.system(),
         "arch": platform.machine(),
@@ -978,6 +982,11 @@ async def acp_detect():
         "npm": npm_r.get("stdout", "").strip()[:100],
         "has_node": "NOT_FOUND" not in node_r.get("stdout", ""),
         "has_npm": "NOT_FOUND" not in npm_r.get("stdout", ""),
+        "git": git_r.get("stdout", "").strip()[:100],
+        "has_git": "NOT_FOUND" not in git_r.get("stdout", ""),
+        "brew": brew_r.get("stdout", "").strip()[:100] if is_mac else None,
+        "has_brew": "NOT_FOUND" not in brew_r.get("stdout", "") if is_mac else None,
+        "npm_registry": npm_reg.get("stdout", "").strip()[:200],
     }
     for name, meta in tools.items():
         r = await run_cmd(f"command -v {name} 2>/dev/null", timeout=5)
@@ -990,6 +999,9 @@ async def acp_detect():
     # acpx 插件
     acpx = await run_cmd("command -v openclaw >/dev/null 2>&1 && openclaw plugins list 2>/dev/null | grep -i acpx || echo ''", timeout=10)
     results["_acpx_plugin"] = {"installed": "acpx" in acpx.get("stdout", ""), "raw": acpx.get("stdout", "").strip()[:200]}
+    # gstack 技能包
+    gstack_dir = os.path.expanduser("~/.claude/skills/gstack")
+    results["_gstack"] = {"installed": os.path.isdir(gstack_dir)}
     # CCR 服务状态
     ccr_port = await run_cmd("lsof -i :3456 -sTCP:LISTEN -t 2>/dev/null || ss -tln 2>/dev/null | grep ':3456'", timeout=5)
     ccr_cfg_exists = os.path.isfile(os.path.expanduser("~/.claude-code-router/config.json"))
@@ -1022,6 +1034,119 @@ async def acp_install(req: dict):
     cmd = _ACP_INSTALL[name]
     result = await run_cmd(cmd, timeout=120)
     return result
+
+
+@app.post("/acp/install-node", dependencies=[auth])
+async def acp_install_node():
+    """安装 Node.js 20 LTS（macOS 用 brew，Linux 用 NodeSource）"""
+    import platform
+    is_mac = platform.system() == "Darwin"
+    # 已安装则跳过
+    chk = await run_cmd("command -v node && node --version 2>/dev/null", timeout=5)
+    if chk.get("ok") and chk.get("stdout", "").strip():
+        return {"ok": True, "msg": f"Node.js 已安装: {chk['stdout'].strip()}", "skipped": True}
+    if is_mac:
+        r = await run_cmd("brew install node@20 && brew link node@20 --force --overwrite 2>/dev/null || true", timeout=180)
+    else:
+        # 检测包管理器
+        has_apt = (await run_cmd("command -v apt-get", timeout=3)).get("ok")
+        has_yum = (await run_cmd("command -v yum", timeout=3)).get("ok")
+        has_dnf = (await run_cmd("command -v dnf", timeout=3)).get("ok")
+        if has_apt:
+            r = await run_cmd("curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt-get install -y nodejs", timeout=180)
+        elif has_dnf:
+            r = await run_cmd("curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash - && sudo dnf install -y nodejs", timeout=180)
+        elif has_yum:
+            r = await run_cmd("curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash - && sudo yum install -y nodejs", timeout=180)
+        else:
+            return {"ok": False, "msg": "未检测到 apt/yum/dnf 包管理器"}
+    # 验证
+    ver = await run_cmd("node --version 2>/dev/null", timeout=5)
+    ok = ver.get("ok", False)
+    return {"ok": ok, "msg": ver.get("stdout", "").strip() if ok else "安装失败", "detail": r.get("stderr", "")[:500]}
+
+
+@app.post("/acp/install-git", dependencies=[auth])
+async def acp_install_git():
+    """安装 Git（macOS 用 brew，Linux 用系统包管理器）"""
+    import platform
+    is_mac = platform.system() == "Darwin"
+    chk = await run_cmd("command -v git && git --version 2>/dev/null", timeout=5)
+    if chk.get("ok") and chk.get("stdout", "").strip():
+        return {"ok": True, "msg": f"Git 已安装: {chk['stdout'].strip()}", "skipped": True}
+    if is_mac:
+        r = await run_cmd("brew install git", timeout=120)
+    else:
+        has_apt = (await run_cmd("command -v apt-get", timeout=3)).get("ok")
+        has_yum = (await run_cmd("command -v yum", timeout=3)).get("ok")
+        has_dnf = (await run_cmd("command -v dnf", timeout=3)).get("ok")
+        if has_apt:
+            r = await run_cmd("sudo apt-get install -y git", timeout=120)
+        elif has_dnf:
+            r = await run_cmd("sudo dnf install -y git", timeout=120)
+        elif has_yum:
+            r = await run_cmd("sudo yum install -y git", timeout=120)
+        else:
+            return {"ok": False, "msg": "未检测到 apt/yum/dnf 包管理器"}
+    ver = await run_cmd("git --version 2>/dev/null", timeout=5)
+    ok = ver.get("ok", False)
+    return {"ok": ok, "msg": ver.get("stdout", "").strip() if ok else "安装失败"}
+
+
+@app.post("/acp/npm-mirror", dependencies=[auth])
+async def acp_npm_mirror(req: dict = {}):
+    """检测 npm 源并可选设置国内镜像"""
+    action = req.get("action", "detect")  # detect | set | reset
+    if action == "set":
+        mirror = req.get("mirror", "https://registry.npmmirror.com")
+        r = await run_cmd(f"npm config set registry {mirror}", timeout=10)
+        cur = await run_cmd("npm config get registry 2>/dev/null", timeout=5)
+        return {"ok": r.get("ok", False), "registry": cur.get("stdout", "").strip()}
+    elif action == "reset":
+        r = await run_cmd("npm config set registry https://registry.npmjs.org", timeout=10)
+        return {"ok": r.get("ok", False), "registry": "https://registry.npmjs.org"}
+    # detect — 检测当前源和连通性
+    cur = await run_cmd("npm config get registry 2>/dev/null", timeout=5)
+    registry = cur.get("stdout", "").strip()
+    # 测试官方源连通性
+    test = await run_cmd("curl -s --connect-timeout 5 -o /dev/null -w '%{http_code}' https://registry.npmjs.org", timeout=10)
+    npm_ok = test.get("stdout", "").strip() == "200"
+    return {"registry": registry, "npm_reachable": npm_ok, "suggest_mirror": not npm_ok}
+
+
+@app.post("/acp/install-gstack", dependencies=[auth])
+async def acp_install_gstack():
+    """安装 gstack 技能包到 ~/.claude/skills/gstack"""
+    gstack_dir = os.path.expanduser("~/.claude/skills/gstack")
+    skills_dir = os.path.expanduser("~/.claude/skills")
+    os.makedirs(skills_dir, exist_ok=True)
+    if os.path.isdir(gstack_dir):
+        r = await run_cmd(f"cd {gstack_dir} && git pull 2>&1", timeout=30)
+        return {"ok": True, "msg": "gstack 已更新", "detail": r.get("stdout", "").strip()[:300]}
+    r = await run_cmd(f"git clone https://github.com/garrytan/gstack.git {gstack_dir} 2>&1", timeout=60)
+    ok = os.path.isdir(gstack_dir)
+    return {"ok": ok, "msg": "gstack 安装成功" if ok else "安装失败", "detail": r.get("stdout", r.get("stderr", "")).strip()[:500]}
+
+
+@app.post("/acp/clean-env", dependencies=[auth])
+async def acp_clean_env():
+    """完整清理旧环境 — 停止 CCR、清理端口、清理认证缓存、清理环境变量"""
+    results = []
+    # 停止 CCR
+    await run_cmd("command -v ccr >/dev/null && ccr stop 2>/dev/null || true", timeout=5)
+    results.append("CCR 已停止")
+    # 清理端口
+    await run_cmd("lsof -ti :3456 | xargs kill -9 2>/dev/null || true", timeout=5)
+    results.append("端口 3456 已清理")
+    # 清理认证缓存
+    await run_cmd("rm -rf ~/.claude/auth* ~/.claude/.credentials* ~/.claude/statsig* ~/.claude/oauth* ~/.claude/session* ~/.claude/settings.local.json 2>/dev/null || true", timeout=5)
+    results.append("Claude 认证缓存已清理")
+    # 清理环境变量
+    for key in ["ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_BASE_URL"]:
+        os.environ.pop(key, None)
+        _ENV.pop(key, None)
+    results.append("环境变量已清理")
+    return {"ok": True, "results": results}
 
 
 @app.post("/acp/ccr/config", dependencies=[auth])
