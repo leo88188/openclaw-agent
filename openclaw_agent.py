@@ -1486,7 +1486,7 @@ async def acp_health():
     acpx_path = await _find_acpx()
     if acpx_path:
         ver_r = await run_cmd(f"'{acpx_path}' --version 2>/dev/null", timeout=5)
-        checks.append({"name": "acpx CLI", "ok": True, "detail": f"{acpx_path} ({ver_r.get('stdout', '').strip()[:50]})"})
+        checks.append({"name": "acpx CLI", "ok": True, "detail": f"已安装 ({ver_r.get('stdout', '').strip()[:50]})"})
     else:
         checks.append({"name": "acpx CLI", "ok": False, "detail": "未找到 acpx"})
     # 2. CCR 服务（仅当配置存在时检查，非必须项）
