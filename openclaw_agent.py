@@ -1956,6 +1956,8 @@ async def acpx_logs(limit: int = 20):
         stream_file = f.with_suffix(".stream.ndjson")
         text_chunks, tools, errors = [], [], []
         token_usage = {}
+        cost = {}
+        context_size = 0
         if stream_file.exists():
             try:
                 for line in stream_file.read_text("utf-8").splitlines():
@@ -1978,7 +1980,11 @@ async def acpx_logs(limit: int = 20):
                         elif su == "tool_call_update" and update.get("status") == "failed":
                             errors.append(str(update.get("rawOutput", ""))[:200])
                         elif su == "usage_update":
-                            token_usage = update.get("usage", {})
+                            token_usage = update.get("usage", token_usage)
+                            if update.get("cost"):
+                                cost = update["cost"]
+                            if update.get("size"):
+                                context_size = update["size"]
                     # result 里的 stopReason
                     result = d.get("result", {})
                     if result.get("stopReason"):
@@ -1988,6 +1994,13 @@ async def acpx_logs(limit: int = 20):
             except Exception:
                 pass
         full_text = "".join(text_chunks)
+        # 从 .json messages 提取用户 prompt
+        prompts = []
+        for msg in meta.get("messages", []):
+            u = msg.get("User", {})
+            for c in u.get("content", []):
+                if isinstance(c, dict) and c.get("Text"):
+                    prompts.append(c["Text"][:300])
         entries.append({
             "id": sid,
             "name": meta.get("name", ""),
@@ -2001,6 +2014,9 @@ async def acpx_logs(limit: int = 20):
             "tools": tools[:20],
             "errors": errors[:10],
             "usage": token_usage,
+            "cost": cost,
+            "contextSize": context_size,
+            "prompts": prompts[:5],
             "stopReason": meta.get("stopReason", ""),
         })
     return {"ok": True, "sessions": entries}
