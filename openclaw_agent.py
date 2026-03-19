@@ -209,11 +209,9 @@ class ConfigSaveReq(BaseModel):
 
 @app.post("/config", dependencies=[auth])
 async def config_save(req: ConfigSaveReq):
-    path = Path(CONFIG_PATH)
-    if req.backup and path.exists():
-        bak = path.with_suffix(f".bak.{datetime.now().strftime('%Y%m%d%H%M%S')}")
-        bak.write_text(path.read_text(encoding="utf-8"), encoding="utf-8")
-    path.write_text(json.dumps(req.config, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    ok, err = await _safe_write_config(req.config)
+    if not ok:
+        return {"ok": False, "msg": f"validate 失败，已回滚: {err}"}
     return {"ok": True}
 
 
@@ -1402,6 +1400,27 @@ async def _ensure_ccr_service():
     return True
 
 
+async def _safe_write_config(cfg: dict) -> tuple[bool, str]:
+    """备份 openclaw.json → 写入 → validate → 失败回滚"""
+    path = Path(CONFIG_PATH)
+    bak = path.with_suffix(f".bak.{datetime.now().strftime('%Y%m%d%H%M%S')}")
+    try:
+        if path.exists():
+            bak.write_text(path.read_text("utf-8"), "utf-8")
+        path.write_text(json.dumps(cfg, indent=2, ensure_ascii=False) + "\n", "utf-8")
+        v = await run_cmd("openclaw config validate", timeout=10)
+        if not v.get("ok") or "error" in v.get("stdout", "").lower() or "error" in v.get("stderr", "").lower():
+            # 回滚
+            if bak.exists():
+                path.write_text(bak.read_text("utf-8"), "utf-8")
+            return False, v.get("stderr") or v.get("stdout") or "validate 失败"
+        return True, ""
+    except Exception as e:
+        if bak.exists():
+            path.write_text(bak.read_text("utf-8"), "utf-8")
+        return False, str(e)
+
+
 async def _ensure_acpx_config():
     """确保 openclaw.json 里 acpx 插件的 command 和 expectedVersion 已设置"""
     acpx_path = await _find_acpx()
@@ -1415,9 +1434,10 @@ async def _ensure_acpx_config():
             return False
         pc["command"] = acpx_path
         pc["expectedVersion"] = "any"
-        with open(CONFIG_PATH, "w") as f:
-            json.dump(cfg, f, indent=2, ensure_ascii=False)
-        return True
+        ok, err = await _safe_write_config(cfg)
+        if not ok:
+            logger.warning("acpx config validate 失败，已回滚: %s", err)
+        return ok
     except Exception:
         return False
 
@@ -1738,8 +1758,11 @@ async def acp_fix():
                 changed = True
                 results.append(f"acpx 插件路径 → {acpx_path}")
         if changed:
-            with open(CONFIG_PATH, "w") as f:
-                json.dump(cfg, f, indent=2, ensure_ascii=False)
+            ok, err = await _safe_write_config(cfg)
+            if ok:
+                results.append("openclaw.json 已更新并通过 validate")
+            else:
+                results.append(f"⚠ openclaw.json validate 失败，已回滚: {err}")
     except Exception:
         pass
     # 4. CCR（仅当配置存在时）
