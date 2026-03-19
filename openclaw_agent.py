@@ -1137,6 +1137,226 @@ async def version():
     return {"version": datetime.fromtimestamp(mtime).strftime("%Y-%m-%d %H:%M:%S"), "install_dir": INSTALL_DIR}
 
 
+# ── TUI / Agent 对话 ────────────────────────────────────
+
+@app.post("/agent/send", dependencies=[auth])
+async def agent_send(req: dict):
+    """向指定 agent 发送消息并返回 JSON 结果"""
+    agent = req.get("agent", "").strip()
+    message = req.get("message", "").strip()
+    if not agent or not message:
+        raise HTTPException(400, "agent 和 message 不能为空")
+    session_id = req.get("session_id", "").strip() or f"debug-{int(datetime.now().timestamp())}"
+    thinking = req.get("thinking", "")
+    timeout_sec = min(int(req.get("timeout", 120)), 300)
+    safe_msg = message.replace("\\", "\\\\").replace('"', '\\"').replace("$", "\\$").replace("`", "\\`")
+    cmd = f'openclaw agent --agent {agent} --session-id {session_id} --message "{safe_msg}" --json --timeout {timeout_sec}'
+    if thinking:
+        cmd += f' --thinking {thinking}'
+    cmd += ' 2>&1'
+    result = await run_cmd(cmd, timeout=timeout_sec + 10)
+    stdout = result.get("stdout", "")
+    # 从末尾找最大 JSON 对象
+    reply_text, meta, warnings = "", {}, []
+    if "falling back to embedded" in stdout:
+        warnings.append("Gateway 连接失败，已回退到 embedded 模式")
+    if "Unknown agent id" in stdout:
+        import re
+        m = re.search(r'Unknown agent id "([^"]+)"', stdout)
+        warnings.append(f"未知 Agent: {m.group(1) if m else agent}")
+    data = _find_last_json(stdout)
+    if data:
+        for p in data.get("payloads", []):
+            if p.get("text"):
+                reply_text += p["text"]
+        am = data.get("meta", {}).get("agentMeta", {})
+        if am:
+            usage = am.get("usage", {})
+            meta = {
+                "model": am.get("model", ""),
+                "provider": am.get("provider", ""),
+                "sessionId": am.get("sessionId", ""),
+                "durationMs": data.get("meta", {}).get("durationMs"),
+                "inputTokens": usage.get("input"),
+                "outputTokens": usage.get("output"),
+                "cacheRead": usage.get("cacheRead"),
+                "totalTokens": usage.get("total"),
+                "stopReason": data.get("meta", {}).get("stopReason", ""),
+            }
+    if not reply_text and not data:
+        reply_text = stdout[:2000] if stdout else ""
+    return {"reply": reply_text, "session_id": session_id, "meta": meta, "warnings": warnings, "raw_length": len(stdout)}
+
+
+@app.post("/sessions/close", dependencies=[auth])
+async def sessions_close(req: dict):
+    """关闭（删除）指定会话"""
+    agent_id = req.get("agent", "").strip()
+    session_key = req.get("key", "").strip()
+    if not agent_id or not session_key:
+        raise HTTPException(400, "agent 和 key 不能为空")
+    agents_dir = os.path.join(OPENCLAW_HOME, ".openclaw", "agents")
+    store_path = os.path.join(agents_dir, agent_id, "sessions", "sessions.json")
+    if not os.path.isfile(store_path):
+        return {"ok": False, "error": "会话存储文件不存在"}
+    try:
+        with open(store_path) as f:
+            store = json.load(f)
+        entry = store.pop(session_key, None)
+        with open(store_path, "w") as f:
+            json.dump(store, f, indent=2, ensure_ascii=False)
+        sid = entry.get("sessionId", "") if entry else ""
+        transcript = os.path.join(agents_dir, agent_id, "sessions", f"{sid}.jsonl") if sid else ""
+        removed = bool(transcript and os.path.exists(transcript))
+        if removed:
+            os.remove(transcript)
+        return {"ok": bool(entry), "sessionId": sid, "transcriptRemoved": removed}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@app.get("/acp/health", dependencies=[auth])
+async def acp_health():
+    """ACP 链路健康检查"""
+    import platform
+    checks = []
+    # 1. acpx
+    acpx_r = await run_cmd("command -v acpx && acpx --version 2>/dev/null", timeout=5)
+    acpx_ok = acpx_r.get("ok", False)
+    checks.append({"name": "acpx", "ok": acpx_ok, "detail": acpx_r.get("stdout", "")[:100]})
+    # 2. CCR
+    ccr_r = await run_cmd("curl -s --connect-timeout 3 http://localhost:3456/health", timeout=5)
+    ccr_ok = "ok" in ccr_r.get("stdout", "").lower() or ccr_r.get("ok", False)
+    checks.append({"name": "CCR 服务", "ok": ccr_ok, "detail": ccr_r.get("stdout", "")[:100]})
+    # 3. Gateway 环境变量
+    gw_pid_r = await run_cmd("pgrep -f 'openclaw.*gateway' | head -1", timeout=3)
+    gw_pid = gw_pid_r.get("stdout", "").strip()
+    base_url_ok, api_key_ok = False, False
+    if gw_pid:
+        if platform.system() == "Darwin":
+            env_r = await run_cmd(f"ps eww -p {gw_pid} 2>/dev/null", timeout=3)
+        else:
+            env_r = await run_cmd(f"cat /proc/{gw_pid}/environ 2>/dev/null | tr '\\0' '\\n'", timeout=3)
+        env_out = env_r.get("stdout", "")
+        base_url_ok = "ANTHROPIC_BASE_URL" in env_out
+        api_key_ok = "ANTHROPIC_API_KEY" in env_out
+    checks.append({"name": "ANTHROPIC_BASE_URL", "ok": base_url_ok, "detail": "localhost:3456" if base_url_ok else "未设置"})
+    checks.append({"name": "ANTHROPIC_API_KEY", "ok": api_key_ok, "detail": "已设置" if api_key_ok else "未设置"})
+    # 4. acpx 插件
+    plugin_r = await run_cmd("openclaw plugins list 2>/dev/null | grep -i acpx", timeout=10)
+    plugin_ok = "acpx" in plugin_r.get("stdout", "").lower() and "loaded" in plugin_r.get("stdout", "").lower()
+    checks.append({"name": "acpx 插件", "ok": plugin_ok, "detail": plugin_r.get("stdout", "").strip()[:150]})
+    # 5. ACP 配置
+    acp_cfg = {}
+    try:
+        with open(CONFIG_PATH) as f:
+            acp_cfg = json.load(f).get("acp", {})
+    except Exception:
+        pass
+    acp_ok = acp_cfg.get("enabled", False) and acp_cfg.get("backend") == "acpx"
+    checks.append({"name": "ACP 配置", "ok": acp_ok, "detail": json.dumps(acp_cfg)[:200] if acp_cfg else "未配置"})
+    return {"checks": checks, "all_ok": all(c["ok"] for c in checks)}
+
+
+@app.post("/acp/fix", dependencies=[auth])
+async def acp_fix():
+    """ACP 一键修复"""
+    import platform
+    is_mac = platform.system() == "Darwin"
+    results = []
+    # 1. acpx symlink
+    find_r = await run_cmd("find $(pnpm root -g 2>/dev/null || echo '') -path '*/openclaw/extensions/acpx/node_modules/.bin/acpx' 2>/dev/null | head -1", timeout=10)
+    acpx_bin = find_r.get("stdout", "").strip()
+    if acpx_bin:
+        if is_mac:
+            real_r = await run_cmd(f"python3 -c \"import os,sys;print(os.path.realpath(sys.argv[1]))\" '{acpx_bin}'", timeout=3)
+        else:
+            real_r = await run_cmd(f"readlink -f '{acpx_bin}'", timeout=3)
+        real_path = real_r.get("stdout", "").strip()
+        if real_path:
+            await run_cmd(f"ln -sf '{real_path}' /usr/local/bin/acpx")
+            results.append("acpx symlink 已更新")
+    # 2. 环境变量持久化
+    if is_mac:
+        env_file = os.path.expanduser("~/.openclaw/.env")
+        os.makedirs(os.path.dirname(env_file), exist_ok=True)
+        existing = Path(env_file).read_text("utf-8") if os.path.exists(env_file) else ""
+        changed = False
+        if "ANTHROPIC_API_KEY" not in existing:
+            existing += "\nANTHROPIC_API_KEY=sk-ant-placeholder-for-ccr"
+            changed = True
+        if "ANTHROPIC_BASE_URL" not in existing:
+            existing += "\nANTHROPIC_BASE_URL=http://localhost:3456"
+            changed = True
+        if changed:
+            Path(env_file).write_text(existing.strip() + "\n", "utf-8")
+            results.append("环境变量已写入 ~/.openclaw/.env")
+    else:
+        ovr = os.path.expanduser("~/.config/systemd/user/openclaw-gateway.service.d/override.conf")
+        if os.path.isfile(ovr):
+            content = Path(ovr).read_text("utf-8")
+            changed = False
+            if "ANTHROPIC_API_KEY" not in content:
+                content += "\nEnvironment=ANTHROPIC_API_KEY=sk-ant-placeholder-for-ccr"
+                changed = True
+            if "ANTHROPIC_BASE_URL" not in content:
+                content += "\nEnvironment=ANTHROPIC_BASE_URL=http://localhost:3456"
+                changed = True
+            if changed:
+                Path(ovr).write_text(content, "utf-8")
+                results.append("环境变量已写入 systemd override")
+    # 3. ACP allowedAgents
+    try:
+        with open(CONFIG_PATH) as f:
+            cfg = json.load(f)
+        acp = cfg.get("acp", {})
+        aa = set(acp.get("allowedAgents", []))
+        need = {"claude", "claude-code"}
+        if not need.issubset(aa):
+            acp["allowedAgents"] = sorted(aa | need)
+            cfg["acp"] = acp
+            with open(CONFIG_PATH, "w") as f:
+                json.dump(cfg, f, indent=2, ensure_ascii=False)
+            results.append("allowedAgents 已修复")
+    except Exception:
+        pass
+    # 4. CCR
+    ccr_r = await run_cmd("curl -s --connect-timeout 2 http://localhost:3456/health", timeout=3)
+    if "ok" not in ccr_r.get("stdout", "").lower():
+        ccr_cfg = os.path.expanduser("~/.claude-code-router/config.json")
+        if os.path.isfile(ccr_cfg):
+            await run_cmd("nohup ccr start > /tmp/ccr.log 2>&1 &", timeout=3)
+            results.append("CCR 已启动")
+    # 5. 重启 gateway
+    if is_mac:
+        await run_cmd("GW=$(pgrep -f 'openclaw.*gateway' | head -1); [ -n \"$GW\" ] && kill $GW; sleep 2; nohup openclaw gateway > /tmp/oc-gw.log 2>&1 &", timeout=10)
+    else:
+        await run_cmd("XDG_RUNTIME_DIR=/run/user/$(id -u) systemctl --user daemon-reload; XDG_RUNTIME_DIR=/run/user/$(id -u) systemctl --user restart openclaw-gateway", timeout=10)
+    results.append("Gateway 已重启")
+    return {"ok": True, "results": results}
+
+
+def _find_last_json(text: str) -> dict:
+    """从末尾反向查找包含 payloads/meta/sessions 的最大 JSON"""
+    rpos = len(text) - 1
+    while rpos >= 0:
+        if text[rpos] == '}':
+            depth = 0
+            for i in range(rpos, -1, -1):
+                if text[i] == '}': depth += 1
+                elif text[i] == '{': depth -= 1
+                if depth == 0:
+                    try:
+                        d = json.loads(text[i:rpos + 1])
+                        if isinstance(d, dict) and ("payloads" in d or "meta" in d or "sessions" in d):
+                            return d
+                    except Exception:
+                        pass
+                    break
+        rpos -= 1
+    return {}
+
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("OPENCLAW_AGENT_PORT", "9966"))
