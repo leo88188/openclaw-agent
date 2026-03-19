@@ -1586,9 +1586,14 @@ async def acpx_exec(req: dict):
     approve = req.get("approve", "all")  # all | reads | deny
     timeout_sec = min(int(req.get("timeout", 120)), 300)
     safe_task = task.replace("\\", "\\\\").replace('"', '\\"').replace("$", "\\$").replace("`", "\\`")
-    # 构建命令
+    # 构建命令 — 注入 CCR 环境变量（如果 CCR 在运行）
+    env_prefix = ""
+    if os.environ.get("ANTHROPIC_BASE_URL") or _ENV.get("ANTHROPIC_BASE_URL"):
+        base_url = os.environ.get("ANTHROPIC_BASE_URL") or _ENV.get("ANTHROPIC_BASE_URL")
+        api_key = os.environ.get("ANTHROPIC_API_KEY") or _ENV.get("ANTHROPIC_API_KEY") or "sk-ant-placeholder-for-ccr"
+        env_prefix = f'ANTHROPIC_BASE_URL="{base_url}" ANTHROPIC_API_KEY="{api_key}" '
     approve_flag = {"all": "--approve-all", "reads": "--approve-reads", "deny": "--deny-all"}.get(approve, "--approve-all")
-    cmd = f"'{acpx_path}' {approve_flag} --timeout {timeout_sec}"
+    cmd = f"{env_prefix}'{acpx_path}' {approve_flag} --timeout {timeout_sec}"
     if session:
         cmd += f" {client} -s {session}"
     else:
@@ -1621,21 +1626,28 @@ async def acpx_sessions(req: dict):
     acpx_path = await _find_acpx()
     if not acpx_path:
         return {"ok": False, "error": "acpx 未找到"}
+    # CCR 环境变量
+    env_prefix = ""
+    if os.environ.get("ANTHROPIC_BASE_URL") or _ENV.get("ANTHROPIC_BASE_URL"):
+        base_url = os.environ.get("ANTHROPIC_BASE_URL") or _ENV.get("ANTHROPIC_BASE_URL")
+        api_key = os.environ.get("ANTHROPIC_API_KEY") or _ENV.get("ANTHROPIC_API_KEY") or "sk-ant-placeholder-for-ccr"
+        env_prefix = f'ANTHROPIC_BASE_URL="{base_url}" ANTHROPIC_API_KEY="{api_key}" '
+    acpx = f"{env_prefix}'{acpx_path}'"
     name = req.get("name", "").strip()
     if action == "list":
-        r = await run_cmd(f"'{acpx_path}' {client} sessions 2>&1", timeout=15)
+        r = await run_cmd(f"{acpx} {client} sessions 2>&1", timeout=15)
     elif action == "new":
         if not name:
             name = f"oc-{client}-{int(datetime.now().timestamp())}"
-        r = await run_cmd(f"'{acpx_path}' {client} sessions new --name {name} 2>&1", timeout=15)
+        r = await run_cmd(f"{acpx} {client} sessions new --name {name} 2>&1", timeout=15)
     elif action == "close":
         if not name:
             raise HTTPException(400, "关闭会话需要 name")
-        r = await run_cmd(f"'{acpx_path}' {client} sessions close {name} 2>&1", timeout=15)
+        r = await run_cmd(f"{acpx} {client} sessions close {name} 2>&1", timeout=15)
     elif action == "ensure":
         if not name:
             raise HTTPException(400, "ensure 需要 name")
-        r = await run_cmd(f"'{acpx_path}' {client} sessions ensure --name {name} 2>&1", timeout=15)
+        r = await run_cmd(f"{acpx} {client} sessions ensure --name {name} 2>&1", timeout=15)
     else:
         raise HTTPException(400, f"不支持的操作: {action}")
     return {"ok": r.get("ok", False), "output": r.get("stdout", "").strip()[:3000], "action": action, "client": client, "name": name}
