@@ -944,12 +944,13 @@ async def upgrade():
     """从 GitHub 拉取最新代码并重启服务"""
     import urllib.request
     files = ["openclaw_agent.py", "requirements.txt"]
-    updated = []
+    updated, backups = [], {}
     for f in files:
         url = f"{REPO_URL}/{f}?t={int(datetime.now().timestamp())}"
         local = os.path.join(INSTALL_DIR, f)
         try:
             old = Path(local).read_text(encoding="utf-8") if os.path.exists(local) else ""
+            backups[f] = old
             urllib.request.urlretrieve(url, local)
             new = Path(local).read_text(encoding="utf-8")
             if old != new:
@@ -958,6 +959,19 @@ async def upgrade():
             return {"ok": False, "error": f"下载 {f} 失败: {e}"}
     if not updated:
         return {"ok": True, "msg": "已是最新版本", "updated": []}
+    # 验证新代码
+    if "openclaw_agent.py" in updated:
+        agent_file = os.path.join(INSTALL_DIR, "openclaw_agent.py")
+        try:
+            import ast
+            ast.parse(Path(agent_file).read_text(encoding="utf-8"))
+        except SyntaxError as e:
+            Path(agent_file).write_text(backups["openclaw_agent.py"], encoding="utf-8")
+            return {"ok": False, "error": f"新代码语法错误，已回滚: {e}"}
+        chk = await run_cmd(f"cd {INSTALL_DIR} && python3 -c \"import ast; ast.parse(open('openclaw_agent.py').read()); print('ok')\"", timeout=10)
+        if "ok" not in chk.get("stdout", ""):
+            Path(agent_file).write_text(backups["openclaw_agent.py"], encoding="utf-8")
+            return {"ok": False, "error": f"新代码验证失败，已回滚: {chk.get('stderr', '')[:200]}"}
     # 更新依赖
     venv_pip = os.path.join(INSTALL_DIR, "venv", "bin", "pip")
     if os.path.exists(venv_pip):
