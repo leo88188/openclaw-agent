@@ -1334,6 +1334,8 @@ def _persist_ccr_env():
 @app.post("/acp/ccr/start", dependencies=[auth])
 async def acp_ccr_start(req: dict = {}):
     """启动/重启 Claude Code Router 服务"""
+    import platform
+    is_mac = platform.system() == "Darwin"
     # 先停掉已有的
     await run_cmd("command -v ccr >/dev/null && ccr stop 2>/dev/null || true", timeout=5)
     await run_cmd("lsof -ti :3456 | xargs kill -9 2>/dev/null || true", timeout=5)
@@ -1341,7 +1343,22 @@ async def acp_ccr_start(req: dict = {}):
     # 清理 claude 认证缓存（避免冲突）
     if req.get("clean_auth", False):
         await run_cmd("rm -rf ~/.claude/auth* ~/.claude/.credentials* ~/.claude/statsig* ~/.claude/oauth* ~/.claude/session* 2>/dev/null || true", timeout=3)
-    # 后台启动 ccr — 用 Popen 直接 detach，不走 run_cmd（ccr 是前台程序）
+    # Linux 优先用 systemctl
+    if not is_mac:
+        svc_r = await run_cmd("systemctl cat ccr 2>/dev/null", timeout=3)
+        if svc_r.get("ok") and "ccr" in svc_r.get("stdout", ""):
+            await run_cmd("systemctl restart ccr", timeout=10)
+            for i in range(10):
+                await asyncio.sleep(1)
+                chk = await run_cmd("curl -s --connect-timeout 1 http://localhost:3456/health", timeout=3)
+                if "ok" in chk.get("stdout", "").lower():
+                    _persist_ccr_env()
+                    os.environ["ANTHROPIC_BASE_URL"] = "http://localhost:3456"
+                    _ENV["ANTHROPIC_BASE_URL"] = "http://localhost:3456"
+                    return {"ok": True, "msg": "CCR 服务已启动 (systemd, 端口 3456)"}
+            log = await run_cmd("journalctl -u ccr --no-pager -n 20", timeout=3)
+            return {"ok": False, "msg": "CCR 启动超时", "log": log.get("stdout", "").strip()[:2000]}
+    # macOS 或无 systemd：Popen detach
     import subprocess
     log_path = os.path.expanduser("~/.claude-code-router/ccr.log")
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
@@ -1637,7 +1654,10 @@ async def acp_fix():
     if os.path.isfile(ccr_cfg):
         ccr_r = await run_cmd("curl -s --connect-timeout 2 http://localhost:3456/health", timeout=3)
         if "ok" not in ccr_r.get("stdout", "").lower():
-            await run_cmd("nohup ccr start > /tmp/ccr.log 2>&1 &", timeout=3)
+            if is_mac:
+                await run_cmd("nohup ccr start > /tmp/ccr.log 2>&1 &", timeout=3)
+            else:
+                await run_cmd("systemctl start ccr 2>/dev/null || nohup ccr start > /tmp/ccr.log 2>&1 &", timeout=5)
             results.append("CCR 已启动")
     # 5. 重启 gateway
     if is_mac:
