@@ -2062,6 +2062,256 @@ def _find_last_json(text: str) -> dict:
     return {}
 
 
+# ── 安全扫描 / 病毒查杀 ─────────────────────────────────
+
+# 已知恶意文件路径
+_MALWARE_PATHS = [
+    "/usr/local/lib/libprocesshider.so",
+    "/lib/libudev.so", "/lib/libudev.so.6", "/usr/lib/libudev.so",
+    "/var/tmp/snap", "/var/tmp/.16", "/var/tmp/.x",
+    "/etc/cron.hourly/gcc.sh",
+]
+# init.d 合法服务名（用于过滤随机名恶意脚本）
+_LEGIT_INITD = {
+    "ssh", "sshd", "cron", "udev", "rsyslog", "hwclock.sh", "networking", "procps",
+    "kmod", "apparmor", "dbus", "console-setup.sh", "keyboard-setup.sh",
+    "screen-cleanup", "plymouth", "plymouth-log", "x11-common", "ufw",
+    "unattended-upgrades", "open-vm-tools", "qemu-guest-agent", "tat_agent",
+    "openclaw", "acpid", "apport", "chrony", "cryptdisks", "cryptdisks-early",
+    "grub-common", "iscsid", "kdump-tools", "open-iscsi", "rsync",
+    "selinux-autorelabel", "sysstat", "uuidd",
+}
+
+
+@app.get("/security/scan", dependencies=[auth])
+async def security_scan():
+    """全面安全扫描，基于实战经验检测挖矿木马和后门"""
+    issues = []  # {"level": "critical|warning|info", "category": "...", "detail": "..."}
+
+    # 1. ld.so.preload 注入检查
+    r = await run_cmd("cat /etc/ld.so.preload 2>/dev/null || echo ''", timeout=5)
+    preload = r.get("stdout", "").strip()
+    for line in preload.splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        # 腾讯云 libonion.so 是正常的
+        if "libonion" in line:
+            continue
+        issues.append({"level": "critical", "category": "ld.so.preload", "detail": f"可疑预加载库: {line}"})
+
+    # 2. 已知恶意文件
+    for p in _MALWARE_PATHS:
+        r = await run_cmd(f"ls -la {p} 2>/dev/null", timeout=3)
+        if r.get("ok"):
+            issues.append({"level": "critical", "category": "恶意文件", "detail": r["stdout"].strip()})
+
+    # 3. cron.hourly 可疑脚本
+    r = await run_cmd("ls /etc/cron.hourly/ 2>/dev/null", timeout=3)
+    for f in r.get("stdout", "").split():
+        if f.strip():
+            issues.append({"level": "warning", "category": "cron.hourly", "detail": f"/etc/cron.hourly/{f}"})
+
+    # 4. /etc/crontab 可疑条目
+    r = await run_cmd("grep -v '^#' /etc/crontab 2>/dev/null | grep -v '^$' | grep -v -E '^(SHELL|PATH|MAILTO|HOME)'", timeout=3)
+    for line in r.get("stdout", "").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        # 标准系统条目
+        if "run-parts" in line and ("cron.hourly" in line or "cron.daily" in line or "cron.weekly" in line or "cron.monthly" in line):
+            continue
+        issues.append({"level": "warning", "category": "crontab", "detail": line})
+
+    # 5. init.d 随机名脚本（恶意软件特征：10位随机小写字母）
+    r = await run_cmd("ls /etc/init.d/ 2>/dev/null", timeout=3)
+    for f in r.get("stdout", "").split():
+        f = f.strip()
+        if f and f not in _LEGIT_INITD and len(f) >= 8 and f.isalpha() and f.islower():
+            issues.append({"level": "critical", "category": "init.d恶意脚本", "detail": f"/etc/init.d/{f}"})
+
+    # 6. CPU 异常进程（>50%）
+    r = await run_cmd("ps aux --sort=-%cpu | awk 'NR>1 && $3>50{print $0}'", timeout=5)
+    for line in r.get("stdout", "").splitlines():
+        if line.strip():
+            issues.append({"level": "critical", "category": "高CPU进程", "detail": line.strip()[:200]})
+
+    # 7. /tmp /dev/shm /var/tmp 可执行文件
+    r = await run_cmd("find /tmp /dev/shm /var/tmp -type f -executable 2>/dev/null", timeout=5)
+    for line in r.get("stdout", "").splitlines():
+        if line.strip():
+            issues.append({"level": "warning", "category": "临时目录可执行文件", "detail": line.strip()})
+
+    # 8. /var/tmp 隐藏文件（排除系统目录）
+    r = await run_cmd("find /var/tmp -maxdepth 1 -name '.*' -not -name '.' -not -name '..' -type f 2>/dev/null", timeout=3)
+    for line in r.get("stdout", "").splitlines():
+        if line.strip():
+            issues.append({"level": "critical", "category": "隐藏恶意文件", "detail": line.strip()})
+
+    # 9. authorized_keys 被锁（ia 属性 = 恶意软件防删改）
+    r = await run_cmd("lsattr /root/.ssh/authorized_keys 2>/dev/null", timeout=3)
+    attrs = r.get("stdout", "")
+    if "i" in attrs.split()[0] if attrs.strip() else False:
+        issues.append({"level": "warning", "category": "authorized_keys", "detail": f"被锁定(immutable): {attrs.strip()}"})
+
+    # 10. 最近7天 /usr/bin 新增文件（恶意软件常复制到此）
+    r = await run_cmd("find /usr/bin -type f -mtime -7 -newer /usr/bin/ls 2>/dev/null | head -20", timeout=5)
+    for line in r.get("stdout", "").splitlines():
+        if line.strip():
+            issues.append({"level": "warning", "category": "/usr/bin新文件", "detail": line.strip()})
+
+    # 11. 网卡流量统计
+    r = await run_cmd("cat /proc/net/dev | grep eth0", timeout=3)
+    traffic = {}
+    if r.get("stdout"):
+        parts = r["stdout"].split()
+        if len(parts) >= 10:
+            rx = int(parts[1]) if parts[1].isdigit() else 0
+            tx = int(parts[9]) if parts[9].isdigit() else 0
+            traffic = {"rx_bytes": rx, "tx_bytes": tx, "rx_gb": round(rx / 1073741824, 2), "tx_gb": round(tx / 1073741824, 2)}
+            # 发送超过 50GB 告警
+            if tx > 53687091200:
+                issues.append({"level": "warning", "category": "异常流量", "detail": f"发送流量 {traffic['tx_gb']}GB，可能有历史恶意外连"})
+
+    # 12. 可疑外连（排除已知正常连接）
+    r = await run_cmd("ss -tnp | grep ESTAB", timeout=5)
+    conns = []
+    for line in r.get("stdout", "").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        # 正常进程
+        if any(x in line for x in ("openclaw", "tat_agent", "YDService", "barad_agent", "python3", "sshd")):
+            conns.append({"line": line[:200], "suspicious": False})
+            continue
+        conns.append({"line": line[:200], "suspicious": True})
+        issues.append({"level": "warning", "category": "可疑网络连接", "detail": line[:200]})
+
+    # 汇总
+    critical = sum(1 for i in issues if i["level"] == "critical")
+    warning = sum(1 for i in issues if i["level"] == "warning")
+    clean = critical == 0 and warning == 0
+
+    return {
+        "clean": clean,
+        "summary": f"{'✅ 安全' if clean else f'⚠️ 发现 {critical} 个严重问题, {warning} 个警告'}",
+        "critical": critical,
+        "warning": warning,
+        "issues": issues,
+        "traffic": traffic,
+        "connections": len(conns),
+    }
+
+
+@app.post("/security/fix", dependencies=[auth])
+async def security_fix(req: dict = {}):
+    """自动修复已知安全问题，基于实战清理经验"""
+    dry_run = req.get("dry_run", True)
+    results = []
+
+    # 1. 清理 ld.so.preload 恶意条目
+    r = await run_cmd("cat /etc/ld.so.preload 2>/dev/null || echo ''", timeout=3)
+    preload = r.get("stdout", "").strip()
+    malicious_preload = [l for l in preload.splitlines() if l.strip() and "libonion" not in l and not l.startswith("#")]
+    if malicious_preload:
+        if dry_run:
+            results.append(f"[预览] 清理 ld.so.preload: {malicious_preload}")
+        else:
+            # 只保留合法条目
+            clean = [l for l in preload.splitlines() if "libonion" in l or l.startswith("#")]
+            await run_cmd(f"echo '{chr(10).join(clean)}' > /etc/ld.so.preload", timeout=3)
+            results.append(f"已清理 ld.so.preload: 移除 {malicious_preload}")
+
+    # 2. 删除已知恶意文件
+    for p in _MALWARE_PATHS:
+        r = await run_cmd(f"ls {p} 2>/dev/null", timeout=3)
+        if r.get("ok"):
+            if dry_run:
+                results.append(f"[预览] 删除恶意文件: {p}")
+            else:
+                await run_cmd(f"rm -f {p}", timeout=3)
+                results.append(f"已删除: {p}")
+
+    # 3. 清理 init.d 随机名恶意脚本
+    r = await run_cmd("ls /etc/init.d/ 2>/dev/null", timeout=3)
+    for f in r.get("stdout", "").split():
+        f = f.strip()
+        if f and f not in _LEGIT_INITD and len(f) >= 8 and f.isalpha() and f.islower():
+            if dry_run:
+                results.append(f"[预览] 停止并删除恶意服务: {f}")
+            else:
+                await run_cmd(f"systemctl stop {f} 2>/dev/null; systemctl disable {f} 2>/dev/null; rm -f /etc/init.d/{f}", timeout=10)
+                results.append(f"已清理恶意服务: {f}")
+
+    # 4. 锁定 cron.hourly 防止恶意脚本写入
+    r = await run_cmd("lsattr -d /etc/cron.hourly 2>/dev/null", timeout=3)
+    if "i" not in (r.get("stdout", "").split()[0] if r.get("stdout", "").strip() else ""):
+        # 先清理里面的可疑文件
+        r2 = await run_cmd("ls /etc/cron.hourly/ 2>/dev/null", timeout=3)
+        for f in r2.get("stdout", "").split():
+            if f.strip():
+                if dry_run:
+                    results.append(f"[预览] 删除 /etc/cron.hourly/{f}")
+                else:
+                    await run_cmd(f"rm -f /etc/cron.hourly/{f}", timeout=3)
+                    results.append(f"已删除: /etc/cron.hourly/{f}")
+        if dry_run:
+            results.append("[预览] 锁定 /etc/cron.hourly (chattr +i)")
+        else:
+            await run_cmd("chattr +i /etc/cron.hourly", timeout=3)
+            results.append("已锁定 /etc/cron.hourly")
+
+    # 5. 解锁 authorized_keys
+    r = await run_cmd("lsattr /root/.ssh/authorized_keys 2>/dev/null", timeout=3)
+    attrs = r.get("stdout", "")
+    if attrs.strip() and ("i" in attrs.split()[0] or "a" in attrs.split()[0]):
+        if dry_run:
+            results.append(f"[预览] 解锁 authorized_keys: {attrs.strip()}")
+        else:
+            await run_cmd("chattr -ia /root/.ssh/authorized_keys", timeout=3)
+            results.append("已解锁 authorized_keys")
+
+    # 6. 杀死高 CPU 可疑进程
+    r = await run_cmd("ps aux --sort=-%cpu | awk 'NR>1 && $3>50{print $2, $11}'", timeout=5)
+    for line in r.get("stdout", "").splitlines():
+        parts = line.strip().split(None, 1)
+        if len(parts) < 2:
+            continue
+        pid, cmd = parts
+        # 排除正常进程
+        if any(x in cmd for x in ("openclaw", "python3", "node", "java", "mysql", "redis", "nginx")):
+            continue
+        if dry_run:
+            results.append(f"[预览] 杀死可疑进程: PID={pid} CMD={cmd}")
+        else:
+            await run_cmd(f"kill -9 {pid}", timeout=3)
+            results.append(f"已杀死: PID={pid} CMD={cmd}")
+
+    # 7. 清理 /var/tmp 可疑 ELF 文件
+    r = await run_cmd("find /var/tmp -maxdepth 1 -type f 2>/dev/null", timeout=3)
+    for line in r.get("stdout", "").splitlines():
+        fp = line.strip()
+        if not fp:
+            continue
+        fr = await run_cmd(f"file {fp} 2>/dev/null", timeout=3)
+        if "ELF" in fr.get("stdout", ""):
+            if dry_run:
+                results.append(f"[预览] 删除可疑ELF: {fp}")
+            else:
+                await run_cmd(f"rm -f {fp}", timeout=3)
+                results.append(f"已删除可疑ELF: {fp}")
+
+    if not dry_run:
+        await run_cmd("systemctl daemon-reload 2>/dev/null", timeout=5)
+
+    return {
+        "dry_run": dry_run,
+        "fixed": len(results),
+        "results": results,
+        "hint": "确认无误后用 dry_run=false 执行实际修复" if dry_run else "修复完成，建议重新运行 /security/scan 验证",
+    }
+
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("OPENCLAW_AGENT_PORT", "9966"))
