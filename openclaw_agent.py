@@ -487,7 +487,7 @@ c.start()
     with _feishu_lock:
         _feishu_log.clear()
     _feishu_proc = subprocess.Popen(
-        ["python3", tmp.name],
+        [sys.executable, tmp.name],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE,
     )
     _feishu_cfg = {"app_id": req.app_id, "log_level": req.log_level, "pid": _feishu_proc.pid, "_script": tmp.name}
