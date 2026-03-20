@@ -2136,11 +2136,15 @@ async def security_scan():
         if line.strip():
             issues.append({"level": "critical", "category": "高CPU进程", "detail": line.strip()[:200]})
 
-    # 7. /tmp /dev/shm /var/tmp 可执行文件
-    r = await run_cmd("find /tmp /dev/shm /var/tmp -type f -executable 2>/dev/null", timeout=5)
+    # 7. /tmp /dev/shm /var/tmp 可疑 ELF 可执行文件（排除 .git/hooks、.sample、已知项目脚本）
+    r = await run_cmd("find /tmp /dev/shm /var/tmp -maxdepth 1 -type f -executable 2>/dev/null", timeout=5)
     for line in r.get("stdout", "").splitlines():
-        if line.strip():
-            issues.append({"level": "warning", "category": "临时目录可执行文件", "detail": line.strip()})
+        fp = line.strip()
+        if not fp:
+            continue
+        fr = await run_cmd(f"file {fp} 2>/dev/null", timeout=3)
+        if "ELF" in fr.get("stdout", ""):
+            issues.append({"level": "critical", "category": "临时目录ELF文件", "detail": fp})
 
     # 8. /var/tmp 隐藏文件（排除系统目录）
     r = await run_cmd("find /var/tmp -maxdepth 1 -name '.*' -not -name '.' -not -name '..' -type f 2>/dev/null", timeout=3)
