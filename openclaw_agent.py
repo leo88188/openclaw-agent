@@ -5,6 +5,7 @@ OpenClaw Agent - 轻量远程管理服务
 鉴权: Bearer Token + 可选 HMAC-SHA256 签名（防重放、防篡改）
 """
 import os
+import sys
 import json
 import hmac
 import hashlib
