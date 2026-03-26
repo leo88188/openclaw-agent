@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill 市场 - Knowledge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+    <main class="ml-56 p-10 relative">
+        <div class="deco-line top-16 right-48"></div>
+
+        <div class="flex items-center justify-between mb-8">
+            <div class="title-enter">
+                <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">Skill 市场</h2>
+                <p class="mt-2" style="color:var(--text-muted)">浏览和分享提示词模板</p>
+            </div>
+            <button onclick="showCreateSkill()" class="btn-accent">
+                <i class="fa fa-plus mr-1"></i>创建 Skill
+            </button>
+        </div>
+        <div id="skill-list" class="grid grid-cols-4 gap-5"></div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/app.js"></script>
+    <script>
+    async function loadSkills() {
+        $('#skill-list').html(components.loading());
+        try {
+            const data = await api.getSkillList();
+            if (!data.items.length) { $('#skill-list').html(components.emptyState('暂无 Skill')); return; }
+            let html = '';
+            data.items.forEach((item, i) => {
+                html += `
+                <div class="card p-5 card-hover stagger" style="animation-delay:${i*0.05}s">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="tag">${escapeHtml(item.category || '通用')}</span>
+                        <button onclick="api.toggleFavorite(${item.id}).then(loadSkills)" style="color:var(--text-muted)" class="hover:opacity-80"><i class="fa fa-heart-o"></i></button>
+                    </div>
+                    <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(item.name)}</h3>
+                    <p class="text-sm mt-2" style="color:var(--text-secondary)">${truncate(item.description, 80)}</p>
+                    <div class="flex items-center gap-4 mt-4 text-xs" style="color:var(--text-muted)">
+                        <span><i class="fa fa-heart mr-1"></i>${item.favorite_count || 0}</span>
+                        <span><i class="fa fa-play mr-1"></i>${item.use_count || 0}</span>
+                    </div>
+                </div>`;
+            });
+            $('#skill-list').html(html);
+        } catch(e) { $('#skill-list').html(components.emptyState('加载失败')); }
+    }
+
+    function showCreateSkill() {
+        components.modal('创建 Skill', `
+            <input id="m-name" class="input-dark w-full mb-3" placeholder="Skill 名称">
+            <input id="m-desc" class="input-dark w-full mb-3" placeholder="描述">
+            <textarea id="m-prompt" class="input-dark w-full mb-3" rows="4" placeholder="提示词模板"></textarea>
+            <input id="m-cat" class="input-dark w-full" placeholder="分类">
+        `, async () => {
+            await api.createSkill({ name: $('#m-name').val(), description: $('#m-desc').val(), prompt_template: $('#m-prompt').val(), category: $('#m-cat').val() });
+            components.toast('创建成功', 'success');
+            loadSkills();
+        });
+    }
+
+    $(function() { loadSkills(); });
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能搜索 - Knowledge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+    <main class="ml-56 p-10 relative">
+        <div class="geo-deco w-20 h-20 top-4 right-16 opacity-10" style="animation-delay:0.5s;border-radius:50%"></div>
+
+        <div class="mb-8 title-enter">
+            <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">智能搜索</h2>
+            <p class="mt-2" style="color:var(--text-muted)">语义化搜索知识库内容</p>
+        </div>
+
+        <div class="card p-6 mb-8 stagger">
+            <div class="flex gap-3">
+                <input id="search-input" class="input-dark flex-1 text-lg" placeholder="输入关键词或自然语言搜索...">
+                <button id="search-btn" onclick="doSearch()" class="btn-accent px-6">
+                    <i class="fa fa-search mr-1"></i>搜索
+                </button>
+            </div>
+        </div>
+
+        <div id="search-results" class="grid grid-cols-2 gap-5"></div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/app.js"></script>
+    <script>
+    let _searchTimer = null;
+
+    async function doSearch() {
+        const q = $('#search-input').val().trim();
+        if (!q) return;
+        const btn = $('#search-btn');
+        btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin mr-1"></i>搜索中...');
+        $('#search-results').html(components.loading());
+        try {
+            const data = await api.search(q);
+            if (!data.items.length) { $('#search-results').html(components.emptyState('未找到相关结果')); return; }
+            let html = '';
+            data.items.forEach((item, i) => {
+                html += `
+                <div class="card p-5 card-hover stagger" style="animation-delay:${i*0.05}s">
+                    <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(item.title)}</h3>
+                    <p class="text-sm mt-3" style="color:var(--text-secondary)">${truncate(item.content, 200)}</p>
+                    <div class="flex items-center gap-3 mt-4 text-xs">
+                        ${item.category ? '<span class="tag">' + escapeHtml(item.category) + '</span>' : ''}
+                        <span style="color:var(--text-muted)"><i class="fa fa-clock-o mr-1"></i>${formatDate(item.created_at)}</span>
+                    </div>
+                </div>`;
+            });
+            $('#search-results').html(html);
+        } catch(e) { $('#search-results').html(components.emptyState('搜索失败')); }
+        finally { btn.prop('disabled', false).html('<i class="fa fa-search mr-1"></i>搜索'); }
+    }
+
+    $('#search-input').on('input', function() {
+        clearTimeout(_searchTimer);
+        _searchTimer = setTimeout(doSearch, 300);
+    });
+    $('#search-input').on('keypress', function(e) { if (e.which === 13) { clearTimeout(_searchTimer); doSearch(); } });
+    </script>
+</body>
+</html>

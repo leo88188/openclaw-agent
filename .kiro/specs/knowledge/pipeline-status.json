@@ -1,0 +1,65 @@
+{
+  "id": "feature-knowledge-20260325204315",
+  "feature": "knowledge",
+  "stage": "frontend",
+  "updated_at": "2026-03-26T17:27:55.563617",
+  "steps": {
+    "pm": {
+      "status": "pending",
+      "retries": 0,
+      "startTime": null,
+      "output": null,
+      "error": null
+    },
+    "architect": {
+      "status": "pending",
+      "retries": 0,
+      "startTime": null,
+      "output": null,
+      "error": null
+    },
+    "frontend": {
+      "status": "in_progress",
+      "retries": 1,
+      "startTime": "2026-03-26T17:27:55.563624",
+      "output": null,
+      "error": null
+    },
+    "backend": {
+      "status": "pending",
+      "retries": 0,
+      "startTime": null,
+      "output": null,
+      "error": null
+    },
+    "client": {
+      "status": "pending",
+      "retries": 0,
+      "startTime": null,
+      "output": null,
+      "error": null
+    },
+    "qa": {
+      "status": "pending",
+      "retries": 0,
+      "startTime": null,
+      "output": null,
+      "error": null
+    },
+    "review": {
+      "status": "pending",
+      "retries": 0,
+      "startTime": null,
+      "output": null,
+      "error": null
+    },
+    "devops": {
+      "status": "completed",
+      "retries": 1,
+      "startTime": "2026-03-26T14:19:58.756000",
+      "output": ".kiro/specs/knowledge/release.md",
+      "error": null
+    }
+  },
+  "errors": []
+}

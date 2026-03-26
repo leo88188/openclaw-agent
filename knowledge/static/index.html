@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge - AI知识库</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+    <main class="ml-56 p-10 relative">
+        <!-- Decorative elements -->
+        <div class="geo-deco w-16 h-16 -top-2 right-24 opacity-20" style="animation-delay:0s"></div>
+        <div class="geo-deco w-10 h-10 top-32 right-8 opacity-10" style="animation-delay:2s;border-radius:50%"></div>
+        <div class="deco-line top-20 right-40"></div>
+
+        <div class="mb-10 title-enter">
+            <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">仪表盘</h2>
+            <p class="mt-2" style="color:var(--text-muted)">知识库概览与快捷操作</p>
+        </div>
+
+        <div class="grid grid-cols-4 gap-5 mb-10">
+            <div class="card p-6 stagger glow-pulse">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">知识条目</p>
+                        <p id="stat-knowledge" class="text-4xl font-bold font-display mt-2" style="color:var(--text-primary)">-</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:var(--accent-dim)">
+                        <i class="fa fa-book text-lg" style="color:var(--accent)"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-6 stagger">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">Skill 模板</p>
+                        <p id="stat-skills" class="text-4xl font-bold font-display mt-2" style="color:var(--text-primary)">-</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(52,211,153,0.12)">
+                        <i class="fa fa-magic text-lg" style="color:var(--success)"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-6 stagger">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">数据表</p>
+                        <p id="stat-tables" class="text-4xl font-bold font-display mt-2" style="color:var(--text-primary)">-</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(96,165,250,0.12)">
+                        <i class="fa fa-database text-lg" style="color:var(--info)"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-6 stagger">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">系统状态</p>
+                        <p class="text-lg font-bold mt-2" style="color:var(--success)"><i class="fa fa-circle text-xs mr-1"></i>运行中</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(52,211,153,0.12)">
+                        <i class="fa fa-heartbeat text-lg" style="color:var(--success)"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-5">
+            <div class="card p-6 stagger">
+                <h3 class="font-display font-semibold mb-5" style="color:var(--text-primary)"><i class="fa fa-bolt mr-2" style="color:var(--accent)"></i>快捷操作</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <a href="/knowledge.html" class="flex items-center gap-3 p-3 rounded-xl transition" style="background:var(--accent-dim);color:var(--accent)">
+                        <i class="fa fa-plus-circle"></i><span class="font-medium text-sm">新建知识</span>
+                    </a>
+                    <a href="/search.html" class="flex items-center gap-3 p-3 rounded-xl transition" style="background:rgba(52,211,153,0.1);color:var(--success)">
+                        <i class="fa fa-search"></i><span class="font-medium text-sm">搜索知识</span>
+                    </a>
+                    <a href="/skills.html" class="flex items-center gap-3 p-3 rounded-xl transition" style="background:rgba(96,165,250,0.1);color:var(--info)">
+                        <i class="fa fa-magic"></i><span class="font-medium text-sm">浏览 Skill</span>
+                    </a>
+                    <a href="/metadata.html" class="flex items-center gap-3 p-3 rounded-xl transition" style="background:rgba(251,146,60,0.1);color:#fb923c">
+                        <i class="fa fa-database"></i><span class="font-medium text-sm">导入元数据</span>
+                    </a>
+                </div>
+            </div>
+            <div class="card p-6 stagger">
+                <h3 class="font-display font-semibold mb-5" style="color:var(--text-primary)"><i class="fa fa-info-circle mr-2" style="color:var(--info)"></i>系统信息</h3>
+                <div class="space-y-4 text-sm">
+                    <div class="flex justify-between"><span style="color:var(--text-muted)">平台版本</span><span class="font-mono" style="color:var(--text-secondary)">v1.0.0</span></div>
+                    <div class="flex justify-between"><span style="color:var(--text-muted)">后端框架</span><span style="color:var(--text-secondary)">FastAPI + MySQL + Redis</span></div>
+                    <div class="flex justify-between"><span style="color:var(--text-muted)">向量引擎</span><span style="color:var(--text-secondary)">内置 (可扩展)</span></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/app.js"></script>
+    <script>
+    $(async function() {
+        try {
+            const stats = await api.getStats();
+            $('#stat-knowledge').text(stats.knowledge_count);
+            $('#stat-skills').text(stats.skill_count);
+            $('#stat-tables').text(stats.table_count);
+        } catch(e) {
+            console.log('Stats API not available yet');
+        }
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识管理 - Knowledge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+    <main class="ml-56 p-10 relative">
+        <div class="geo-deco w-14 h-14 -top-2 right-32 opacity-15" style="animation-delay:1s"></div>
+
+        <div class="flex items-center justify-between mb-8">
+            <div class="title-enter">
+                <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">知识管理</h2>
+                <p class="mt-2" style="color:var(--text-muted)">管理团队知识条目</p>
+            </div>
+            <button onclick="showCreateModal()" class="btn-accent">
+                <i class="fa fa-plus mr-1"></i>新建知识
+            </button>
+        </div>
+
+        <div id="knowledge-list" class="grid grid-cols-2 gap-5"></div>
+        <div id="pagination"></div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/app.js"></script>
+    <script>
+    let currentPage = 1;
+
+    async function loadList(page) {
+        currentPage = page || 1;
+        $('#knowledge-list').html(components.loading());
+        try {
+            const data = await api.getKnowledgeList(currentPage);
+            if (!data.items.length) { $('#knowledge-list').html(components.emptyState('暂无知识条目')); $('#pagination').html(''); return; }
+            let html = '';
+            data.items.forEach((item, i) => {
+                html += `
+                <div class="card p-5 card-hover stagger" style="animation-delay:${i*0.05}s">
+                    <div class="flex items-start justify-between">
+                        <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(item.title)}</h3>
+                        <div class="flex gap-2">
+                            <button onclick="editItem(${item.id})" style="color:var(--text-muted)" class="hover:opacity-80"><i class="fa fa-edit"></i></button>
+                            <button onclick="deleteItem(${item.id})" style="color:var(--text-muted)" class="hover:opacity-80"><i class="fa fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <p class="text-sm mt-3" style="color:var(--text-secondary)">${truncate(item.content, 120)}</p>
+                    <div class="flex items-center gap-3 mt-4 text-xs">
+                        ${item.category ? '<span class="tag">' + escapeHtml(item.category) + '</span>' : ''}
+                        <span style="color:var(--text-muted)"><i class="fa fa-clock-o mr-1"></i>${formatDate(item.created_at)}</span>
+                    </div>
+                </div>`;
+            });
+            $('#knowledge-list').html(html);
+            $('#pagination').html(components.pagination(data.total || data.items.length, currentPage, data.size || 20, 'loadList'));
+        } catch(e) { $('#knowledge-list').html(components.emptyState('加载失败')); }
+    }
+
+    function showCreateModal() {
+        components.modal('新建知识', `
+            <input id="m-title" class="input-dark w-full mb-3" placeholder="标题">
+            <textarea id="m-content" class="input-dark w-full mb-3" rows="5" placeholder="内容（支持Markdown）"></textarea>
+            <input id="m-category" class="input-dark w-full" placeholder="分类">
+        `, async () => {
+            await api.createKnowledge({ title: $('#m-title').val(), content: $('#m-content').val(), category: $('#m-category').val() });
+            components.toast('创建成功', 'success');
+            loadList();
+        });
+    }
+
+    async function deleteItem(id) {
+        components.confirm('确认删除该知识条目？', async () => {
+            await api.deleteKnowledge(id);
+            components.toast('已删除', 'success');
+            loadList();
+        });
+    }
+
+    async function editItem(id) {
+        const item = await api.getKnowledge(id);
+        components.modal('编辑知识', `
+            <input id="m-title" class="input-dark w-full mb-3" value="${escapeHtml(item.title)}">
+            <textarea id="m-content" class="input-dark w-full mb-3" rows="5">${escapeHtml(item.content)}</textarea>
+            <input id="m-category" class="input-dark w-full" value="${escapeHtml(item.category || '')}">
+        `, async () => {
+            await api.updateKnowledge(id, { title: $('#m-title').val(), content: $('#m-content').val(), category: $('#m-category').val() });
+            components.toast('更新成功', 'success');
+            loadList();
+        });
+    }
+
+    $(function() { loadList(); });
+    </script>
+</body>
+</html>

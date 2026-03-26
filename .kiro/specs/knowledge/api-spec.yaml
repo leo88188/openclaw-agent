@@ -1,0 +1,239 @@
+openapi: "3.0.3"
+info:
+  title: Knowledge API
+  version: "1.0.0"
+  description: AI知识库管理系统 API
+
+servers:
+  - url: http://localhost:8000
+    description: 本地开发
+
+paths:
+  # ── 知识管理 ──
+  /api/v1/knowledge:
+    get:
+      summary: 知识列表
+      parameters:
+        - name: page
+          in: query
+          schema: { type: integer, default: 1 }
+        - name: page_size
+          in: query
+          schema: { type: integer, default: 20 }
+        - name: category
+          in: query
+          schema: { type: string }
+        - name: keyword
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: 分页列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total: { type: integer }
+                  items: { type: array, items: { $ref: "#/components/schemas/KnowledgeItem" } }
+    post:
+      summary: 创建知识条目
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/KnowledgeCreate" }
+      responses:
+        "201":
+          description: 创建成功
+
+  /api/v1/knowledge/{id}:
+    get:
+      summary: 知识详情
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: 详情
+    put:
+      summary: 更新知识
+      responses:
+        "200":
+          description: 更新成功
+    delete:
+      summary: 删除知识(软删除)
+      responses:
+        "200":
+          description: 删除成功
+
+  # ── 向量搜索 ──
+  /api/v1/search:
+    post:
+      summary: 向量语义搜索
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query: { type: string }
+                top_k: { type: integer, default: 10 }
+                category: { type: string }
+      responses:
+        "200":
+          description: 搜索结果
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id: { type: integer }
+                        title: { type: string }
+                        content: { type: string }
+                        score: { type: number }
+
+  # ── Skill 管理 ──
+  /api/v1/skills:
+    get:
+      summary: Skill列表
+      parameters:
+        - name: page
+          in: query
+          schema: { type: integer, default: 1 }
+        - name: category
+          in: query
+          schema: { type: string }
+        - name: is_public
+          in: query
+          schema: { type: boolean }
+      responses:
+        "200":
+          description: 分页列表
+    post:
+      summary: 创建Skill
+      responses:
+        "201":
+          description: 创建成功
+
+  /api/v1/skills/{id}:
+    get:
+      summary: Skill详情
+      responses:
+        "200":
+          description: 详情
+    put:
+      summary: 更新Skill
+      responses:
+        "200":
+          description: 更新成功
+    delete:
+      summary: 删除Skill
+      responses:
+        "200":
+          description: 删除成功
+
+  /api/v1/skills/{id}/favorite:
+    post:
+      summary: 收藏/取消收藏
+      responses:
+        "200":
+          description: 操作成功
+
+  # ── 元数据 ──
+  /api/v1/metadata/tables:
+    get:
+      summary: 数据库表列表
+      responses:
+        "200":
+          description: 表列表
+
+  /api/v1/metadata/tables/{table_name}:
+    get:
+      summary: 表结构详情
+      responses:
+        "200":
+          description: 字段列表
+
+  /api/v1/metadata/import:
+    post:
+      summary: 导入元数据
+      responses:
+        "200":
+          description: 导入成功
+
+  # ── 团队 ──
+  /api/v1/teams:
+    get:
+      summary: 团队列表
+      responses:
+        "200":
+          description: 团队列表
+    post:
+      summary: 创建团队
+      responses:
+        "201":
+          description: 创建成功
+
+  /api/v1/teams/{id}/members:
+    get:
+      summary: 团队成员
+      responses:
+        "200":
+          description: 成员列表
+    post:
+      summary: 添加成员
+      responses:
+        "201":
+          description: 添加成功
+
+  # ── 仪表盘 ──
+  /api/v1/dashboard/stats:
+    get:
+      summary: 统计概览
+      responses:
+        "200":
+          description: 统计数据
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  knowledge_count: { type: integer }
+                  skill_count: { type: integer }
+                  team_count: { type: integer }
+                  table_count: { type: integer }
+                  recent_items: { type: array }
+
+components:
+  schemas:
+    KnowledgeItem:
+      type: object
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        content: { type: string }
+        category: { type: string }
+        tags: { type: array, items: { type: string } }
+        team_id: { type: integer }
+        created_by: { type: string }
+        created_at: { type: string, format: date-time }
+
+    KnowledgeCreate:
+      type: object
+      required: [title, content]
+      properties:
+        title: { type: string }
+        content: { type: string }
+        category: { type: string }
+        tags: { type: array, items: { type: string } }
+        team_id: { type: integer }
