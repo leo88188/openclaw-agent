@@ -2,7 +2,7 @@
   "id": "feature-knowledge-20260325204315",
   "feature": "knowledge",
   "stage": "frontend",
-  "updated_at": "2026-03-26T17:27:55.563617",
+  "updated_at": "2026-03-26T17:35:57.511000",
   "steps": {
     "pm": {
       "status": "pending",
@@ -21,7 +21,7 @@
     "frontend": {
       "status": "in_progress",
       "retries": 1,
-      "startTime": "2026-03-26T17:27:55.563624",
+      "startTime": "2026-03-26T17:35:57.511000",
       "output": null,
       "error": null
     },
