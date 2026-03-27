@@ -1,13 +1,20 @@
 {
   "id": "feature-knowledge-20260325204315",
   "feature": "knowledge",
-  "stage": "pm",
-  "updated_at": "2026-03-27T12:59:13.398000",
+  "stage": "uxui",
+  "updated_at": "2026-03-27T18:11:46.123000",
   "steps": {
     "pm": {
-      "status": "in_progress",
+      "status": "completed",
       "retries": 1,
       "startTime": "2026-03-27T12:59:13.398000",
+      "output": "requirements.md",
+      "error": null
+    },
+    "uxui": {
+      "status": "in_progress",
+      "retries": 1,
+      "startTime": "2026-03-27T18:11:46.123000",
       "output": null,
       "error": null
     },

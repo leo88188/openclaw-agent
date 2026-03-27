@@ -1,14 +1,14 @@
 {
   "id": "feature-knowledge-20260325204315",
   "feature": "knowledge",
-  "stage": "pm",
-  "updated_at": "2026-03-27T12:58:34.446454",
+  "stage": "uxui",
+  "updated_at": "2026-03-27T18:11:13.661697",
   "steps": {
     "pm": {
-      "status": "pending",
-      "retries": 0,
-      "startTime": null,
-      "output": null,
+      "status": "completed",
+      "retries": 1,
+      "startTime": "2026-03-27T12:59:13.398000",
+      "output": "requirements.md",
       "error": null
     },
     "architect": {
