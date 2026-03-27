@@ -1,0 +1,6 @@
+[2026年 3月27日 星期五 10时40分37秒 CST] 执行 knowledge/restart.sh (by architect-agent)
+Killing processes on port 9998: 60392
+Killing processes on port 9999: 60391
+Backend started (PID: 51056)
+Frontend started (PID: 51057)
+Done. Backend: http://localhost:9999  Frontend: http://localhost:9998

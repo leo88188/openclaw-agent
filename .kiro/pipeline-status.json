@@ -1,8 +1,8 @@
 {
   "id": "feature-knowledge-20260325204315",
   "feature": "knowledge",
-  "stage": "architect",
-  "updated_at": "2026-03-27T10:28:53.593149",
+  "stage": "pm",
+  "updated_at": "2026-03-27T12:58:34.446454",
   "steps": {
     "pm": {
       "status": "pending",
@@ -12,10 +12,10 @@
       "error": null
     },
     "architect": {
-      "status": "pending",
-      "retries": 0,
-      "startTime": null,
-      "output": null,
+      "status": "completed",
+      "retries": 1,
+      "startTime": "2026-03-27T10:29:33.031000",
+      "output": "design.md, db-design.md, frontend-design.md, api-spec.yaml, execution-plan.md",
       "error": null
     },
     "frontend": {
