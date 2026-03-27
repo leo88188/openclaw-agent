@@ -1,8 +1,8 @@
 {
   "id": "feature-knowledge-20260325204315",
   "feature": "knowledge",
-  "stage": "frontend",
-  "updated_at": "2026-03-26T17:35:24.583487",
+  "stage": "architect",
+  "updated_at": "2026-03-27T10:28:53.593149",
   "steps": {
     "pm": {
       "status": "pending",
@@ -19,10 +19,10 @@
       "error": null
     },
     "frontend": {
-      "status": "pending",
-      "retries": 0,
-      "startTime": null,
-      "output": null,
+      "status": "completed",
+      "retries": 1,
+      "startTime": "2026-03-26T17:35:57.511000",
+      "output": "knowledge/static/",
       "error": null
     },
     "backend": {

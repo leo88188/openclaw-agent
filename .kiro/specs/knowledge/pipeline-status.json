@@ -1,8 +1,8 @@
 {
   "id": "feature-knowledge-20260325204315",
   "feature": "knowledge",
-  "stage": "frontend",
-  "updated_at": "2026-03-26T17:35:57.511000",
+  "stage": "architect",
+  "updated_at": "2026-03-27T10:29:33.031000",
   "steps": {
     "pm": {
       "status": "pending",
@@ -12,17 +12,17 @@
       "error": null
     },
     "architect": {
-      "status": "pending",
-      "retries": 0,
-      "startTime": null,
+      "status": "in_progress",
+      "retries": 1,
+      "startTime": "2026-03-27T10:29:33.031000",
       "output": null,
       "error": null
     },
     "frontend": {
-      "status": "in_progress",
+      "status": "completed",
       "retries": 1,
       "startTime": "2026-03-26T17:35:57.511000",
-      "output": null,
+      "output": "knowledge/static/",
       "error": null
     },
     "backend": {

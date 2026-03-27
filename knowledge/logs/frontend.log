@@ -150,3 +150,45 @@
 ::1 - - [26/Mar/2026 17:33:39] "GET /api/v1/knowledge?page=1 HTTP/1.1" 404 -
 ::1 - - [26/Mar/2026 17:33:40] code 404, message File not found
 ::1 - - [26/Mar/2026 17:33:40] "GET /api/v1/dashboard/stats HTTP/1.1" 404 -
+::1 - - [26/Mar/2026 17:43:29] "GET / HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 17:43:29] "GET /css/custom.css HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 17:43:29] "GET /js/components.js HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 17:43:29] "GET /js/app.js HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 17:43:29] "GET /js/api.js HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 17:43:29] code 404, message File not found
+::1 - - [26/Mar/2026 17:43:29] "GET /api/v1/dashboard/stats HTTP/1.1" 404 -
+::1 - - [26/Mar/2026 17:43:30] "GET /knowledge.html HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 17:43:30] code 404, message File not found
+::1 - - [26/Mar/2026 17:43:30] "GET /api/v1/knowledge?page=1 HTTP/1.1" 404 -
+::1 - - [26/Mar/2026 17:43:31] "GET /search.html HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 17:43:32] code 404, message File not found
+::1 - - [26/Mar/2026 17:43:32] "GET /api/v1/dashboard/stats HTTP/1.1" 404 -
+::1 - - [26/Mar/2026 17:43:33] "GET /metadata.html HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 17:43:33] code 404, message File not found
+::1 - - [26/Mar/2026 17:43:33] "GET /api/v1/metadata/tables HTTP/1.1" 404 -
+::1 - - [26/Mar/2026 17:43:34] "GET /teams.html HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 17:43:34] code 404, message File not found
+::1 - - [26/Mar/2026 17:43:34] "GET /api/v1/teams HTTP/1.1" 404 -
+::1 - - [26/Mar/2026 17:43:34] code 404, message File not found
+::1 - - [26/Mar/2026 17:43:34] "GET /api/v1/metadata/tables HTTP/1.1" 404 -
+::1 - - [26/Mar/2026 18:00:34] "GET /metadata.html HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 18:00:34] "GET /css/custom.css HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 18:00:34] "GET /js/components.js HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 18:00:34] "GET /js/app.js HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 18:00:34] "GET /js/api.js HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 18:00:40] code 404, message File not found
+::1 - - [26/Mar/2026 18:00:40] "GET /api/v1/metadata/tables HTTP/1.1" 404 -
+::1 - - [26/Mar/2026 18:00:42] "GET /knowledge.html HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 18:00:42] code 404, message File not found
+::1 - - [26/Mar/2026 18:00:42] "GET /api/v1/knowledge?page=1 HTTP/1.1" 404 -
+::1 - - [26/Mar/2026 18:00:43] "GET / HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 18:00:43] code 404, message File not found
+::1 - - [26/Mar/2026 18:00:43] "GET /api/v1/dashboard/stats HTTP/1.1" 404 -
+::1 - - [26/Mar/2026 18:00:44] "GET /search.html HTTP/1.1" 304 -
+::1 - - [26/Mar/2026 18:00:44] code 404, message File not found
+::1 - - [26/Mar/2026 18:00:44] "GET /api/v1/metadata/tables HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [27/Mar/2026 10:02:16] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [27/Mar/2026 10:02:16] "GET /css/custom.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [27/Mar/2026 10:02:16] "GET /js/api.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [27/Mar/2026 10:02:16] "GET /js/components.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [27/Mar/2026 10:02:16] "GET /js/app.js HTTP/1.1" 200 -

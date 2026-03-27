@@ -2,17 +2,200 @@ openapi: "3.0.3"
 info:
   title: Knowledge API
   version: "1.0.0"
-  description: AI知识库管理系统 API
+  description: AI知识库管理系统 API — OpenClaw 龙虾团队
 
 servers:
-  - url: http://localhost:8000
+  - url: http://localhost:9999
     description: 本地开发
 
+tags:
+  - name: knowledge
+    description: 知识条目管理
+  - name: search
+    description: 语义搜索
+  - name: skills
+    description: Skill/提示词管理
+  - name: metadata
+    description: 数据库元数据
+  - name: teams
+    description: 团队空间
+  - name: dashboard
+    description: 仪表盘
+
 paths:
-  # ── 知识管理 ──
   /api/v1/knowledge:
     get:
-      summary: 知识列表
+      tags: [knowledge]
+      operationId: listKnowledge
+      summary: 知识列表（分页、筛选）
+      parameters:
+        - name: page
+          in: query
+          schema: { type: integer, default: 1, minimum: 1 }
+        - name: page_size
+          in: query
+          schema: { type: integer, default: 20, minimum: 1, maximum: 100 }
+        - name: category
+          in: query
+          schema: { type: string }
+          description: 按分类筛选
+        - name: keyword
+          in: query
+          schema: { type: string }
+          description: 关键词搜索
+      responses:
+        "200":
+          description: 分页列表
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListKnowledgeResponse"
+              example:
+                total: 42
+                page: 1
+                page_size: 20
+                items:
+                  - id: 1
+                    title: "MySQL 索引优化指南"
+                    content: "# 索引优化..."
+                    category: "数据库"
+                    tags: ["mysql", "性能"]
+                    team_id: null
+                    created_by: "张三"
+                    created_at: "2026-03-25T10:00:00"
+                    updated_at: "2026-03-25T10:00:00"
+        "500":
+          $ref: "#/components/responses/InternalError"
+    post:
+      tags: [knowledge]
+      operationId: createKnowledge
+      summary: 创建知识条目
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateKnowledgeRequest"
+            example:
+              title: "Redis 缓存策略"
+              content: "# 缓存策略\n\n## 1. TTL 设计..."
+              category: "技术"
+              tags: ["redis", "缓存"]
+      responses:
+        "201":
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Knowledge"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /api/v1/knowledge/{id}:
+    get:
+      tags: [knowledge]
+      operationId: getKnowledge
+      summary: 知识详情
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: 详情
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Knowledge"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [knowledge]
+      operationId: updateKnowledge
+      summary: 更新知识条目（幂等）
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateKnowledgeRequest"
+      responses:
+        "200":
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Knowledge"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags: [knowledge]
+      operationId: deleteKnowledge
+      summary: 删除知识条目（软删除，幂等）
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: 删除成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean, example: true }
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/v1/search:
+    post:
+      tags: [search]
+      operationId: semanticSearch
+      summary: 语义搜索（当前为关键词搜索，后续升级向量搜索）
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+            example:
+              query: "MySQL 索引优化"
+              category: null
+              limit: 20
+      responses:
+        "200":
+          description: 搜索结果
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResponse"
+              example:
+                total: 3
+                items:
+                  - id: 1
+                    title: "MySQL 索引优化指南"
+                    content: "索引优化的核心原则..."
+                    category: "数据库"
+                    tags: ["mysql"]
+                    created_at: "2026-03-25T10:00:00"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /api/v1/skills:
+    get:
+      tags: [skills]
+      operationId: listSkills
+      summary: Skill 列表
       parameters:
         - name: page
           in: query
@@ -23,33 +206,48 @@ paths:
         - name: category
           in: query
           schema: { type: string }
-        - name: keyword
+        - name: is_public
           in: query
-          schema: { type: string }
+          schema: { type: boolean }
       responses:
         "200":
           description: 分页列表
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  total: { type: integer }
-                  items: { type: array, items: { $ref: "#/components/schemas/KnowledgeItem" } }
+                $ref: "#/components/schemas/ListSkillsResponse"
     post:
-      summary: 创建知识条目
+      tags: [skills]
+      operationId: createSkill
+      summary: 创建 Skill
       requestBody:
         required: true
         content:
           application/json:
-            schema: { $ref: "#/components/schemas/KnowledgeCreate" }
+            schema:
+              $ref: "#/components/schemas/CreateSkillRequest"
+            example:
+              name: "代码审查助手"
+              description: "帮助审查代码质量"
+              prompt_template: "请审查以下代码：\n{{code}}"
+              params: [{ "name": "code", "type": "string", "required": true }]
+              category: "开发"
+              is_public: true
       responses:
         "201":
           description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Skill"
+        "400":
+          $ref: "#/components/responses/BadRequest"
 
-  /api/v1/knowledge/{id}:
+  /api/v1/skills/{id}:
     get:
-      summary: 知识详情
+      tags: [skills]
+      operationId: getSkill
+      summary: Skill 详情
       parameters:
         - name: id
           in: path
@@ -58,182 +256,487 @@ paths:
       responses:
         "200":
           description: 详情
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Skill"
+        "404":
+          $ref: "#/components/responses/NotFound"
     put:
-      summary: 更新知识
+      tags: [skills]
+      operationId: updateSkill
+      summary: 更新 Skill（幂等）
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSkillRequest"
       responses:
         "200":
           description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Skill"
+        "404":
+          $ref: "#/components/responses/NotFound"
     delete:
-      summary: 删除知识(软删除)
+      tags: [skills]
+      operationId: deleteSkill
+      summary: 删除 Skill（软删除，幂等）
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
       responses:
         "200":
           description: 删除成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+        "404":
+          $ref: "#/components/responses/NotFound"
 
-  # ── 向量搜索 ──
-  /api/v1/search:
+  /api/v1/skills/{id}/favorite:
     post:
-      summary: 向量语义搜索
+      tags: [skills]
+      operationId: toggleSkillFavorite
+      summary: 收藏/取消收藏 Skill（toggle，幂等）
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_name:
+                  type: string
+                  description: 用户标识
+      responses:
+        "200":
+          description: 操作成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  favorited: { type: boolean }
+                  favorite_count: { type: integer }
+
+  /api/v1/metadata/tables:
+    get:
+      tags: [metadata]
+      operationId: listMetadataTables
+      summary: 数据库表列表
+      responses:
+        "200":
+          description: 表列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tables:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        table_name: { type: string }
+                        table_comment: { type: string, nullable: true }
+                        column_count: { type: integer }
+              example:
+                tables:
+                  - table_name: "knowledge_items"
+                    table_comment: "知识条目表"
+                    column_count: 11
+
+  /api/v1/metadata/tables/{table_name}:
+    get:
+      tags: [metadata]
+      operationId: getMetadataTable
+      summary: 表结构详情
+      parameters:
+        - name: table_name
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: 字段列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  table_name: { type: string }
+                  table_comment: { type: string, nullable: true }
+                  columns:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        column_name: { type: string }
+                        column_type: { type: string }
+                        column_comment: { type: string, nullable: true }
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/v1/metadata/import:
+    post:
+      tags: [metadata]
+      operationId: importMetadata
+      summary: 导入数据库元数据
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
-              required: [query]
+              required: [db_name]
               properties:
-                query: { type: string }
-                top_k: { type: integer, default: 10 }
-                category: { type: string }
+                db_name:
+                  type: string
+                  description: 要导入的数据库名
+            example:
+              db_name: "knowledge"
       responses:
         "200":
-          description: 搜索结果
+          description: 导入成功
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  results:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id: { type: integer }
-                        title: { type: string }
-                        content: { type: string }
-                        score: { type: number }
+                  imported_tables: { type: integer }
+                  imported_columns: { type: integer }
 
-  # ── Skill 管理 ──
-  /api/v1/skills:
-    get:
-      summary: Skill列表
-      parameters:
-        - name: page
-          in: query
-          schema: { type: integer, default: 1 }
-        - name: category
-          in: query
-          schema: { type: string }
-        - name: is_public
-          in: query
-          schema: { type: boolean }
-      responses:
-        "200":
-          description: 分页列表
-    post:
-      summary: 创建Skill
-      responses:
-        "201":
-          description: 创建成功
-
-  /api/v1/skills/{id}:
-    get:
-      summary: Skill详情
-      responses:
-        "200":
-          description: 详情
-    put:
-      summary: 更新Skill
-      responses:
-        "200":
-          description: 更新成功
-    delete:
-      summary: 删除Skill
-      responses:
-        "200":
-          description: 删除成功
-
-  /api/v1/skills/{id}/favorite:
-    post:
-      summary: 收藏/取消收藏
-      responses:
-        "200":
-          description: 操作成功
-
-  # ── 元数据 ──
-  /api/v1/metadata/tables:
-    get:
-      summary: 数据库表列表
-      responses:
-        "200":
-          description: 表列表
-
-  /api/v1/metadata/tables/{table_name}:
-    get:
-      summary: 表结构详情
-      responses:
-        "200":
-          description: 字段列表
-
-  /api/v1/metadata/import:
-    post:
-      summary: 导入元数据
-      responses:
-        "200":
-          description: 导入成功
-
-  # ── 团队 ──
   /api/v1/teams:
     get:
+      tags: [teams]
+      operationId: listTeams
       summary: 团队列表
       responses:
         "200":
           description: 团队列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Team"
     post:
+      tags: [teams]
+      operationId: createTeam
       summary: 创建团队
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTeamRequest"
+            example:
+              name: "数据团队"
+              description: "负责数据平台建设"
+              created_by: "张三"
       responses:
         "201":
           description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Team"
 
   /api/v1/teams/{id}/members:
     get:
-      summary: 团队成员
+      tags: [teams]
+      operationId: listTeamMembers
+      summary: 团队成员列表
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
       responses:
         "200":
           description: 成员列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/TeamMember"
     post:
-      summary: 添加成员
+      tags: [teams]
+      operationId: addTeamMember
+      summary: 添加团队成员
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [user_name]
+              properties:
+                user_name: { type: string }
+                role:
+                  type: string
+                  enum: [admin, editor, viewer]
+                  default: viewer
       responses:
         "201":
           description: 添加成功
+        "409":
+          $ref: "#/components/responses/Conflict"
 
-  # ── 仪表盘 ──
   /api/v1/dashboard/stats:
     get:
-      summary: 统计概览
+      tags: [dashboard]
+      operationId: getDashboardStats
+      summary: 仪表盘统计概览
       responses:
         "200":
           description: 统计数据
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  knowledge_count: { type: integer }
-                  skill_count: { type: integer }
-                  team_count: { type: integer }
-                  table_count: { type: integer }
-                  recent_items: { type: array }
+                $ref: "#/components/schemas/DashboardStats"
+              example:
+                knowledge_count: 128
+                skill_count: 45
+                table_count: 12
 
 components:
   schemas:
-    KnowledgeItem:
+    # ── 知识 ──
+    Knowledge:
       type: object
       properties:
         id: { type: integer }
         title: { type: string }
         content: { type: string }
-        category: { type: string }
-        tags: { type: array, items: { type: string } }
-        team_id: { type: integer }
-        created_by: { type: string }
+        category: { type: string, nullable: true }
+        tags: { type: array, items: { type: string }, nullable: true }
+        team_id: { type: integer, nullable: true }
+        created_by: { type: string, nullable: true }
         created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
 
-    KnowledgeCreate:
+    CreateKnowledgeRequest:
       type: object
       required: [title, content]
       properties:
-        title: { type: string }
+        title: { type: string, maxLength: 255 }
         content: { type: string }
-        category: { type: string }
+        category: { type: string, maxLength: 100 }
         tags: { type: array, items: { type: string } }
         team_id: { type: integer }
+        created_by: { type: string }
+
+    UpdateKnowledgeRequest:
+      type: object
+      properties:
+        title: { type: string, maxLength: 255 }
+        content: { type: string }
+        category: { type: string, maxLength: 100 }
+        tags: { type: array, items: { type: string } }
+
+    ListKnowledgeResponse:
+      type: object
+      properties:
+        total: { type: integer }
+        page: { type: integer }
+        page_size: { type: integer }
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Knowledge"
+
+    # ── 搜索 ──
+    SearchRequest:
+      type: object
+      required: [query]
+      properties:
+        query: { type: string, minLength: 1 }
+        category: { type: string, nullable: true }
+        limit: { type: integer, default: 20, maximum: 100 }
+
+    SearchResponse:
+      type: object
+      properties:
+        total: { type: integer }
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: integer }
+              title: { type: string }
+              content: { type: string, description: "截取前200字符" }
+              category: { type: string, nullable: true }
+              tags: { type: array, items: { type: string }, nullable: true }
+              created_at: { type: string, format: date-time }
+
+    # ── Skill ──
+    Skill:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        description: { type: string, nullable: true }
+        prompt_template: { type: string }
+        params: { type: array, nullable: true }
+        category: { type: string, nullable: true }
+        is_public: { type: boolean }
+        created_by: { type: string, nullable: true }
+        favorite_count: { type: integer }
+        use_count: { type: integer }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+
+    CreateSkillRequest:
+      type: object
+      required: [name, prompt_template]
+      properties:
+        name: { type: string, maxLength: 255 }
+        description: { type: string }
+        prompt_template: { type: string }
+        params: { type: array }
+        category: { type: string, maxLength: 100 }
+        is_public: { type: boolean, default: true }
+        created_by: { type: string }
+
+    UpdateSkillRequest:
+      type: object
+      properties:
+        name: { type: string, maxLength: 255 }
+        description: { type: string }
+        prompt_template: { type: string }
+        params: { type: array }
+        category: { type: string }
+        is_public: { type: boolean }
+
+    ListSkillsResponse:
+      type: object
+      properties:
+        total: { type: integer }
+        page: { type: integer }
+        page_size: { type: integer }
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Skill"
+
+    # ── 团队 ──
+    Team:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        description: { type: string, nullable: true }
+        created_by: { type: string, nullable: true }
+        created_at: { type: string, format: date-time }
+
+    CreateTeamRequest:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string, maxLength: 255 }
+        description: { type: string }
+        created_by: { type: string }
+
+    TeamMember:
+      type: object
+      properties:
+        id: { type: integer }
+        team_id: { type: integer }
+        user_name: { type: string }
+        role:
+          type: string
+          enum: [admin, editor, viewer]
+        created_at: { type: string, format: date-time }
+
+    # ── 仪表盘 ──
+    DashboardStats:
+      type: object
+      properties:
+        knowledge_count: { type: integer }
+        skill_count: { type: integer }
+        table_count: { type: integer }
+
+    # ── 通用 ──
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          description: 业务错误码
+        message:
+          type: string
+          description: 用户可见的错误信息
+        detail:
+          type: string
+          description: 详细错误信息（可选）
+
+  responses:
+    BadRequest:
+      description: 请求参数错误
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            code: "VALIDATION_ERROR"
+            message: "参数校验失败"
+    NotFound:
+      description: 资源不存在
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            code: "NOT_FOUND"
+            message: "资源不存在"
+    Conflict:
+      description: 资源冲突
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            code: "CONFLICT"
+            message: "该成员已存在"
+    InternalError:
+      description: 服务端错误
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            code: "INTERNAL_ERROR"
+            message: "服务端内部错误"
