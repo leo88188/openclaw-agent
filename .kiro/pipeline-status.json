@@ -1,28 +1,35 @@
 {
   "id": "feature-knowledge-20260325204315",
   "feature": "knowledge",
-  "stage": "uxui",
-  "updated_at": "2026-03-27T18:11:13.661697",
+  "stage": "pm",
+  "updated_at": "2026-03-27T18:56:50.505212",
   "steps": {
     "pm": {
-      "status": "completed",
-      "retries": 1,
-      "startTime": "2026-03-27T12:59:13.398000",
-      "output": "requirements.md",
+      "status": "pending",
+      "retries": 0,
+      "startTime": null,
+      "output": null,
+      "error": null
+    },
+    "uxui": {
+      "status": "pending",
+      "retries": 0,
+      "startTime": null,
+      "output": null,
       "error": null
     },
     "architect": {
-      "status": "completed",
-      "retries": 1,
-      "startTime": "2026-03-27T10:29:33.031000",
-      "output": "design.md, db-design.md, frontend-design.md, api-spec.yaml, execution-plan.md",
+      "status": "pending",
+      "retries": 0,
+      "startTime": null,
+      "output": null,
       "error": null
     },
     "frontend": {
-      "status": "completed",
-      "retries": 1,
-      "startTime": "2026-03-26T17:35:57.511000",
-      "output": "knowledge/static/",
+      "status": "pending",
+      "retries": 0,
+      "startTime": null,
+      "output": null,
       "error": null
     },
     "backend": {
@@ -54,10 +61,10 @@
       "error": null
     },
     "devops": {
-      "status": "completed",
-      "retries": 1,
-      "startTime": "2026-03-26T14:19:58.756000",
-      "output": ".kiro/specs/knowledge/release.md",
+      "status": "pending",
+      "retries": 0,
+      "startTime": null,
+      "output": null,
       "error": null
     }
   },

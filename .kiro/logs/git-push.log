@@ -72,3 +72,40 @@ remote:
 To https://github.com/leo88188/openclaw-agent.git
  ! [remote rejected] HEAD -> main (push declined due to repository rule violations)
 error: failed to push some refs to 'https://github.com/leo88188/openclaw-agent.git'
+remote: error: GH013: Repository rule violations found for refs/heads/main.        
+remote: 
+remote: - GITHUB PUSH PROTECTION        
+remote:   —————————————————————————————————————————        
+remote:     Resolve the following violations before pushing again        
+remote: 
+remote:     - Push cannot contain secrets        
+remote: 
+remote:             
+remote:      (?) Learn how to resolve a blocked push        
+remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push        
+remote:             
+remote:             
+remote:       —— GitHub Personal Access Token ——————————————————————        
+remote:        locations:        
+remote:          - commit: 35a63f86b7d421a4f917f3ab87adc50da42b7249        
+remote:            path: .kiro/pipeline-config.json:3        
+remote:             
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.        
+remote:        https://github.com/leo88188/openclaw-agent/security/secret-scanning/unblock-secret/3BVfcqN2ETeaConlrUeFeB3DgYL        
+remote:             
+remote:             
+remote:       —— Figma Personal Access Token ———————————————————————        
+remote:        locations:        
+remote:          - commit: 35a63f86b7d421a4f917f3ab87adc50da42b7249        
+remote:            path: .kiro/pipeline-config.json:14        
+remote:          - commit: 35a63f86b7d421a4f917f3ab87adc50da42b7249        
+remote:            path: .kiro/specs/knowledge/config.json:14        
+remote:             
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.        
+remote:        https://github.com/leo88188/openclaw-agent/security/secret-scanning/unblock-secret/3BVfctpsBvBPTpwZ6ZFBPfMbkOU        
+remote:             
+remote: 
+remote: 
+To https://github.com/leo88188/openclaw-agent.git
+ ! [remote rejected] HEAD -> main (push declined due to repository rule violations)
+error: failed to push some refs to 'https://github.com/leo88188/openclaw-agent.git'
