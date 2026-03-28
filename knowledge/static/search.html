@@ -11,24 +11,60 @@
     <link rel="stylesheet" href="/css/custom.css">
 </head>
 <body>
-    <main class="ml-56 p-10 relative">
-        <div class="geo-deco w-20 h-20 top-4 right-16 opacity-10" style="animation-delay:0.5s;border-radius:50%"></div>
-
-        <div class="mb-8 title-enter">
-            <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">智能搜索</h2>
-            <p class="mt-2" style="color:var(--text-muted)">语义化搜索知识库内容</p>
-        </div>
-
-        <div class="card p-6 mb-8 stagger">
-            <div class="flex gap-3">
-                <input id="search-input" class="input-dark flex-1 text-lg" placeholder="输入关键词或自然语言搜索...">
-                <button id="search-btn" onclick="doSearch()" class="btn-accent px-6">
-                    <i class="fa fa-search mr-1"></i>搜索
-                </button>
+    <main class="ml-60 p-10 relative">
+        <!-- 初始状态：居中大搜索框 -->
+        <div id="search-hero" class="search-hero flex flex-col items-center justify-center" style="min-height:50vh">
+            <h2 class="text-3xl font-bold font-display mb-2" style="color:var(--text-primary)"><i class="fa fa-search mr-2" style="color:var(--accent)"></i>搜索知识库</h2>
+            <p class="mb-8" style="color:var(--text-muted)">输入自然语言描述，语义化检索知识</p>
+            <div class="w-full" style="max-width:640px">
+                <div class="relative">
+                    <input id="search-input" class="input-dark w-full text-lg" style="height:56px;border-radius:28px;padding:0 56px 0 24px" placeholder="输入自然语言描述...">
+                    <button id="search-btn" onclick="doSearch()" class="absolute right-2 top-2 w-10 h-10 rounded-full flex items-center justify-center" style="background:var(--accent);color:#fff">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div id="search-results" class="grid grid-cols-2 gap-5"></div>
+        <!-- 有结果状态 -->
+        <div id="search-results-area" style="display:none">
+            <!-- 顶部搜索栏 -->
+            <div class="mb-6">
+                <div class="flex gap-3 items-center">
+                    <div class="relative flex-1">
+                        <input id="search-input-compact" class="input-dark w-full" style="padding-right:40px" placeholder="输入自然语言描述...">
+                        <button id="clear-search" class="absolute right-3 top-1/2 -translate-y-1/2" style="color:var(--text-muted);cursor:pointer;display:none" onclick="clearSearch()"><i class="fa fa-times"></i></button>
+                    </div>
+                    <button id="search-btn-compact" onclick="doSearch()" class="btn-accent px-5"><i class="fa fa-search mr-1"></i>搜索</button>
+                </div>
+                <div id="search-meta" class="text-sm mt-2" style="color:var(--text-muted)"></div>
+            </div>
+
+            <div class="flex gap-6">
+                <!-- 左侧过滤面板 -->
+                <div id="filter-panel" class="w-60 flex-shrink-0">
+                    <div class="card p-4 sticky top-4">
+                        <h4 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color:var(--text-muted)">来源类型</h4>
+                        <label class="flex items-center gap-2 mb-2 text-sm cursor-pointer"><input type="checkbox" class="filter-source" value="knowledge" checked> 知识</label>
+                        <label class="flex items-center gap-2 mb-2 text-sm cursor-pointer"><input type="checkbox" class="filter-source" value="metadata" checked> 元数据</label>
+                        <label class="flex items-center gap-2 mb-4 text-sm cursor-pointer"><input type="checkbox" class="filter-source" value="skill" checked> Skill</label>
+
+                        <h4 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color:var(--text-muted)">时间范围</h4>
+                        <select id="filter-time" class="input-dark w-full text-sm">
+                            <option value="">全部</option>
+                            <option value="7d">最近 7 天</option>
+                            <option value="30d">最近 30 天</option>
+                            <option value="90d">最近 90 天</option>
+                        </select>
+
+                        <button onclick="resetFilters()" class="text-xs mt-4 block" style="color:var(--accent);cursor:pointer">清除所有筛选</button>
+                    </div>
+                </div>
+
+                <!-- 右侧结果列表 -->
+                <div id="search-results" class="flex-1 space-y-4"></div>
+            </div>
+        </div>
     </main>
 
     <script src="/js/api.js"></script>
@@ -36,38 +72,116 @@
     <script src="/js/app.js"></script>
     <script>
     let _searchTimer = null;
+    let hasSearched = false;
+
+    function getQuery() {
+        return (hasSearched ? $('#search-input-compact') : $('#search-input')).val().trim();
+    }
+
+    function switchToResults() {
+        if (hasSearched) return;
+        hasSearched = true;
+        $('#search-hero').hide();
+        $('#search-results-area').show();
+        $('#search-input-compact').val($('#search-input').val());
+        $('#clear-search').toggle(!!$('#search-input-compact').val());
+    }
+
+    function clearSearch() {
+        hasSearched = false;
+        $('#search-results-area').hide();
+        $('#search-hero').show();
+        $('#search-input').val('').focus();
+        $('#search-results').html('');
+    }
+
+    function getFilters() {
+        const sources = [];
+        $('.filter-source:checked').each(function() { sources.push($(this).val()); });
+        return {
+            source_type: sources.length < 3 ? sources.join(',') : null,
+            time_range: $('#filter-time').val() || null
+        };
+    }
+
+    function resetFilters() {
+        $('.filter-source').prop('checked', true);
+        $('#filter-time').val('');
+        doSearch();
+    }
 
     async function doSearch() {
-        const q = $('#search-input').val().trim();
-        if (!q) return;
-        const btn = $('#search-btn');
-        btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin mr-1"></i>搜索中...');
-        $('#search-results').html(components.loading());
+        const q = getQuery();
+        if (!q) { components.toast('请输入搜索内容', 'warning'); return; }
+        switchToResults();
+        $('#search-input-compact').val(q);
+        $('#clear-search').show();
+
+        const btn = hasSearched ? $('#search-btn-compact') : $('#search-btn');
+        btn.prop('disabled', true);
+        $('#search-results').html(components.skeleton('card', 4));
+        $('#search-meta').text('搜索中...');
+
+        const t0 = Date.now();
         try {
-            const data = await api.search(q);
-            if (!data.items.length) { $('#search-results').html(components.emptyState('未找到相关结果')); return; }
+            const filters = getFilters();
+            const data = await api.search(q, filters);
+            const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
+
+            if (!data.items || !data.items.length) {
+                $('#search-results').html(components.emptyState('没有找到相关结果，试试换个描述方式？'));
+                $('#search-meta').text('');
+                return;
+            }
+
+            $('#search-meta').text(`找到 ${data.total || data.items.length} 条结果（${elapsed}s）`);
+
             let html = '';
-            data.items.forEach((item, i) => {
+            data.items.forEach(item => {
+                const sourceLabel = { knowledge: '知识', metadata: '元数据', skill: 'Skill' }[item.source_type] || '知识';
+                const sourceColor = { knowledge: 'var(--accent)', metadata: 'var(--info)', skill: 'var(--success)' }[item.source_type] || 'var(--accent)';
+                const score = item.score != null ? Math.round(item.score) : null;
                 html += `
-                <div class="card p-5 card-hover stagger" style="animation-delay:${i*0.05}s">
-                    <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(item.title)}</h3>
-                    <p class="text-sm mt-3" style="color:var(--text-secondary)">${truncate(item.content, 200)}</p>
-                    <div class="flex items-center gap-3 mt-4 text-xs">
+                <div class="card p-5 card-hover cursor-pointer" onclick="navigateResult('${item.source_type||'knowledge'}', ${item.id})">
+                    <div class="flex items-start justify-between">
+                        <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(item.title)}</h3>
+                        ${score != null ? `<span class="text-xs font-mono font-semibold ml-2" style="color:${sourceColor}">${score}%</span>` : ''}
+                    </div>
+                    <p class="text-sm mt-2" style="color:var(--text-secondary)">${truncate(item.content, 200)}</p>
+                    <div class="flex items-center gap-3 mt-3 text-xs">
+                        <span class="font-medium" style="color:${sourceColor}">${sourceLabel}</span>
                         ${item.category ? '<span class="tag">' + escapeHtml(item.category) + '</span>' : ''}
                         <span style="color:var(--text-muted)"><i class="fa fa-clock-o mr-1"></i>${formatDate(item.created_at)}</span>
                     </div>
                 </div>`;
             });
             $('#search-results').html(html);
-        } catch(e) { $('#search-results').html(components.emptyState('搜索失败')); }
-        finally { btn.prop('disabled', false).html('<i class="fa fa-search mr-1"></i>搜索'); }
+        } catch(e) {
+            $('#search-results').html(components.emptyState('搜索失败'));
+            $('#search-meta').text('');
+        } finally {
+            btn.prop('disabled', false);
+        }
     }
 
-    $('#search-input').on('input', function() {
-        clearTimeout(_searchTimer);
-        _searchTimer = setTimeout(doSearch, 300);
+    function navigateResult(type, id) {
+        if (type === 'metadata') { location.href = '/metadata.html'; }
+        else if (type === 'skill') { location.href = '/skills.html'; }
+        else { location.href = `/knowledge.html?detail=${id}`; }
+    }
+
+    // 事件绑定
+    $('#search-input').on('keypress', function(e) { if (e.which === 13) doSearch(); });
+    $('#search-input-compact').on('keypress', function(e) { if (e.which === 13) doSearch(); });
+    $('#search-input-compact').on('input', function() { $('#clear-search').toggle(!!$(this).val()); });
+    $('.filter-source, #filter-time').on('change', function() { if (hasSearched) doSearch(); });
+
+    // URL 参数支持
+    $(function() {
+        const params = new URLSearchParams(location.search);
+        const q = params.get('q') || params.get('query');
+        if (q) { $('#search-input').val(q); doSearch(); }
     });
-    $('#search-input').on('keypress', function(e) { if (e.which === 13) { clearTimeout(_searchTimer); doSearch(); } });
     </script>
 </body>
 </html>

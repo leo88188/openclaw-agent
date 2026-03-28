@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional
 from ..database import get_db
 from ..models.skill import Skill, SkillFavorite
 
@@ -13,7 +13,7 @@ class SkillCreate(BaseModel):
     name: str
     description: Optional[str] = None
     prompt_template: str
-    params: Optional[dict] = None
+    params: Optional[list] = None
     category: Optional[str] = None
     is_public: int = 1
     created_by: Optional[str] = None
@@ -23,24 +23,37 @@ class SkillUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     prompt_template: Optional[str] = None
-    params: Optional[dict] = None
+    params: Optional[list] = None
     category: Optional[str] = None
     is_public: Optional[int] = None
+
+
+class FavoriteBody(BaseModel):
+    user_name: str = "default"
+
+
+class UseBody(BaseModel):
+    user_name: Optional[str] = None
 
 
 @router.get("")
 async def list_skills(
     page: int = Query(1, ge=1),
-    size: int = Query(20, ge=1, le=100),
+    page_size: int = Query(20, ge=1, le=100),
     category: Optional[str] = None,
+    is_public: Optional[bool] = None,
     db: AsyncSession = Depends(get_db),
 ):
     q = select(Skill).where(Skill.is_deleted == 0)
     if category:
         q = q.where(Skill.category == category)
+    if is_public is not None:
+        q = q.where(Skill.is_public == (1 if is_public else 0))
     total = await db.scalar(select(func.count()).select_from(q.subquery()))
-    items = (await db.execute(q.order_by(Skill.created_at.desc()).offset((page - 1) * size).limit(size))).scalars().all()
-    return {"total": total, "items": [_to_dict(i) for i in items]}
+    items = (await db.execute(
+        q.order_by(Skill.created_at.desc()).offset((page - 1) * page_size).limit(page_size)
+    )).scalars().all()
+    return {"total": total, "page": page, "page_size": page_size, "items": [_to_dict(i) for i in items]}
 
 
 @router.post("")
@@ -83,23 +96,33 @@ async def delete_skill(skill_id: int, db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/{skill_id}/favorite")
-async def toggle_favorite(skill_id: int, user_name: str = "default", db: AsyncSession = Depends(get_db)):
-    existing = (await db.execute(
-        select(SkillFavorite).where(SkillFavorite.skill_id == skill_id, SkillFavorite.user_name == user_name)
-    )).scalar_one_or_none()
+async def toggle_favorite(skill_id: int, body: FavoriteBody = FavoriteBody(), db: AsyncSession = Depends(get_db)):
     skill = await db.get(Skill, skill_id)
-    if not skill:
+    if not skill or skill.is_deleted:
         raise HTTPException(404, "Skill not found")
+    existing = (await db.execute(
+        select(SkillFavorite).where(SkillFavorite.skill_id == skill_id, SkillFavorite.user_name == body.user_name)
+    )).scalar_one_or_none()
     if existing:
         await db.delete(existing)
         skill.favorite_count = max(0, (skill.favorite_count or 0) - 1)
-        action = "unfavorited"
+        favorited = False
     else:
-        db.add(SkillFavorite(skill_id=skill_id, user_name=user_name))
+        db.add(SkillFavorite(skill_id=skill_id, user_name=body.user_name))
         skill.favorite_count = (skill.favorite_count or 0) + 1
-        action = "favorited"
+        favorited = True
     await db.commit()
-    return {"ok": True, "action": action}
+    return {"favorited": favorited, "favorite_count": skill.favorite_count}
+
+
+@router.post("/{skill_id}/use")
+async def record_use(skill_id: int, body: UseBody = UseBody(), db: AsyncSession = Depends(get_db)):
+    skill = await db.get(Skill, skill_id)
+    if not skill or skill.is_deleted:
+        raise HTTPException(404, "Skill not found")
+    skill.use_count = (skill.use_count or 0) + 1
+    await db.commit()
+    return {"use_count": skill.use_count}
 
 
 def _to_dict(item: Skill):
@@ -110,4 +133,5 @@ def _to_dict(item: Skill):
         "created_by": item.created_by, "favorite_count": item.favorite_count,
         "use_count": item.use_count,
         "created_at": item.created_at.isoformat() if item.created_at else None,
+        "updated_at": item.updated_at.isoformat() if item.updated_at else None,
     }

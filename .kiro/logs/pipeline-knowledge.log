@@ -14903,4 +14903,2223 @@ Replacing: [38;5;141m.kiro/specs/knowledge/execution-plan.md[0m
 - 后端：14 个任务，~12h（数据库迁移 + 新增 API + 缓存 + Service 层）[0m[0m
 - 前端：12 个任务，~17h（设计系统 + 通用组件 + 6 页面重构 + 响应式）[0m[0m
 - 后端缓存（阶段 2）与前端交互升级（阶段 3）可完全并行[0m[0m
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢂⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡂⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠅⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢃⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡃⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠍⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢋⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡋⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠍⠁ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢋⠁ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡋⠁ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠍⠉ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠋⠉ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠋⠉ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠉⠙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠉⠙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠉⠩ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠈⢙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠈⡙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢈⠩ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⢙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⡙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢂⠩ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡂⢘ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠅⡘ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢃⠨ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡃⢐ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠍⡐ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢋⠠ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡋⢀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠍⡁ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢋⠁ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡋⠁ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠍⠉ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠋⠉ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠋⠉ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠉⠙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠉⠙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠉⠩ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠈⢙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠈⡙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠈⠩ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⢙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⡙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⠩ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⢘ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⡘ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⠨ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⢐ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m4.40 s
+[0m[38;5;8m
+ ▸ Credits: 11.46 • Time: 5m 59s
+
+[0m[1G[0m[0m[?25h[38;5;244m - Completed in 400.173s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[38;5;141m> [0marchitect-agent 执行成功。现在进行质量校验：[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.18 s
+[0mI will run the following command: [38;5;141mcd /Volumes/data/modellabs/openclaw-agent && \
+echo "=== design.md ===" && test -s .kiro/specs/knowledge/design.md && grep -q "mermaid\|mermaid" .kiro/specs/knowledge/design.md && grep -q "模块\|Module" .kiro/specs/knowledge/design.md && grep -q "安全\|Security" .kiro/specs/knowledge/design.md && echo "PASS" || echo "FAIL" && \
+echo "=== db-design.md ===" && test -s .kiro/specs/knowledge/db-design.md && grep -q "erDiagram\|ER" .kiro/specs/knowledge/db-design.md && grep -q "CREATE TABLE" .kiro/specs/knowledge/db-design.md && grep -q "查询场景\|Query\|SELECT" .kiro/specs/knowledge/db-design.md && echo "PASS" || echo "FAIL" && \
+echo "=== frontend-design.md ===" && test -s .kiro/specs/knowledge/frontend-design.md && grep -q "页面\|Page\|路由\|Route" .kiro/specs/knowledge/frontend-design.md && grep -q "组件\|Component" .kiro/specs/knowledge/frontend-design.md && grep -q "operationId\|/api/" .kiro/specs/knowledge/frontend-design.md && echo "PASS" || echo "FAIL" && \
+echo "=== api-spec.yaml ===" && test -s .kiro/specs/knowledge/api-spec.yaml && grep -q "operationId" .kiro/specs/knowledge/api-spec.yaml && grep -q "schema" .kiro/specs/knowledge/api-spec.yaml && grep -q "ErrorResponse\|error" .kiro/specs/knowledge/api-spec.yaml && echo "PASS" || echo "FAIL"[0m[38;5;244m (using tool: shell)[0m
+Purpose: 校验架构师 4 个产出文件质量
+
+=== design.md ===
+PASS
+=== db-design.md ===
+PASS
+=== frontend-design.md ===
+PASS
+=== api-spec.yaml ===
+PASS
+[38;5;244m - Completed in 0.25s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m✅ 架构师 4 个产出文件全部校验通过。更新状态并进入 [1m步骤 3/7：前端开发[22m 和 [1m步骤 4/7：后端开发[22m（可并行）。[0m[0m
+[0m[0m
+先更新状态文件，然后并行调度前端和后端 Agent：[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141m.kiro/specs/knowledge/pipeline-status.json[0m[38;5;244m (using tool: write)[0m
+Purpose: 更新 pipeline-status.json：frontend 和 backend 步骤设为 in_progress
+
+[49m[39m   1,  1[0m:[39m[49m {
+[0m[49m[39m   2,  2[0m:[39m[49m   "id": "feature-knowledge-20260325204315",
+[0m[49m[39m   3,  3[0m:[39m[49m   "feature": "knowledge",
+[0m[49m[38;5;9m-  4    [0m:[38;5;9m[49m   "stage": "architect",
+[0m[49m[38;5;9m-  5    [0m:[38;5;9m[49m   "updated_at": "2026-03-28T11:02:00.000000",
+[0m[49m[38;5;10m+      4[0m:[38;5;10m[49m   "stage": "frontend+backend",
+[0m[49m[38;5;10m+      5[0m:[38;5;10m[49m   "updated_at": "2026-03-28T11:10:00.000000",
+[0m[49m[39m   6,  6[0m:[39m[49m   "steps": {
+[0m[49m[39m   7,  7[0m:[39m[49m     "pm": {
+[0m[49m[39m   8,  8[0m:[39m[49m       "status": "completed",
+[0m[49m[39m   9,  9[0m:[39m[49m       "retries": 1,
+[0m[49m[39m  10, 10[0m:[39m[49m       "startTime": "2026-03-27T18:57:22.919000",
+[0m[49m[39m  11, 11[0m:[39m[49m       "output": ".kiro/specs/knowledge/requirements.md",
+[0m[49m[39m  12, 12[0m:[39m[49m       "error": null
+[0m[49m[39m  13, 13[0m:[39m[49m     },
+[0m[49m[39m  14, 14[0m:[39m[49m     "uxui": {
+[0m[49m[39m  15, 15[0m:[39m[49m       "status": "completed",
+[0m[49m[39m  16, 16[0m:[39m[49m       "retries": 2,
+[0m[49m[39m  17, 17[0m:[39m[49m       "startTime": "2026-03-28T10:58:00.000000",
+[0m[49m[39m  18, 18[0m:[39m[49m       "output": ".kiro/specs/knowledge/ui-design.md",
+[0m[49m[39m  19, 19[0m:[39m[49m       "error": null
+[0m[49m[39m  20, 20[0m:[39m[49m     },
+[0m[49m[39m  21, 21[0m:[39m[49m     "architect": {
+[0m[49m[38;5;9m- 22    [0m:[38;5;9m[49m       "status": "in_progress",
+[0m[49m[38;5;10m+     22[0m:[38;5;10m[49m       "status": "completed",
+[0m[49m[39m  23, 23[0m:[39m[49m       "retries": 1,
+[0m[49m[39m  24, 24[0m:[39m[49m       "startTime": "2026-03-28T11:02:00.000000",
+[0m[49m[38;5;9m- 25    [0m:[38;5;9m[49m       "output": null,
+[0m[49m[38;5;10m+     25[0m:[38;5;10m[49m       "output": ".kiro/specs/knowledge/design.md",
+[0m[49m[39m  26, 26[0m:[39m[49m       "error": null
+[0m[49m[39m  27, 27[0m:[39m[49m     },
+[0m[49m[39m  28, 28[0m:[39m[49m     "frontend": {
+[0m[49m[38;5;9m- 29    [0m:[38;5;9m[49m       "status": "pending",
+[0m[49m[38;5;9m- 30    [0m:[38;5;9m[49m       "retries": 0,
+[0m[49m[38;5;9m- 31    [0m:[38;5;9m[49m       "startTime": null,
+[0m[49m[38;5;10m+     29[0m:[38;5;10m[49m       "status": "in_progress",
+[0m[49m[38;5;10m+     30[0m:[38;5;10m[49m       "retries": 1,
+[0m[49m[38;5;10m+     31[0m:[38;5;10m[49m       "startTime": "2026-03-28T11:10:00.000000",
+[0m[49m[39m  32, 32[0m:[39m[49m       "output": null,
+[0m[49m[39m  33, 33[0m:[39m[49m       "error": null
+[0m[49m[39m  34, 34[0m:[39m[49m     },
+[0m[49m[39m  35, 35[0m:[39m[49m     "backend": {
+[0m[49m[38;5;9m- 36    [0m:[38;5;9m[49m       "status": "pending",
+[0m[49m[38;5;9m- 37    [0m:[38;5;9m[49m       "retries": 0,
+[0m[49m[38;5;9m- 38    [0m:[38;5;9m[49m       "startTime": null,
+[0m[49m[38;5;10m+     36[0m:[38;5;10m[49m       "status": "in_progress",
+[0m[49m[38;5;10m+     37[0m:[38;5;10m[49m       "retries": 1,
+[0m[49m[38;5;10m+     38[0m:[38;5;10m[49m       "startTime": "2026-03-28T11:10:00.000000",
+[0m[49m[39m  39, 39[0m:[39m[49m       "output": null,
+[0m[49m[39m  40, 40[0m:[39m[49m       "error": null
+[0m[49m[39m  41, 41[0m:[39m[49m     },
+[0m[49m[39m  42, 42[0m:[39m[49m     "client": {
+[0m[49m[39m  43, 43[0m:[39m[49m       "status": "pending",
+[0m[49m[39m  44, 44[0m:[39m[49m       "retries": 0,
+[0m[49m[39m  45, 45[0m:[39m[49m       "startTime": null,
+[0m[49m[39m  46, 46[0m:[39m[49m       "output": null,
+[0m[49m[39m  47, 47[0m:[39m[49m       "error": null
+[0m[49m[39m  48, 48[0m:[39m[49m     },
+[0m[49m[39m  49, 49[0m:[39m[49m     "qa": {
+[0m[49m[39m  50, 50[0m:[39m[49m       "status": "pending",
+[0m[49m[39m  51, 51[0m:[39m[49m       "retries": 0,
+[0m[49m[39m  52, 52[0m:[39m[49m       "startTime": null,
+[0m[49m[39m  53, 53[0m:[39m[49m       "output": null,
+[0m[49m[39m  54, 54[0m:[39m[49m       "error": null
+[0m[49m[39m  55, 55[0m:[39m[49m     },
+[0m[49m[39m  56, 56[0m:[39m[49m     "review": {
+[0m[49m[39m  57, 57[0m:[39m[49m       "status": "pending",
+[0m[49m[39m  58, 58[0m:[39m[49m       "retries": 0,
+[0m[49m[39m  59, 59[0m:[39m[49m       "startTime": null,
+[0m[49m[39m  60, 60[0m:[39m[49m       "output": null,
+[0m[49m[39m  61, 61[0m:[39m[49m       "error": null
+[0m[49m[39m  62, 62[0m:[39m[49m     },
+[0m[49m[39m  63, 63[0m:[39m[49m     "devops": {
+[0m[49m[39m  64, 64[0m:[39m[49m       "status": "pending",
+[0m[49m[39m  65, 65[0m:[39m[49m       "retries": 0,
+[0m[49m[39m  66, 66[0m:[39m[49m       "startTime": null,
+[0m[49m[39m  67, 67[0m:[39m[49m       "output": null,
+[0m[49m[39m  68, 68[0m:[39m[49m       "error": null
+[0m[49m[39m  69, 69[0m:[39m[49m     }
+[0m[49m[39m  70, 70[0m:[39m[49m   },
+[0m[49m[39m  71, 71[0m:[39m[49m   "errors": []
+[0m[49m[39m  72, 72[0m:[39m[49m }
+[0m[K
+Replacing: [38;5;141m.kiro/specs/knowledge/pipeline-status.json[0m
+[38;5;244m - Completed in 0.5s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m现在并行调度前端和后端 Agent：[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI will run the following command: [38;5;141mcd /Volumes/data/modellabs/openclaw-agent && kiro-cli chat --agent frontend-dev-agent --no-interactive -a "Feature: knowledge. 这是一次迭代，不是从零开始，请在已有前端代码基础上修改。读取配置: .kiro/specs/knowledge/config.json, .kiro/pipeline-config.json. 读取需求: .kiro/specs/knowledge/requirements.md. 读取设计: .kiro/specs/knowledge/ui-design.md, .kiro/specs/knowledge/frontend-design.md, .kiro/specs/knowledge/api-spec.yaml. 迭代需求：交互设计和架构设计已更新，需要同步更新前端代码。请完成前端开发。" &
+FRONTEND_PID=$!
+kiro-cli chat --agent backend-dev-agent --no-interactive -a "Feature: knowledge. 这是一次迭代，不是从零开始，请在已有后端代码基础上修改。读取配置: .kiro/specs/knowledge/config.json, .kiro/pipeline-config.json. 读取需求: .kiro/specs/knowledge/requirements.md. 读取设计: .kiro/specs/knowledge/design.md, .kiro/specs/knowledge/db-design.md, .kiro/specs/knowledge/api-spec.yaml. 迭代需求：架构设计已更新（api-spec.yaml v1.1.0），需要同步更新后端代码，包括新增接口和搜索增强。请完成后端开发。" &
+BACKEND_PID=$!
+wait $FRONTEND_PID
+FRONTEND_EXIT=$?
+wait $BACKEND_PID
+BACKEND_EXIT=$?
+echo "FRONTEND_EXIT=$FRONTEND_EXIT"
+echo "BACKEND_EXIT=$BACKEND_EXIT"[0m[38;5;244m (using tool: shell)[0m
+Purpose: 并行调度前端和后端 Agent
+
+One or more mcp server did not load correctly. See $TMPDIR/kiro-log/kiro-chat.log for more details.
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+
+[38;5;252m[0m[?25lOne or more mcp server did not load correctly. See $TMPDIR/kiro-log/kiro-chat.log for more details.
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+
+[38;5;252m[0m[?25l[38;5;11m
+WARNING: [0mRetry #2, retrying within 10.0s..
+[38;5;11m
+WARNING: [0mRetry #2, retrying within 10.0s..
+[38;5;141m> [0m[0m[0m
+[0m[0m
+好的，我先读取所有配置和设计文档，了解当前项目状态和迭代需求。[0m[0m
+[?25l[38;5;141m> [0m[0m[0m
+[0m[0m
+好的，我先读取所有配置和设计文档，了解当前状态和迭代需求。[0m[0m
+[?25l[0m[0mBatch fs_read operation with [38;5;141m6[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141m.kiro/specs/knowledge/config.json[0m, all lines
+↱ Operation 2: Reading file: [38;5;141m.kiro/pipeline-config.json[0m, all lines
+↱ Operation 3: Reading file: [38;5;141m.kiro/specs/knowledge/requirements.md[0m, all lines
+↱ Operation 4: Reading file: [38;5;141m.kiro/specs/knowledge/ui-design.md[0m, all lines
+↱ Operation 5: Reading file: [38;5;141m.kiro/specs/knowledge/frontend-design.md[0m, all lines
+↱ Operation 6: Reading file: [38;5;141m.kiro/specs/knowledge/api-spec.yaml[0m, all lines
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m934 bytes[0m from .kiro/specs/knowledge/config.json
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m1040 bytes[0m from .kiro/pipeline-config.json
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m34749 bytes[0m from .kiro/specs/knowledge/requirements.md
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m25310 bytes[0m from .kiro/specs/knowledge/ui-design.md
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m13733 bytes[0m from .kiro/specs/knowledge/frontend-design.md
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m25111 bytes[0m from .kiro/specs/knowledge/api-spec.yaml
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 6 operations processed, 6 successful, 0 failed
+[38;5;244m - Completed in 0.1s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0m[?25l[0m[0m[0mBatch fs_read operation with [38;5;141m6[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141m/Volumes/data/modellabs/openclaw-agent/.kiro/specs/knowledge/config.json[0m, all lines
+↱ Operation 2: Reading file: [38;5;141m/Volumes/data/modellabs/openclaw-agent/.kiro/pipeline-config.json[0m, all lines
+↱ Operation 3: Reading file: [38;5;141m/Volumes/data/modellabs/openclaw-agent/.kiro/specs/knowledge/requirements.md[0m, all lines
+↱ Operation 4: Reading file: [38;5;141m/Volumes/data/modellabs/openclaw-agent/.kiro/specs/knowledge/design.md[0m, all lines
+↱ Operation 5: Reading file: [38;5;141m/Volumes/data/modellabs/openclaw-agent/.kiro/specs/knowledge/db-design.md[0m, all lines
+↱ Operation 6: Reading file: [38;5;141m/Volumes/data/modellabs/openclaw-agent/.kiro/specs/knowledge/api-spec.yaml[0m, all lines
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m934 bytes[0m from /Volumes/data/modellabs/openclaw-agent/.kiro/specs/knowledge/config.json
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m1040 bytes[0m from /Volumes/data/modellabs/openclaw-agent/.kiro/pipeline-config.json
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m34749 bytes[0m from /Volumes/data/modellabs/openclaw-agent/.kiro/specs/knowledge/requirements.md
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m13939 bytes[0m from /Volumes/data/modellabs/openclaw-agent/.kiro/specs/knowledge/design.md
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m15499 bytes[0m from /Volumes/data/modellabs/openclaw-agent/.kiro/specs/knowledge/db-design.md
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m25111 bytes[0m from /Volumes/data/modellabs/openclaw-agent/.kiro/specs/knowledge/api-spec.yaml
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 6 operations processed, 6 successful, 0 failed
+[38;5;244m - Completed in 0.2s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[38;5;141m> [0m文档已全部读取。现在查看现有前端代码结构，了解当前实现状态。[0m[0m
+[?25l[?25l[0m[0mReading directory: [38;5;141mknowledge/static[0m[38;5;244m (using tool: read, max depth: 2, max entries: 1000, excluding: defaults)[0m
+[38;5;10m ✓ [0mSuccessfully read directory [38;5;141mknowledge/static[0m [38;5;244m(12 entries)[0m
+[38;5;244m - Completed in 0.1s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.16 s
+[0m[?25l[0m[?25l[0m[0mRunning tool [38;5;141mread_multiple_files[0m with the param[38;5;244m (from mcp server: filesystem)[0m
+ ⋮  {
+ ⋮    "paths": [
+ ⋮      "knowledge/static/js/api.js",
+ ⋮      "knowledge/static/js/app.js",
+ ⋮      "knowledge/static/js/components.js",
+ ⋮      "knowledge/static/index.html",
+ ⋮      "knowledge/static/knowledge.html",
+ ⋮      "knowledge/static/search.html"
+ ⋮    ]
+ ⋮  }
+[0m[38;5;244m - Completed in 0.25s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[0m[0mRunning tool [38;5;141msequentialthinking[0m with the param[38;5;244m (from mcp server: sequential-thinking)[0m
+ ⋮  {
+ ⋮    "thought": "Let me analyze the current state and what needs to be updated.\n\nAPI spec v1.1.0 changes compared to what might exist:\n1. New endpoint: POST /api/v1/skills/{id}/use - Record Skill usage (+1)\n2. Search enhancements: SearchRequest now has source_type (knowledge/metadata/skill), time_range (all/7d/30d/90d) filters\n3. SearchResponse items now include source_type and score fields\n4. Knowledge list now supports keyword and tags query parameters\n5. Health check endpoint: GET /api/v1/health with mysql/redis/version status\n6. Team members GET endpoint: GET /api/v1/teams/{id}/members\n\nI need to read the existing backend code to understand what's already implemented, then make targeted changes.",
+ ⋮    "nextThoughtNeeded": true,
+ ⋮    "thoughtNumber": 1,
+ ⋮    "totalThoughts": 3
+ ⋮  }
+[0m[38;5;244m - Completed in 0.8s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m现在读取现有后端代码，了解当前实现状[?25l态：[0m[0m
+[?25l[0m[0mRunning tool [38;5;141mread_multiple_files[0m with the param[38;5;244m (from mcp server: filesystem)[0m
+ ⋮  {
+ ⋮    "paths": [
+ ⋮      "knowledge/static/skills.html",
+ ⋮      "knowledge/static/metadata.html",
+ ⋮      "knowledge/static/teams.html",
+ ⋮      "knowledge/static/css/custom.css"
+ ⋮    ]
+ ⋮  }
+[0m[38;5;244m - Completed in 0.8s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[0m[0mSearch codebase map[38;5;244m (using tool: code)[0m
+⠋ Loading...⠙ Loading...[2K[1G[1A[?25l
+[38;5;12m[CodebaseMap in /Volumes/data/modellabs/openclaw-agent/knowledge/server] 18 files, ~967 tokens, truncated: false
+[0m[38;5;244m - Completed in 0.82s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m好的，我已经完整了解了现有代码和最新的交互设计文档。现在对比 ui-design.md [?25lv2.0 和现有代码，找出需要迭代的差异点：[0m[0m
+[0m[0m
+[1m需要更新的内容：[22m[0m[0m
+[0m[0m
+1. [1mcomponents.js[22m — Toast 需要按 ui-design.md 规范重做（左边框+图标+颜色分类）；[0m[0mRunning tool [38;5;141mread_multiple_files[0m with the param[38;5;244m (from mcp server: filesystem)[0m
+ ⋮  {
+ ⋮    "paths": [
+ ⋮      "/Volumes/data/modellabs/openclaw-agent/knowledge/server/routers/search.py",
+ ⋮      "/Volumes/data/modellabs/openclaw-agent/knowledge/server/routers/skill.py",
+ ⋮      "/Volumes/data/modellabs/openclaw-agent/knowledge/server/routers/knowledge.py",
+ ⋮      "/Volumes/data/modellabs/openclaw-agent/knowledge/server/routers/dashboard.py",
+ ⋮      "/Volumes/data/modellabs/openclaw-agent/knowledge/server/routers/team.py",
+ ⋮      "/Volumes/data/modellabs/openclaw-agent/knowledge/server/main.py",
+ ⋮      "/Volumes/data/modellabs/openclaw-agent/knowledge/server/redis_client.py"
+ ⋮    ]
+ ⋮  }
+[0m[38;5;244m - Completed in 0.24s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0mModal 需要支持自定义宽度；emptyState 需要 CTA 按钮支持[0m[0m
+2. [1mapi.js[22m — 缺少 [38;5;10msource_type[0m/[38;5;10mtime_range[0m/[38;5;10mtags[0m 搜索参数；缺少 [38;5;10mrecordSkillUse[0m；缺少 [38;5;10mhealth[0m 接口；缺少团队成员角色更新/移除[0m[0m
+3. [1mknowledge.html[22m — 缺少分类下拉+标签筛选+搜索框操作栏；卡片应为 3 列；缺少详情 Modal；缺少标签输入[0m[0m
+4. [1msearch.html[22m — 缺少[?25l居中大搜索框初始状态→有结果状态切换；缺少左侧过滤面板；缺少 source_type/score 展示[0m[0m
+5. [1mskills.html[22m — 缺少分类[0m[0mRunning tool [38;5;141mread_multiple_files[0m with the param[38;5;244m (from mcp server: filesystem)[0m
+ ⋮  {
+ ⋮    "paths": [
+ ⋮      "/Volumes/data/modellabs/openclaw-agent/knowledge/server/config.py",
+ ⋮      "/Volumes/data/modellabs/openclaw-agent/knowledge/server/database.py",
+ ⋮      "/Volumes/data/modellabs/openclaw-agent/knowledge/server/routers/metadata.py"
+ ⋮    ]
+ ⋮  }
+[0m[38;5;244m - Completed in 0.6s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished Tab；⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished应⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0m[?25l[0m为 3 列非 4 列；缺少详情 Modal（参数填写+复制）；缺少分页[0m[0m
+6. [1mmetadata.html[22m — 缺少左侧搜索框；缺少索引 Badge（PK/[?25lIDX/UNI）；API 返回字段名不匹配[0m[0m
+7. [1mteams.html[22m — 缺少团队详情 Modal（成员管理）[0m[0m
+8. [1mindex.html[22m — 缺少数字递增动画；缺少 health API 调用[0m[0m
+9. [1mcustom.css[22m — 缺少 Toast 新样式、骨架屏 shimmer、prefers-reduced-motion[0m[0m
+[0m[0m
+我开始逐步更新。先从核心共享文件开始。[0m[0m
+[0m[0m
+[38;5;252m[1m### 1. 更新 api.js[0m[0m
+[?25l[0m[0mRunning tool [38;5;141msequentialthinking[0m with the param[38;5;244m (from mcp server: sequential-thinking)[0m
+ ⋮  {
+ ⋮    "nextThoughtNeeded": true,
+ ⋮    "thought": "Now I have a clear picture. Let me identify the gaps between current code and api-spec v1.1.0:\n\n**1. search.py** — Major changes needed:\n- SearchRequest missing: `source_type` (knowledge/metadata/skill), `time_range` (all/7d/30d/90d)\n- SearchResponse items missing: `source_type`, `score` fields\n- Search currently only searches knowledge_items, needs to also search db_metadata and skills\n\n**2. skill.py** — Changes needed:\n- Missing endpoint: `POST /api/v1/skills/{id}/use` (recordSkillUse)\n- toggle_favorite response should return `{favorited: bool, favorite_count: int}` per spec, currently returns `{ok, action}`\n- list_skills missing `is_public` query parameter\n- list_skills response missing `page` and `page_size` fields\n\n**3. knowledge.py** — Changes needed:\n- list_knowledge missing `keyword` and `tags` query parameters per spec\n- list_knowledge response missing `page` and `page_size` fields\n- Parameter name: spec uses `page_size`, current code uses `size`\n\n**4. main.py** — Changes needed:\n- Missing health check endpoint: `GET /api/v1/health`\n- Version should be \"1.1.0\"\n\n**5. team.py** — Changes needed:\n- Missing: `PUT /{id}/members/{uid}` (updateTeamMemberRole)\n- Missing: `DELETE /{id}/members/{uid}` (removeTeamMember)\n- list_teams response missing `created_at`\n- list_members response missing `team_id`, `created_at`\n\n**6. metadata.py** — Changes needed:\n- list_tables response should use `tables` key (not `items`) and include `column_count`\n- import response should return `{imported_tables, imported_columns}` per spec\n\n**7. dashboard.py** — No changes needed, already matches spec.\n\nLet me now implement all these changes.",
+ ⋮    "thoughtNumber": 2,
+ ⋮    "totalThoughts": 3
+ ⋮  }
+[0m[38;5;244m - Completed in 0.3s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0m[?25l[0m[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/static/js/api.js[0m[38;5;244m (using tool: write)[0m
+Purpose: 更新 api.js：添加搜索过滤参数、Skill 使用记录、健康检查、团队成员角色更新/移除等缺失接口
+
+[49m[39m   1,  1[0m:[39m[49m /**
+[0m[49m[38;5;9m-  2    [0m:[38;5;9m[49m  * Knowledge API 接口封装
+[0m[49m[38;5;10m+      2[0m:[38;5;10m[49m  * Knowledge API 接口封装 — v2.0
+[0m[49m[39m   3,  3[0m:[39m[49m  */
+[0m[49m[39m   4,  4[0m:[39m[49m const API_BASE = '/api/v1';
+[0m[49m[39m   5,  5[0m:[39m[49m 
+[0m[49m[39m   6,  6[0m:[39m[49m const api = {
+[0m[49m[39m   7,  7[0m:[39m[49m     async request(method, path, data) {
+[0m[49m[38;5;9m-  8    [0m:[38;5;9m[49m         const opts = {
+[0m[49m[38;5;9m-  9    [0m:[38;5;9m[49m             method,
+[0m[49m[38;5;9m- 10    [0m:[38;5;9m[49m             headers: { 'Content-Type': 'application/json' },
+[0m[49m[38;5;9m- 11    [0m:[38;5;9m[49m         };
+[0m[49m[38;5;10m+      8[0m:[38;5;10m[49m         const opts = { method, headers: { 'Content-Type': 'application/json' } };
+[0m[49m[39m  12,  9[0m:[39m[49m         if (data && method !== 'GET') opts.body = JSON.stringify(data);
+[0m[49m[39m  13, 10[0m:[39m[49m         try {
+[0m[49m[39m  14, 11[0m:[39m[49m             const resp = await fetch(API_BASE + path, opts);
+[0m[49m[39m  15, 12[0m:[39m[49m             if (!resp.ok) {
+[0m[49m[38;5;9m- 16    [0m:[38;5;9m[49m                 const errBody = await resp.json().catch(() => ({}));
+[0m[49m[38;5;9m- 17    [0m:[38;5;9m[49m                 throw new Error(errBody.detail || errBody.message || `请求失败 (${resp.status})`);
+[0m[49m[38;5;10m+     13[0m:[38;5;10m[49m                 const err = await resp.json().catch(() => ({}));
+[0m[49m[38;5;10m+     14[0m:[38;5;10m[49m                 throw new Error(err.detail || err.message || `请求失败 (${resp.status})`);
+[0m[49m[39m  18, 15[0m:[39m[49m             }
+[0m[49m[39m  19, 16[0m:[39m[49m             return resp.json();
+[0m[49m[39m  20, 17[0m:[39m[49m         } catch(e) {
+[0m[49m[39m  21, 18[0m:[39m[49m             if (typeof components !== 'undefined') components.toast(e.message || '网络请求失败', 'error');
+[0m[49m[39m  22, 19[0m:[39m[49m             throw e;
+[0m[49m[39m  23, 20[0m:[39m[49m         }
+[0m[49m[39m  24, 21[0m:[39m[49m     },
+[0m[49m[39m  25, 22[0m:[39m[49m     // Knowledge
+[0m[49m[38;5;9m- 26    [0m:[38;5;9m[49m     getKnowledgeList: (page = 1, category) => api.request('GET', `/knowledge?page=${page}${category ? '&category=' + category : ''}`),
+[0m[49m[38;5;10m+     23[0m:[38;5;10m[49m     getKnowledgeList(page=1, opts={}) {
+[0m[49m[38;5;10m+     24[0m:[38;5;10m[49m         let q = `/knowledge?page=${page}&page_size=${opts.page_size||20}`;
+[0m[49m[38;5;10m+     25[0m:[38;5;10m[49m         if (opts.category) q += `&category=${encodeURIComponent(opts.category)}`;
+[0m[49m[38;5;10m+     26[0m:[38;5;10m[49m         if (opts.keyword) q += `&keyword=${encodeURIComponent(opts.keyword)}`;
+[0m[49m[38;5;10m+     27[0m:[38;5;10m[49m         if (opts.tags) q += `&tags=${encodeURIComponent(opts.tags)}`;
+[0m[49m[38;5;10m+     28[0m:[38;5;10m[49m         return api.request('GET', q);
+[0m[49m[38;5;10m+     29[0m:[38;5;10m[49m     },
+[0m[49m[39m  27, 30[0m:[39m[49m     createKnowledge: (data) => api.request('POST', '/knowledge', data),
+[0m[49m[39m  28, 31[0m:[39m[49m     getKnowledge: (id) => api.request('GET', `/knowledge/${id}`),
+[0m[49m[39m  29, 32[0m:[39m[49m     updateKnowledge: (id, data) => api.request('PUT', `/knowledge/${id}`, data),
+[0m[49m[39m  30, 33[0m:[39m[49m     deleteKnowledge: (id) => api.request('DELETE', `/knowledge/${id}`),
+[0m[49m[39m  31, 34[0m:[39m[49m     // Search
+[0m[49m[38;5;9m- 32    [0m:[38;5;9m[49m     search: (query, category) => api.request('POST', '/search', { query, category }),
+[0m[49m[38;5;10m+     35[0m:[38;5;10m[49m     search(query, opts={}) {
+[0m[49m[38;5;10m+     36[0m:[38;5;10m[49m         return api.request('POST', '/search', {
+[0m[49m[38;5;10m+     37[0m:[38;5;10m[49m             query, limit: opts.limit || 20,
+[0m[49m[38;5;10m+     38[0m:[38;5;10m[49m             category: opts.category || null,
+[0m[49m[38;5;10m+     39[0m:[38;5;10m[49m             source_type: opts.source_type || null,
+[0m[49m[38;5;10m+     40[0m:[38;5;10m[49m             time_range: opts.time_range || null
+[0m[49m[38;5;10m+     41[0m:[38;5;10m[49m         });
+[0m[49m[38;5;10m+     42[0m:[38;5;10m[49m     },
+[0m[49m[39m  33, 43[0m:[39m[49m     // Skills
+[0m[49m[38;5;9m- 34    [0m:[38;5;9m[49m     getSkillList: (page = 1, category) => api.request('GET', `/skills?page=${page}${category ? '&category=' + category : ''}`),
+[0m[49m[38;5;10m+     44[0m:[38;5;10m[49m     getSkillList(page=1, opts={}) {
+[0m[49m[38;5;10m+     45[0m:[38;5;10m[49m         let q = `/skills?page=${page}&page_size=${opts.page_size||20}`;
+[0m[49m[38;5;10m+     46[0m:[38;5;10m[49m         if (opts.category) q += `&category=${encodeURIComponent(opts.category)}`;
+[0m[49m[38;5;10m+     47[0m:[38;5;10m[49m         return api.request('GET', q);
+[0m[49m[38;5;10m+     48[0m:[38;5;10m[49m     },
+[0m[49m[39m  35, 49[0m:[39m[49m     createSkill: (data) => api.request('POST', '/skills', data),
+[0m[49m[39m  36, 50[0m:[39m[49m     getSkill: (id) => api.request('GET', `/skills/${id}`),
+[0m[49m[39m  37, 51[0m:[39m[49m     updateSkill: (id, data) => api.request('PUT', `/skills/${id}`, data),
+[0m[49m[39m  38, 52[0m:[39m[49m     deleteSkill: (id) => api.request('DELETE', `/skills/${id}`),
+[0m[49m[39m  39, 53[0m:[39m[49m     toggleFavorite: (id) => api.request('POST', `/skills/${id}/favorite`),
+[0m[49m[38;5;10m+     54[0m:[38;5;10m[49m     recordUse: (id) => api.request('POST', `/skills/${id}/use`),
+[0m[49m[39m  40, 55[0m:[39m[49m     // Metadata
+[0m[49m[39m  41, 56[0m:[39m[49m     getTableList: () => api.request('GET', '/metadata/tables'),
+[0m[49m[38;5;9m- 42    [0m:[38;5;9m[49m     getTable: (name) => api.request('GET', `/metadata/tables/${name}`),
+[0m[49m[38;5;10m+     57[0m:[38;5;10m[49m     getTable: (name) => api.request('GET', `/metadata/tables/${encodeURIComponent(name)}`),
+[0m[49m[39m  43, 58[0m:[39m[49m     importMetadata: (dbName) => api.request('POST', '/metadata/import', { db_name: dbName }),
+[0m[49m[39m  44, 59[0m:[39m[49m     // Teams
+[0m[49m[39m  45, 60[0m:[39m[49m     getTeamList: () => api.request('GET', '/teams'),
+[0m[49m[39m  46, 61[0m:[39m[49m     createTeam: (data) => api.request('POST', '/teams', data),
+[0m[49m[39m  47, 62[0m:[39m[49m     getTeamMembers: (id) => api.request('GET', `/teams/${id}/members`),
+[0m[49m[39m  48, 63[0m:[39m[49m     addTeamMember: (id, data) => api.request('POST', `/teams/${id}/members`, data),
+[0m[49m[38;5;10m+     64[0m:[38;5;10m[49m     updateMemberRole: (id, uid, role) => api.request('PUT', `/teams/${id}/members/${encodeURIComponent(uid)}`, { role }),
+[0m[49m[38;5;10m+     65[0m:[38;5;10m[49m     removeMember: (id, uid) => api.request('DELETE', `/teams/${id}/members/${encodeURIComponent(uid)}`),
+[0m[49m[39m  49, 66[0m:[39m[49m     // Dashboard
+[0m[49m[39m  50, 67[0m:[39m[49m     getStats: () => api.request('GET', '/dashboard/stats'),
+[0m[49m[38;5;10m+     68[0m:[38;5;10m[49m     healthCheck: () => api.request('GET', '/health'),
+[0m[49m[39m  51, 69[0m:[39m[49m };
+[0m[K
+Replacing: [38;5;141mknowledge/static/js/api.js[0m
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[0m[0mRunning tool [38;5;141msequentialthinking[0m with the param[38;5;244m (from mcp server: sequential-thinking)[0m
+ ⋮  {
+ ⋮    "nextThoughtNeeded": false,
+ ⋮    "thought": "Plan of changes:\n\n1. **search.py** — Add source_type/time_range filters, multi-source search (knowledge + metadata + skills), add score/source_type to response\n2. **skill.py** — Add `POST /{id}/use`, fix toggle_favorite response, add is_public filter, fix page_size param name\n3. **knowledge.py** — Add keyword/tags filters, fix page_size param name, add page/page_size to response\n4. **main.py** — Add health check endpoint, update version to 1.1.0\n5. **team.py** — Add PUT/DELETE member endpoints\n6. **metadata.py** — Fix list_tables response format, fix import response format\n\nLet me implement all changes now.",
+ ⋮    "thoughtNumber": 3,
+ ⋮    "totalThoughts": 3
+ ⋮  }
+[0m[38;5;244m - Completed in 0.1s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[38;5;141m> [0m好，已完成分析。对比 api-spec v1.1.0 和现有代码，需要修改 6 个文件。开始逐个更新：[0m[0m
+[0m[0m
+[1m变更清单：[22m[0m[0m
+1. [38;5;10msearch.py[0m — 多源搜索 + source_type/time_range/score[0m[0m
+2. [38;5;10mskill.py[0m — 新增 use 接口 + 修复 favorite 响应 + is_public 筛选[0m[0m
+3. [38;5;10mknowledge.py[0m — 新增 keyword/tags 筛选 + 分页字段[0m[0m
+4. [38;5;10mmain.py[0m — 新增 health 接口 + 版本号[0m[0m
+5. [38;5;10mteam.py[0m — 新增 PUT/DELETE member 接口[0m[0m
+6. [38;5;10mmetadata.py[0m — 修复响应格式[0m[0m
+[0m[0m
+开始修改：[38;5;141m> [0m[38;5;252m[1m### 2. 更新 [0m[0m
+components.js —[?25l 按 ui-design.md v2.0 规范重做 Toast、Modal、emptyState[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/server/routers/search.py[0m[38;5;244m (using tool: write)[0m
+Purpose: 重写 search.py：支持多源搜索(knowledge/metadata/skill)、source_type/time_range 过滤、score 评分
+
+[49m[38;5;9m-  1     [0m:[38;5;9m[49m from fastapi import APIRouter, Depends, Query
+[0m[49m[38;5;10m+       1[0m:[38;5;10m[49m from fastapi import APIRouter, Depends
+[0m[49m[39m   2,   2[0m:[39m[49m from sqlalchemy.ext.asyncio import AsyncSession
+[0m[49m[38;5;9m-  3     [0m:[38;5;9m[49m from sqlalchemy import select
+[0m[49m[38;5;10m+       3[0m:[38;5;10m[49m from sqlalchemy import select, or_
+[0m[49m[39m   4,   4[0m:[39m[49m from pydantic import BaseModel
+[0m[49m[38;5;10m+       5[0m:[38;5;10m[49m from typing import Optional
+[0m[49m[38;5;10m+       6[0m:[38;5;10m[49m from datetime import datetime, timedelta
+[0m[49m[39m   5,   7[0m:[39m[49m from ..database import get_db
+[0m[49m[39m   6,   8[0m:[39m[49m from ..models.knowledge import KnowledgeItem
+[0m[49m[38;5;10m+       9[0m:[38;5;10m[49m from ..models.skill import Skill
+[0m[49m[38;5;10m+      10[0m:[38;5;10m[49m from ..models.metadata import DbMetadata
+[0m[49m[39m   7,  11[0m:[39m[49m 
+[0m[49m[39m   8,  12[0m:[39m[49m router = APIRouter(prefix="/api/v1/search", tags=["search"])
+[0m[49m[39m   9,  13[0m:[39m[49m 
+[0m[49m[38;5;10m+      14[0m:[38;5;10m[49m TIME_RANGE_MAP = {"7d": 7, "30d": 30, "90d": 90}
+[0m[49m[38;5;10m+      15[0m:[38;5;10m[49m 
+[0m[49m[39m  10,  16[0m:[39m[49m 
+[0m[49m[39m  11,  17[0m:[39m[49m class SearchRequest(BaseModel):
+[0m[49m[39m  12,  18[0m:[39m[49m     query: str
+[0m[49m[38;5;9m- 13     [0m:[38;5;9m[49m     category: str | None = None
+[0m[49m[38;5;10m+      19[0m:[38;5;10m[49m     category: Optional[str] = None
+[0m[49m[38;5;10m+      20[0m:[38;5;10m[49m     source_type: Optional[str] = None  # knowledge / metadata / skill
+[0m[49m[38;5;10m+      21[0m:[38;5;10m[49m     time_range: Optional[str] = None   # all / 7d / 30d / 90d
+[0m[49m[39m  14,  22[0m:[39m[49m     limit: int = 20
+[0m[49m[39m  15,  23[0m:[39m[49m 
+[0m[49m[39m  16,  24[0m:[39m[49m 
+[0m[49m[38;5;10m+      25[0m:[38;5;10m[49m def _score(query: str, title: str, content: str) -> float:
+[0m[49m[38;5;10m+      26[0m:[38;5;10m[49m     """简易相关度评分：标题命中权重高于内容"""
+[0m[49m[38;5;10m+      27[0m:[38;5;10m[49m     q = query.lower()
+[0m[49m[38;5;10m+      28[0m:[38;5;10m[49m     t, c = (title or "").lower(), (content or "").lower()
+[0m[49m[38;5;10m+      29[0m:[38;5;10m[49m     s = 0.0
+[0m[49m[38;5;10m+      30[0m:[38;5;10m[49m     if q in t:
+[0m[49m[38;5;10m+      31[0m:[38;5;10m[49m         s += 60
+[0m[49m[38;5;10m+      32[0m:[38;5;10m[49m     if q in c:
+[0m[49m[38;5;10m+      33[0m:[38;5;10m[49m         s += 30
+[0m[49m[38;5;10m+      34[0m:[38;5;10m[49m     # 额外：完全匹配标题加分
+[0m[49m[38;5;10m+      35[0m:[38;5;10m[49m     if q == t:
+[0m[49m[38;5;10m+      36[0m:[38;5;10m[49m         s += 10
+[0m[49m[38;5;10m+      37[0m:[38;5;10m[49m     return min(s, 100)
+[0m[49m[38;5;10m+      38[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      39[0m:[38;5;10m[49m 
+[0m[49m[39m  17,  40[0m:[39m[49m @router.post("")
+[0m[49m[39m  18,  41[0m:[39m[49m async def search(body: SearchRequest, db: AsyncSession = Depends(get_db)):
+[0m[49m[38;5;9m- 19     [0m:[38;5;9m[49m     """简易关键词搜索（向量搜索需集成嵌入模型后扩展）"""
+[0m[49m[38;5;9m- 20     [0m:[38;5;9m[49m     q = select(KnowledgeItem).where(
+[0m[49m[38;5;9m- 21     [0m:[38;5;9m[49m         KnowledgeItem.is_deleted == 0,
+[0m[49m[38;5;9m- 22     [0m:[38;5;9m[49m         KnowledgeItem.title.contains(body.query) | KnowledgeItem.content.contains(body.query),
+[0m[49m[38;5;9m- 23     [0m:[38;5;9m[49m     )
+[0m[49m[38;5;9m- 24     [0m:[38;5;9m[49m     if body.category:
+[0m[49m[38;5;9m- 25     [0m:[38;5;9m[49m         q = q.where(KnowledgeItem.category == body.category)
+[0m[49m[38;5;9m- 26     [0m:[38;5;9m[49m     items = (await db.execute(q.limit(body.limit))).scalars().all()
+[0m[49m[38;5;9m- 27     [0m:[38;5;9m[49m     return {
+[0m[49m[38;5;9m- 28     [0m:[38;5;9m[49m         "total": len(items),
+[0m[49m[38;5;9m- 29     [0m:[38;5;9m[49m         "items": [
+[0m[49m[38;5;9m- 30     [0m:[38;5;9m[49m             {"id": i.id, "title": i.title, "content": i.content[:200],
+[0m[49m[38;5;9m- 31     [0m:[38;5;9m[49m              "category": i.category, "tags": i.tags,
+[0m[49m[38;5;9m- 32     [0m:[38;5;9m[49m              "created_at": i.created_at.isoformat() if i.created_at else None}
+[0m[49m[38;5;9m- 33     [0m:[38;5;9m[49m             for i in items
+[0m[49m[38;5;9m- 34     [0m:[38;5;9m[49m         ],
+[0m[49m[38;5;9m- 35     [0m:[38;5;9m[49m     }
+[0m[49m[38;5;10m+      42[0m:[38;5;10m[49m     results = []
+[0m[49m[38;5;10m+      43[0m:[38;5;10m[49m     cutoff = None
+[0m[49m[38;5;10m+      44[0m:[38;5;10m[49m     if body.time_range and body.time_range in TIME_RANGE_MAP:
+[0m[49m[38;5;10m+      45[0m:[38;5;10m[49m         cutoff = datetime.now() - timedelta(days=TIME_RANGE_MAP[body.time_range])
+[0m[49m[38;5;10m+      46[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      47[0m:[38;5;10m[49m     # --- 搜索知识条目 ---
+[0m[49m[38;5;10m+      48[0m:[38;5;10m[49m     if body.source_type in (None, "knowledge"):
+[0m[49m[38;5;10m+      49[0m:[38;5;10m[49m         q = select(KnowledgeItem).where(
+[0m[49m[38;5;10m+      50[0m:[38;5;10m[49m             KnowledgeItem.is_deleted == 0,
+[0m[49m[38;5;10m+      51[0m:[38;5;10m[49m             or_(KnowledgeItem.title.contains(body.query), KnowledgeItem.content.contains(body.query)),
+[0m[49m[38;5;10m+      52[0m:[38;5;10m[49m         )
+[0m[49m[38;5;10m+      53[0m:[38;5;10m[49m         if body.category:
+[0m[49m[38;5;10m+      54[0m:[38;5;10m[49m             q = q.where(KnowledgeItem.category == body.category)
+[0m[49m[38;5;10m+      55[0m:[38;5;10m[49m         if cutoff:
+[0m[49m[38;5;10m+      56[0m:[38;5;10m[49m             q = q.where(KnowledgeItem.created_at >= cutoff)
+[0m[49m[38;5;10m+      57[0m:[38;5;10m[49m         for i in (await db.execute(q.limit(body.limit))).scalars().all():
+[0m[49m[38;5;10m+      58[0m:[38;5;10m[49m             results.append({
+[0m[49m[38;5;10m+      59[0m:[38;5;10m[49m                 "id": i.id, "title": i.title, "content": (i.content or "")[:200],
+[0m[49m[38;5;10m+      60[0m:[38;5;10m[49m                 "category": i.category, "tags": i.tags, "source_type": "knowledge",
+[0m[49m[38;5;10m+      61[0m:[38;5;10m[49m                 "score": _score(body.query, i.title, i.content or ""),
+[0m[49m[38;5;10m+      62[0m:[38;5;10m[49m                 "created_at": i.created_at.isoformat() if i.created_at else None,
+[0m[49m[38;5;10m+      63[0m:[38;5;10m[49m             })
+[0m[49m[38;5;10m+      64[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      65[0m:[38;5;10m[49m     # --- 搜索元数据 ---
+[0m[49m[38;5;10m+      66[0m:[38;5;10m[49m     if body.source_type in (None, "metadata"):
+[0m[49m[38;5;10m+      67[0m:[38;5;10m[49m         mq = select(DbMetadata).where(
+[0m[49m[38;5;10m+      68[0m:[38;5;10m[49m             or_(
+[0m[49m[38;5;10m+      69[0m:[38;5;10m[49m                 DbMetadata.table_name.contains(body.query),
+[0m[49m[38;5;10m+      70[0m:[38;5;10m[49m                 DbMetadata.column_name.contains(body.query),
+[0m[49m[38;5;10m+      71[0m:[38;5;10m[49m                 DbMetadata.column_comment.contains(body.query),
+[0m[49m[38;5;10m+      72[0m:[38;5;10m[49m                 DbMetadata.table_comment.contains(body.query),
+[0m[49m[38;5;10m+      73[0m:[38;5;10m[49m             )
+[0m[49m[38;5;10m+      74[0m:[38;5;10m[49m         )
+[0m[49m[38;5;10m+      75[0m:[38;5;10m[49m         if cutoff:
+[0m[49m[38;5;10m+      76[0m:[38;5;10m[49m             mq = mq.where(DbMetadata.created_at >= cutoff)
+[0m[49m[38;5;10m+      77[0m:[38;5;10m[49m         for m in (await db.execute(mq.limit(body.limit))).scalars().all():
+[0m[49m[38;5;10m+      78[0m:[38;5;10m[49m             title = f"{m.table_name}.{m.column_name}" if m.column_name else m.table_name
+[0m[49m[38;5;10m+      79[0m:[38;5;10m[49m             content = m.column_comment or m.table_comment or ""
+[0m[49m[38;5;10m+      80[0m:[38;5;10m[49m             results.append({
+[0m[49m[38;5;10m+      81[0m:[38;5;10m[49m                 "id": m.id, "title": title, "content": content[:200],
+[0m[49m[38;5;10m+      82[0m:[38;5;10m[49m                 "category": "元数据", "tags": None, "source_type": "metadata",
+[0m[49m[38;5;10m+      83[0m:[38;5;10m[49m                 "score": _score(body.query, title, content),
+[0m[49m[38;5;10m+      84[0m:[38;5;10m[49m                 "created_at": m.created_at.isoformat() if m.created_at else None,
+[0m[49m[38;5;10m+      85[0m:[38;5;10m[49m             })
+[0m[49m[38;5;10m+      86[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      87[0m:[38;5;10m[49m     # --- 搜索 Skill ---
+[0m[49m[38;5;10m+      88[0m:[38;5;10m[49m     if body.source_type in (None, "skill"):
+[0m[49m[38;5;10m+      89[0m:[38;5;10m[49m         sq = select(Skill).where(
+[0m[49m[38;5;10m+      90[0m:[38;5;10m[49m             Skill.is_deleted == 0,
+[0m[49m[38;5;10m+      91[0m:[38;5;10m[49m             or_(Skill.name.contains(body.query), Skill.description.contains(body.query)),
+[0m[49m[38;5;10m+      92[0m:[38;5;10m[49m         )
+[0m[49m[38;5;10m+      93[0m:[38;5;10m[49m         if body.category:
+[0m[49m[38;5;10m+      94[0m:[38;5;10m[49m             sq = sq.where(Skill.category == body.category)
+[0m[49m[38;5;10m+      95[0m:[38;5;10m[49m         if cutoff:
+[0m[49m[38;5;10m+      96[0m:[38;5;10m[49m             sq = sq.where(Skill.created_at >= cutoff)
+[0m[49m[38;5;10m+      97[0m:[38;5;10m[49m         for s in (await db.execute(sq.limit(body.limit))).scalars().all():
+[0m[49m[38;5;10m+      98[0m:[38;5;10m[49m             results.append({
+[0m[49m[38;5;10m+      99[0m:[38;5;10m[49m                 "id": s.id, "title": s.name, "content": (s.description or "")[:200],
+[0m[49m[38;5;10m+     100[0m:[38;5;10m[49m                 "category": s.category, "tags": None, "source_type": "skill",
+[0m[49m[38;5;10m+     101[0m:[38;5;10m[49m                 "score": _score(body.query, s.name, s.description or ""),
+[0m[49m[38;5;10m+     102[0m:[38;5;10m[49m                 "created_at": s.created_at.isoformat() if s.created_at else None,
+[0m[49m[38;5;10m+     103[0m:[38;5;10m[49m             })
+[0m[49m[38;5;10m+     104[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     105[0m:[38;5;10m[49m     # 按 score 降序排序，截取 limit
+[0m[49m[38;5;10m+     106[0m:[38;5;10m[49m     results.sort(key=lambda x: x["score"], reverse=True)
+[0m[49m[38;5;10m+     107[0m:[38;5;10m[49m     results = results[:body.limit]
+[0m[49m[38;5;10m+     108[0m:[38;5;10m[49m     return {"total": len(results), "items": results}
+[0m[K
+Replacing: [38;5;141mknowledge/server/routers/search.py[0m
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.16 s
+[0mI'll create the following file: [38;5;141mknowledge/server/routers/skill.py[0m[38;5;244m (using tool: write)[0m
+Purpose: 更新 skill.py：新增 POST /{id}/use 接口、修复 favorite 响应格式、新增 is_public 筛选、修复分页参数名
+
+[49m[39m    1,   1[0m:[39m[49m from fastapi import APIRouter, Depends, Query, HTTPException
+[0m[49m[39m    2,   2[0m:[39m[49m from sqlalchemy.ext.asyncio import AsyncSession
+[0m[49m[39m    3,   3[0m:[39m[49m from sqlalchemy import select, func
+[0m[49m[39m    4,   4[0m:[39m[49m from pydantic import BaseModel
+[0m[49m[38;5;9m-   5     [0m:[38;5;9m[49m from typing import Optional, List
+[0m[49m[38;5;10m+        5[0m:[38;5;10m[49m from typing import Optional
+[0m[49m[39m    6,   6[0m:[39m[49m from ..database import get_db
+[0m[49m[39m    7,   7[0m:[39m[49m from ..models.skill import Skill, SkillFavorite
+[0m[49m[39m    8,   8[0m:[39m[49m 
+[0m[49m[39m    9,   9[0m:[39m[49m router = APIRouter(prefix="/api/v1/skills", tags=["skills"])
+[0m[49m[39m   10,  10[0m:[39m[49m 
+[0m[49m[39m   11,  11[0m:[39m[49m 
+[0m[49m[39m   12,  12[0m:[39m[49m class SkillCreate(BaseModel):
+[0m[49m[39m   13,  13[0m:[39m[49m     name: str
+[0m[49m[39m   14,  14[0m:[39m[49m     description: Optional[str] = None
+[0m[49m[39m   15,  15[0m:[39m[49m     prompt_template: str
+[0m[49m[38;5;9m-  16     [0m:[38;5;9m[49m     params: Optional[dict] = None
+[0m[49m[38;5;10m+       16[0m:[38;5;10m[49m     params: Optional[list] = None
+[0m[49m[39m   17,  17[0m:[39m[49m     category: Optional[str] = None
+[0m[49m[39m   18,  18[0m:[39m[49m     is_public: int = 1
+[0m[49m[39m   19,  19[0m:[39m[49m     created_by: Optional[str] = None
+[0m[49m[39m   20,  20[0m:[39m[49m 
+[0m[49m[39m   21,  21[0m:[39m[49m 
+[0m[49m[39m   22,  22[0m:[39m[49m class SkillUpdate(BaseModel):
+[0m[49m[39m   23,  23[0m:[39m[49m     name: Optional[str] = None
+[0m[49m[39m   24,  24[0m:[39m[49m     description: Optional[str] = None
+[0m[49m[39m   25,  25[0m:[39m[49m     prompt_template: Optional[str] = None
+[0m[49m[38;5;9m-  26     [0m:[38;5;9m[49m     params: Optional[dict] = None
+[0m[49m[38;5;10m+       26[0m:[38;5;10m[49m     params: Optional[list] = None
+[0m[49m[39m   27,  27[0m:[39m[49m     category: Optional[str] = None
+[0m[49m[39m   28,  28[0m:[39m[49m     is_public: Optional[int] = None
+[0m[49m[39m   29,  29[0m:[39m[49m 
+[0m[49m[39m   30,  30[0m:[39m[49m 
+[0m[49m[38;5;10m+       31[0m:[38;5;10m[49m class FavoriteBody(BaseModel):
+[0m[49m[38;5;10m+       32[0m:[38;5;10m[49m     user_name: str = "default"
+[0m[49m[38;5;10m+       33[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+       34[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+       35[0m:[38;5;10m[49m class UseBody(BaseModel):
+[0m[49m[38;5;10m+       36[0m:[38;5;10m[49m     user_name: Optional[str] = None
+[0m[49m[38;5;10m+       37[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+       38[0m:[38;5;10m[49m 
+[0m[49m[39m   31,  39[0m:[39m[49m @router.get("")
+[0m[49m[39m   32,  40[0m:[39m[49m async def list_skills(
+[0m[49m[39m   33,  41[0m:[39m[49m     page: int = Query(1, ge=1),
+[0m[49m[38;5;9m-  34     [0m:[38;5;9m[49m     size: int = Query(20, ge=1, le=100),
+[0m[49m[38;5;10m+       42[0m:[38;5;10m[49m     page_size: int = Query(20, ge=1, le=100),
+[0m[49m[39m   35,  43[0m:[39m[49m     category: Optional[str] = None,
+[0m[49m[38;5;10m+       44[0m:[38;5;10m[49m     is_public: Optional[bool] = None,
+[0m[49m[39m   36,  45[0m:[39m[49m     db: AsyncSession = Depends(get_db),
+[0m[49m[39m   37,  46[0m:[39m[49m ):
+[0m[49m[39m   38,  47[0m:[39m[49m     q = select(Skill).where(Skill.is_deleted == 0)
+[0m[49m[39m   39,  48[0m:[39m[49m     if category:
+[0m[49m[39m   40,  49[0m:[39m[49m         q = q.where(Skill.category == category)
+[0m[49m[38;5;10m+       50[0m:[38;5;10m[49m     if is_public is not None:
+[0m[49m[38;5;10m+       51[0m:[38;5;10m[49m         q = q.where(Skill.is_public == (1 if is_public else 0))
+[0m[49m[39m   41,  52[0m:[39m[49m     total = await db.scalar(select(func.count()).select_from(q.subquery()))
+[0m[49m[38;5;9m-  42     [0m:[38;5;9m[49m     items = (await db.execute(q.order_by(Skill.created_at.desc()).offset((page - 1) * size).limit(size))).scalars().all()
+[0m[49m[38;5;9m-  43     [0m:[38;5;9m[49m     return {"total": total, "items": [_to_dict(i) for i in items]}
+[0m[49m[38;5;10m+       53[0m:[38;5;10m[49m     items = (await db.execute(
+[0m[49m[38;5;10m+       54[0m:[38;5;10m[49m         q.order_by(Skill.created_at.desc()).offset((page - 1) * page_size).limit(page_size)
+[0m[49m[38;5;10m+       55[0m:[38;5;10m[49m     )).scalars().all()
+[0m[49m[38;5;10m+       56[0m:[38;5;10m[49m     return {"total": total, "page": page, "page_size": page_size, "items": [_to_dict(i) for i in items]}
+[0m[49m[39m   44,  57[0m:[39m[49m 
+[0m[49m[39m   45,  58[0m:[39m[49m 
+[0m[49m[39m   46,  59[0m:[39m[49m @router.post("")
+[0m[49m[39m   47,  60[0m:[39m[49m async def create_skill(body: SkillCreate, db: AsyncSession = Depends(get_db)):
+[0m[49m[39m   48,  61[0m:[39m[49m     item = Skill(**body.model_dump())
+[0m[49m[39m   49,  62[0m:[39m[49m     db.add(item)
+[0m[49m[39m   50,  63[0m:[39m[49m     await db.commit()
+[0m[49m[39m   51,  64[0m:[39m[49m     await db.refresh(item)
+[0m[49m[39m   52,  65[0m:[39m[49m     return _to_dict(item)
+[0m[49m[39m   53,  66[0m:[39m[49m 
+[0m[49m[39m   54,  67[0m:[39m[49m 
+[0m[49m[39m   55,  68[0m:[39m[49m @router.get("/{skill_id}")
+[0m[49m[39m   56,  69[0m:[39m[49m async def get_skill(skill_id: int, db: AsyncSession = Depends(get_db)):
+[0m[49m[39m   57,  70[0m:[39m[49m     item = await db.get(Skill, skill_id)
+[0m[49m[39m   58,  71[0m:[39m[49m     if not item or item.is_deleted:
+[0m[49m[39m   59,  72[0m:[39m[49m         raise HTTPException(404, "Not found")
+[0m[49m[39m   60,  73[0m:[39m[49m     return _to_dict(item)
+[0m[49m[39m   61,  74[0m:[39m[49m 
+[0m[49m[39m   62,  75[0m:[39m[49m 
+[0m[49m[39m   63,  76[0m:[39m[49m @router.put("/{skill_id}")
+[0m[49m[39m   64,  77[0m:[39m[49m async def update_skill(skill_id: int, body: SkillUpdate, db: AsyncSession = Depends(get_db)):
+[0m[49m[39m   65,  78[0m:[39m[49m     item = await db.get(Skill, skill_id)
+[0m[49m[39m   66,  79[0m:[39m[49m     if not item or item.is_deleted:
+[0m[49m[39m   67,  80[0m:[39m[49m         raise HTTPException(404, "Not found")
+[0m[49m[39m   68,  81[0m:[39m[49m     for k, v in body.model_dump(exclude_unset=True).items():
+[0m[49m[39m   69,  82[0m:[39m[49m         setattr(item, k, v)
+[0m[49m[39m   70,  83[0m:[39m[49m     await db.commit()
+[0m[49m[39m   71,  84[0m:[39m[49m     await db.refresh(item)
+[0m[49m[39m   72,  85[0m:[39m[49m     return _to_dict(item)
+[0m[49m[39m   73,  86[0m:[39m[49m 
+[0m[49m[39m   74,  87[0m:[39m[49m 
+[0m[49m[39m   75,  88[0m:[39m[49m @router.delete("/{skill_id}")
+[0m[49m[39m   76,  89[0m:[39m[49m async def delete_skill(skill_id: int, db: AsyncSession = Depends(get_db)):
+[0m[49m[39m   77,  90[0m:[39m[49m     item = await db.get(Skill, skill_id)
+[0m[49m[39m   78,  91[0m:[39m[49m     if not item:
+[0m[49m[39m   79,  92[0m:[39m[49m         raise HTTPException(404, "Not found")
+[0m[49m[39m   80,  93[0m:[39m[49m     item.is_deleted = 1
+[0m[49m[39m   81,  94[0m:[39m[49m     await db.commit()
+[0m[49m[39m   82,  95[0m:[39m[49m     return {"ok": True}
+[0m[49m[39m   83,  96[0m:[39m[49m 
+[0m[49m[39m   84,  97[0m:[39m[49m 
+[0m[49m[39m   85,  98[0m:[39m[49m @router.post("/{skill_id}/favorite")
+[0m[49m[38;5;9m-  86     [0m:[38;5;9m[49m async def toggle_favorite(skill_id: int, user_name: str = "default", db: AsyncSession = Depends(get_db)):
+[0m[49m[38;5;10m+       99[0m:[38;5;10m[49m async def toggle_favorite(skill_id: int, body: FavoriteBody = FavoriteBody(), db: AsyncSession = Depends(get_db)):
+[0m[49m[38;5;10m+      100[0m:[38;5;10m[49m     skill = await db.get(Skill, skill_id)
+[0m[49m[38;5;10m+      101[0m:[38;5;10m[49m     if not skill or skill.is_deleted:
+[0m[49m[38;5;10m+      102[0m:[38;5;10m[49m         raise HTTPException(404, "Skill not found")
+[0m[49m[39m   87, 103[0m:[39m[49m     existing = (await db.execute(
+[0m[49m[38;5;9m-  88     [0m:[38;5;9m[49m         select(SkillFavorite).where(SkillFavorite.skill_id == skill_id, SkillFavorite.user_name == user_name)
+[0m[49m[38;5;10m+      104[0m:[38;5;10m[49m         select(SkillFavorite).where(SkillFavorite.skill_id == skill_id, SkillFavorite.user_name == body.user_name)
+[0m[49m[39m   89, 105[0m:[39m[49m     )).scalar_one_or_none()
+[0m[49m[38;5;9m-  90     [0m:[38;5;9m[49m     skill = await db.get(Skill, skill_id)
+[0m[49m[38;5;9m-  91     [0m:[38;5;9m[49m     if not skill:
+[0m[49m[38;5;9m-  92     [0m:[38;5;9m[49m         raise HTTPException(404, "Skill not found")
+[0m[49m[39m   93, 106[0m:[39m[49m     if existing:
+[0m[49m[39m   94, 107[0m:[39m[49m         await db.delete(existing)
+[0m[49m[39m   95, 108[0m:[39m[49m         skill.favorite_count = max(0, (skill.favorite_count or 0) - 1)
+[0m[49m[38;5;9m-  96     [0m:[38;5;9m[49m         action = "unfavorited"
+[0m[49m[38;5;10m+      109[0m:[38;5;10m[49m         favorited = False
+[0m[49m[39m   97, 110[0m:[39m[49m     else:
+[0m[49m[38;5;9m-  98     [0m:[38;5;9m[49m         db.add(SkillFavorite(skill_id=skill_id, user_name=user_name))
+[0m[49m[38;5;10m+      111[0m:[38;5;10m[49m         db.add(SkillFavorite(skill_id=skill_id, user_name=body.user_name))
+[0m[49m[39m   99, 112[0m:[39m[49m         skill.favorite_count = (skill.favorite_count or 0) + 1
+[0m[49m[38;5;9m- 100     [0m:[38;5;9m[49m         action = "favorited"
+[0m[49m[38;5;10m+      113[0m:[38;5;10m[49m         favorited = True
+[0m[49m[39m  101, 114[0m:[39m[49m     await db.commit()
+[0m[49m[38;5;9m- 102     [0m:[38;5;9m[49m     return {"ok": True, "action": action}
+[0m[49m[38;5;10m+      115[0m:[38;5;10m[49m     return {"favorited": favorited, "favorite_count": skill.favorite_count}
+[0m[49m[39m  103, 116[0m:[39m[49m 
+[0m[49m[39m  104, 117[0m:[39m[49m 
+[0m[49m[38;5;10m+      118[0m:[38;5;10m[49m @router.post("/{skill_id}/use")
+[0m[49m[38;5;10m+      119[0m:[38;5;10m[49m async def record_use(skill_id: int, body: UseBody = UseBody(), db: AsyncSession = Depends(get_db)):
+[0m[49m[38;5;10m+      120[0m:[38;5;10m[49m     skill = await db.get(Skill, skill_id)
+[0m[49m[38;5;10m+      121[0m:[38;5;10m[49m     if not skill or skill.is_deleted:
+[0m[49m[38;5;10m+      122[0m:[38;5;10m[49m         raise HTTPException(404, "Skill not found")
+[0m[49m[38;5;10m+      123[0m:[38;5;10m[49m     skill.use_count = (skill.use_count or 0) + 1
+[0m[49m[38;5;10m+      124[0m:[38;5;10m[49m     await db.commit()
+[0m[49m[38;5;10m+      125[0m:[38;5;10m[49m     return {"use_count": skill.use_count}
+[0m[49m[38;5;10m+      126[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      127[0m:[38;5;10m[49m 
+[0m[49m[39m  105, 128[0m:[39m[49m def _to_dict(item: Skill):
+[0m[49m[39m  106, 129[0m:[39m[49m     return {
+[0m[49m[39m  107, 130[0m:[39m[49m         "id": item.id, "name": item.name, "description": item.description,
+[0m[49m[39m  108, 131[0m:[39m[49m         "prompt_template": item.prompt_template, "params": item.params,
+[0m[49m[39m  109, 132[0m:[39m[49m         "category": item.category, "is_public": item.is_public,
+[0m[49m[39m  110, 133[0m:[39m[49m         "created_by": item.created_by, "favorite_count": item.favorite_count,
+[0m[49m[39m  111, 134[0m:[39m[49m         "use_count": item.use_count,
+[0m[49m[39m  112, 135[0m:[39m[49m         "created_at": item.created_at.isoformat() if item.created_at else None,
+[0m[49m[38;5;10m+      136[0m:[38;5;10m[49m         "updated_at": item.updated_at.isoformat() if item.updated_at else None,
+[0m[49m[39m  113, 137[0m:[39m[49m     }
+[0m[K
+Replacing: [38;5;141mknowledge/server/routers/skill.py[0m
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/static/js/components.js[0m[38;5;244m (using tool: write)[0m
+Purpose: 重写 components.js：Toast 按 ui-design.md 规范（左边框+图标+颜色）、Modal 支持宽度/动画、emptyState 支持 CTA、新增 skeleton
+
+[49m[39m   1,   1[0m:[39m[49m /**
+[0m[49m[38;5;9m-  2     [0m:[38;5;9m[49m  * 通用组件 — Redesigned
+[0m[49m[38;5;10m+       2[0m:[38;5;10m[49m  * 通用组件 — v2.0 (对齐 ui-design.md)
+[0m[49m[39m   3,   3[0m:[39m[49m  */
+[0m[49m[39m   4,   4[0m:[39m[49m let _toastCount = 0;
+[0m[49m[39m   5,   5[0m:[39m[49m 
+[0m[49m[39m   6,   6[0m:[39m[49m const components = {
+[0m[49m[39m   7,   7[0m:[39m[49m     renderNav() {
+[0m[49m[39m   8,   8[0m:[39m[49m         const nav = `
+[0m[49m[38;5;9m-  9     [0m:[38;5;9m[49m         <nav class="sidebar fixed left-0 top-0 h-full w-56 z-40 flex flex-col">
+[0m[49m[38;5;10m+       9[0m:[38;5;10m[49m         <nav class="sidebar fixed left-0 top-0 h-full w-60 z-40 flex flex-col">
+[0m[49m[39m  10,  10[0m:[39m[49m             <div class="p-5 border-b" style="border-color:var(--border)">
+[0m[49m[39m  11,  11[0m:[39m[49m                 <h1 class="nav-brand text-xl font-bold tracking-tight"><i class="fa fa-bolt mr-2"></i>Knowledge</h1>
+[0m[49m[39m  12,  12[0m:[39m[49m                 <p class="nav-sub text-xs mt-1">AI 知识库平台</p>
+[0m[49m[39m  13,  13[0m:[39m[49m             </div>
+[0m[49m[39m  14,  14[0m:[39m[49m             <div class="flex-1 py-4 space-y-1 px-3">
+[0m[49m[39m  15,  15[0m:[39m[49m                 <a href="/" class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition"><i class="fa fa-dashboard w-5 text-center"></i><span>仪表盘</span></a>
+[0m[49m[39m  16,  16[0m:[39m[49m                 <a href="/knowledge.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition"><i class="fa fa-book w-5 text-center"></i><span>知识管理</span></a>
+[0m[49m[39m  17,  17[0m:[39m[49m                 <a href="/search.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition"><i class="fa fa-search w-5 text-center"></i><span>智能搜索</span></a>
+[0m[49m[39m  18,  18[0m:[39m[49m                 <a href="/skills.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition"><i class="fa fa-magic w-5 text-center"></i><span>Skill 市场</span></a>
+[0m[49m[39m  19,  19[0m:[39m[49m                 <a href="/metadata.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition"><i class="fa fa-database w-5 text-center"></i><span>元数据</span></a>
+[0m[49m[39m  20,  20[0m:[39m[49m                 <a href="/teams.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition"><i class="fa fa-users w-5 text-center"></i><span>团队空间</span></a>
+[0m[49m[39m  21,  21[0m:[39m[49m             </div>
+[0m[49m[39m  22,  22[0m:[39m[49m             <div class="p-4 border-t" style="border-color:var(--border)">
+[0m[49m[39m  23,  23[0m:[39m[49m                 <div class="flex items-center gap-2 text-xs" style="color:var(--text-muted)">
+[0m[49m[39m  24,  24[0m:[39m[49m                     <span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span>
+[0m[49m[39m  25,  25[0m:[39m[49m                     <span>系统运行中</span>
+[0m[49m[39m  26,  26[0m:[39m[49m                 </div>
+[0m[49m[39m  27,  27[0m:[39m[49m             </div>
+[0m[49m[39m  28,  28[0m:[39m[49m         </nav>`;
+[0m[49m[39m  29,  29[0m:[39m[49m         $('body').prepend(nav);
+[0m[49m[39m  30,  30[0m:[39m[49m     },
+[0m[49m[39m  31,  31[0m:[39m[49m 
+[0m[49m[38;5;10m+      32[0m:[38;5;10m[49m     /* Toast — ui-design.md 4.4 规范 */
+[0m[49m[39m  32,  33[0m:[39m[49m     toast(msg, type = 'info') {
+[0m[49m[38;5;9m- 33     [0m:[38;5;9m[49m         const colors = { info: 'background:var(--info)', success: 'background:var(--success)', error: 'background:var(--danger)' };
+[0m[49m[38;5;10m+      34[0m:[38;5;10m[49m         const cfg = {
+[0m[49m[38;5;10m+      35[0m:[38;5;10m[49m             success: { icon: 'fa-check-circle', bg: 'var(--success-light,#ecfdf5)', border: 'var(--success,#2e7d32)', color: 'var(--success,#2e7d32)', dur: 3000 },
+[0m[49m[38;5;10m+      36[0m:[38;5;10m[49m             error:   { icon: 'fa-times-circle', bg: 'var(--error-light,#fef2f2)', border: 'var(--danger,#d32f2f)', color: 'var(--danger,#d32f2f)', dur: 5000 },
+[0m[49m[38;5;10m+      37[0m:[38;5;10m[49m             warning: { icon: 'fa-exclamation-triangle', bg: '#fffbeb', border: '#d97706', color: '#d97706', dur: 4000 },
+[0m[49m[38;5;10m+      38[0m:[38;5;10m[49m             info:    { icon: 'fa-info-circle', bg: '#e6f2ff', border: 'var(--accent,#0066cc)', color: 'var(--accent,#0066cc)', dur: 3000 }
+[0m[49m[38;5;10m+      39[0m:[38;5;10m[49m         };
+[0m[49m[38;5;10m+      40[0m:[38;5;10m[49m         const c = cfg[type] || cfg.info;
+[0m[49m[39m  34,  41[0m:[39m[49m         const idx = _toastCount++;
+[0m[49m[38;5;9m- 35     [0m:[38;5;9m[49m         const offset = 1 + idx * 3.5;
+[0m[49m[38;5;9m- 36     [0m:[38;5;9m[49m         const el = $(`<div class="toast-item fixed right-4 px-6 py-3 shadow-lg z-50 animate-fade-in" style="top:${offset}rem;${colors[type]};color:#ffffff;font-weight:600">${escapeHtml(msg)}</div>`);
+[0m[49m[38;5;10m+      42[0m:[38;5;10m[49m         const top = 24 + idx * 64;
+[0m[49m[38;5;10m+      43[0m:[38;5;10m[49m         const el = $(`<div class="toast-item fixed z-50 flex items-center gap-3 px-5 py-3 shadow-lg" style="top:${top}px;right:24px;width:360px;background:${c.bg};border-left:3px solid ${c.border};border-radius:var(--radius-md,6px);transform:translateX(100%);transition:transform 0.2s ease-out">
+[0m[49m[38;5;10m+      44[0m:[38;5;10m[49m             <i class="fa ${c.icon}" style="color:${c.color};font-size:16px"></i>
+[0m[49m[38;5;10m+      45[0m:[38;5;10m[49m             <span style="color:var(--text-primary,#1a1a1a);font-size:14px;font-weight:500">${escapeHtml(msg)}</span>
+[0m[49m[38;5;10m+      46[0m:[38;5;10m[49m         </div>`);
+[0m[49m[39m  37,  47[0m:[39m[49m         $('body').append(el);
+[0m[49m[38;5;9m- 38     [0m:[38;5;9m[49m         setTimeout(() => { el.remove(); _toastCount = Math.max(0, _toastCount - 1); }, 3000);
+[0m[49m[38;5;10m+      48[0m:[38;5;10m[49m         requestAnimationFrame(() => el.css('transform', 'translateX(0)'));
+[0m[49m[38;5;10m+      49[0m:[38;5;10m[49m         setTimeout(() => {
+[0m[49m[38;5;10m+      50[0m:[38;5;10m[49m             el.css({ opacity: 0, transition: 'opacity 0.15s ease-in' });
+[0m[49m[38;5;10m+      51[0m:[38;5;10m[49m             setTimeout(() => { el.remove(); _toastCount = Math.max(0, _toastCount - 1); }, 150);
+[0m[49m[38;5;10m+      52[0m:[38;5;10m[49m         }, c.dur);
+[0m[49m[39m  39,  53[0m:[39m[49m     },
+[0m[49m[39m  40,  54[0m:[39m[49m 
+[0m[49m[38;5;9m- 41     [0m:[38;5;9m[49m     modal(title, content, onConfirm) {
+[0m[49m[38;5;10m+      55[0m:[38;5;10m[49m     /* Modal — 支持自定义宽度 */
+[0m[49m[38;5;10m+      56[0m:[38;5;10m[49m     modal(title, content, onConfirm, opts = {}) {
+[0m[49m[39m  42,  57[0m:[39m[49m         $('#modal-overlay').remove();
+[0m[49m[38;5;10m+      58[0m:[38;5;10m[49m         const w = opts.width || 'max-w-lg';
+[0m[49m[38;5;10m+      59[0m:[38;5;10m[49m         const confirmText = opts.confirmText || '确认';
+[0m[49m[39m  43,  60[0m:[39m[49m         const html = `
+[0m[49m[38;5;9m- 44     [0m:[38;5;9m[49m         <div id="modal-overlay" class="fixed inset-0 flex items-center justify-center z-50">
+[0m[49m[38;5;9m- 45     [0m:[38;5;9m[49m             <div class="modal-inner rounded-xl shadow-2xl w-full max-w-lg mx-4 p-6">
+[0m[49m[38;5;9m- 46     [0m:[38;5;9m[49m                 <h3 class="text-lg font-semibold mb-4">${escapeHtml(title)}</h3>
+[0m[49m[38;5;9m- 47     [0m:[38;5;9m[49m                 <div class="mb-6">${content}</div>
+[0m[49m[38;5;10m+      61[0m:[38;5;10m[49m         <div id="modal-overlay" class="fixed inset-0 flex items-center justify-center z-50" style="opacity:0;transition:opacity 0.2s ease-out">
+[0m[49m[38;5;10m+      62[0m:[38;5;10m[49m             <div class="modal-inner rounded-xl shadow-2xl w-full ${w} mx-4 p-6" style="transform:translateY(20px);transition:transform 0.2s ease-out">
+[0m[49m[38;5;10m+      63[0m:[38;5;10m[49m                 <div class="flex items-center justify-between mb-4">
+[0m[49m[38;5;10m+      64[0m:[38;5;10m[49m                     <h3 class="text-lg font-semibold" style="color:var(--text-primary)">${escapeHtml(title)}</h3>
+[0m[49m[38;5;10m+      65[0m:[38;5;10m[49m                     <button class="modal-close" style="color:var(--text-muted);cursor:pointer;padding:4px"><i class="fa fa-times"></i></button>
+[0m[49m[38;5;10m+      66[0m:[38;5;10m[49m                 </div>
+[0m[49m[38;5;10m+      67[0m:[38;5;10m[49m                 <div class="modal-body mb-6">${content}</div>
+[0m[49m[39m  48,  68[0m:[39m[49m                 <div class="flex justify-end gap-3">
+[0m[49m[39m  49,  69[0m:[39m[49m                     <button class="btn-cancel px-4 py-2 rounded-lg">取消</button>
+[0m[49m[38;5;9m- 50     [0m:[38;5;9m[49m                     <button class="btn-confirm px-4 py-2 rounded-lg font-semibold">确认</button>
+[0m[49m[38;5;10m+      70[0m:[38;5;10m[49m                     <button class="btn-confirm px-4 py-2 rounded-lg font-semibold">${escapeHtml(confirmText)}</button>
+[0m[49m[39m  51,  71[0m:[39m[49m                 </div>
+[0m[49m[39m  52,  72[0m:[39m[49m             </div>
+[0m[49m[39m  53,  73[0m:[39m[49m         </div>`;
+[0m[49m[39m  54,  74[0m:[39m[49m         $('body').append(html);
+[0m[49m[38;5;10m+      75[0m:[38;5;10m[49m         requestAnimationFrame(() => {
+[0m[49m[38;5;10m+      76[0m:[38;5;10m[49m             $('#modal-overlay').css('opacity', 1);
+[0m[49m[38;5;10m+      77[0m:[38;5;10m[49m             $('#modal-overlay .modal-inner').css('transform', 'translateY(0)');
+[0m[49m[38;5;10m+      78[0m:[38;5;10m[49m         });
+[0m[49m[39m  55,  79[0m:[39m[49m 
+[0m[49m[38;5;9m- 56     [0m:[38;5;9m[49m         const close = () => $('#modal-overlay').remove();
+[0m[49m[38;5;10m+      80[0m:[38;5;10m[49m         const close = () => {
+[0m[49m[38;5;10m+      81[0m:[38;5;10m[49m             $('#modal-overlay').css('opacity', 0);
+[0m[49m[38;5;10m+      82[0m:[38;5;10m[49m             $('#modal-overlay .modal-inner').css('transform', 'translateY(10px)');
+[0m[49m[38;5;10m+      83[0m:[38;5;10m[49m             setTimeout(() => $('#modal-overlay').remove(), 150);
+[0m[49m[38;5;10m+      84[0m:[38;5;10m[49m             $(document).off('keydown.modal');
+[0m[49m[38;5;10m+      85[0m:[38;5;10m[49m         };
+[0m[49m[39m  57,  86[0m:[39m[49m         $('#modal-overlay').on('click', function(e) { if (e.target === this) close(); });
+[0m[49m[38;5;9m- 58     [0m:[38;5;9m[49m         $(document).on('keydown.modal', function(e) { if (e.key === 'Escape') { close(); $(document).off('keydown.modal'); } });
+[0m[49m[38;5;9m- 59     [0m:[38;5;9m[49m         $('#modal-overlay .btn-cancel').click(() => { close(); $(document).off('keydown.modal'); });
+[0m[49m[38;5;9m- 60     [0m:[38;5;9m[49m         $('#modal-overlay .btn-confirm').click(async function() {
+[0m[49m[38;5;9m- 61     [0m:[38;5;9m[49m             const btn = $(this);
+[0m[49m[38;5;9m- 62     [0m:[38;5;9m[49m             if (btn.prop('disabled')) return;
+[0m[49m[38;5;9m- 63     [0m:[38;5;9m[49m             btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin mr-1"></i>处理中...');
+[0m[49m[38;5;9m- 64     [0m:[38;5;9m[49m             try { await onConfirm(); close(); }
+[0m[49m[38;5;9m- 65     [0m:[38;5;9m[49m             catch(e) { components.toast(e.message || '操作失败', 'error'); btn.prop('disabled', false).html('确认'); }
+[0m[49m[38;5;9m- 66     [0m:[38;5;9m[49m             $(document).off('keydown.modal');
+[0m[49m[38;5;9m- 67     [0m:[38;5;9m[49m         });
+[0m[49m[38;5;10m+      87[0m:[38;5;10m[49m         $('#modal-overlay .modal-close').click(close);
+[0m[49m[38;5;10m+      88[0m:[38;5;10m[49m         $(document).on('keydown.modal', function(e) { if (e.key === 'Escape') close(); });
+[0m[49m[38;5;10m+      89[0m:[38;5;10m[49m         $('#modal-overlay .btn-cancel').click(close);
+[0m[49m[38;5;10m+      90[0m:[38;5;10m[49m         if (onConfirm) {
+[0m[49m[38;5;10m+      91[0m:[38;5;10m[49m             $('#modal-overlay .btn-confirm').click(async function() {
+[0m[49m[38;5;10m+      92[0m:[38;5;10m[49m                 const btn = $(this);
+[0m[49m[38;5;10m+      93[0m:[38;5;10m[49m                 if (btn.prop('disabled')) return;
+[0m[49m[38;5;10m+      94[0m:[38;5;10m[49m                 btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin mr-1"></i>处理中...');
+[0m[49m[38;5;10m+      95[0m:[38;5;10m[49m                 try { await onConfirm(); close(); }
+[0m[49m[38;5;10m+      96[0m:[38;5;10m[49m                 catch(e) { components.toast(e.message || '操作失败', 'error'); btn.prop('disabled', false).html(confirmText); }
+[0m[49m[38;5;10m+      97[0m:[38;5;10m[49m             });
+[0m[49m[38;5;10m+      98[0m:[38;5;10m[49m         } else {
+[0m[49m[38;5;10m+      99[0m:[38;5;10m[49m             $('#modal-overlay .btn-confirm').hide();
+[0m[49m[38;5;10m+     100[0m:[38;5;10m[49m             $('#modal-overlay .btn-cancel').text('关闭');
+[0m[49m[38;5;10m+     101[0m:[38;5;10m[49m         }
+[0m[49m[39m  68, 102[0m:[39m[49m     },
+[0m[49m[39m  69, 103[0m:[39m[49m 
+[0m[49m[39m  70, 104[0m:[39m[49m     confirm(msg, onOk) {
+[0m[49m[39m  71, 105[0m:[39m[49m         this.modal('确认操作', `<p style="color:var(--text-secondary)">${escapeHtml(msg)}</p>`, onOk);
+[0m[49m[39m  72, 106[0m:[39m[49m     },
+[0m[49m[39m  73, 107[0m:[39m[49m 
+[0m[49m[39m  74, 108[0m:[39m[49m     pagination(total, page, size, onChange) {
+[0m[49m[39m  75, 109[0m:[39m[49m         const pages = Math.ceil(total / size);
+[0m[49m[39m  76, 110[0m:[39m[49m         if (pages <= 1) return '';
+[0m[49m[39m  77, 111[0m:[39m[49m         let html = '<div class="flex items-center gap-2 mt-6 justify-center">';
+[0m[49m[38;5;10m+     112[0m:[38;5;10m[49m         if (page > 1) html += `<button onclick="${onChange}(${page-1})" class="pagination-btn"><i class="fa fa-chevron-left"></i></button>`;
+[0m[49m[39m  78, 113[0m:[39m[49m         for (let i = 1; i <= pages; i++) {
+[0m[49m[38;5;9m- 79     [0m:[38;5;9m[49m             const cls = i === page ? 'pagination-btn active' : 'pagination-btn';
+[0m[49m[38;5;9m- 80     [0m:[38;5;9m[49m             html += `<button onclick="${onChange}(${i})" class="${cls}">${i}</button>`;
+[0m[49m[38;5;10m+     114[0m:[38;5;10m[49m             if (pages > 7 && i > 3 && i < pages - 2 && Math.abs(i - page) > 1) {
+[0m[49m[38;5;10m+     115[0m:[38;5;10m[49m                 if (i === 4 || i === pages - 3) html += '<span class="px-1" style="color:var(--text-muted)">...</span>';
+[0m[49m[38;5;10m+     116[0m:[38;5;10m[49m                 continue;
+[0m[49m[38;5;10m+     117[0m:[38;5;10m[49m             }
+[0m[49m[38;5;10m+     118[0m:[38;5;10m[49m             html += `<button onclick="${onChange}(${i})" class="pagination-btn${i===page?' active':''}">${i}</button>`;
+[0m[49m[39m  81, 119[0m:[39m[49m         }
+[0m[49m[38;5;10m+     120[0m:[38;5;10m[49m         if (page < pages) html += `<button onclick="${onChange}(${page+1})" class="pagination-btn"><i class="fa fa-chevron-right"></i></button>`;
+[0m[49m[39m  82, 121[0m:[39m[49m         html += '</div>';
+[0m[49m[39m  83, 122[0m:[39m[49m         return html;
+[0m[49m[39m  84, 123[0m:[39m[49m     },
+[0m[49m[39m  85, 124[0m:[39m[49m 
+[0m[49m[38;5;9m- 86     [0m:[38;5;9m[49m     emptyState(msg = '暂无数据') {
+[0m[49m[38;5;9m- 87     [0m:[38;5;9m[49m         return `<div class="empty-state text-center py-16"><i class="fa fa-inbox text-4xl mb-3 block"></i><p>${escapeHtml(msg)}</p></div>`;
+[0m[49m[38;5;10m+     125[0m:[38;5;10m[49m     emptyState(msg = '暂无数据', ctaText, ctaAction) {
+[0m[49m[38;5;10m+     126[0m:[38;5;10m[49m         let html = `<div class="empty-state text-center py-16"><i class="fa fa-inbox text-4xl mb-3 block"></i><p>${escapeHtml(msg)}</p>`;
+[0m[49m[38;5;10m+     127[0m:[38;5;10m[49m         if (ctaText && ctaAction) {
+[0m[49m[38;5;10m+     128[0m:[38;5;10m[49m             html += `<button onclick="${ctaAction}" class="btn-accent mt-4 text-sm"><i class="fa fa-plus mr-1"></i>${escapeHtml(ctaText)}</button>`;
+[0m[49m[38;5;10m+     129[0m:[38;5;10m[49m         }
+[0m[49m[38;5;10m+     130[0m:[38;5;10m[49m         html += '</div>';
+[0m[49m[38;5;10m+     131[0m:[38;5;10m[49m         return html;
+[0m[49m[39m  88, 132[0m:[39m[49m     },
+[0m[49m[39m  89, 133[0m:[39m[49m 
+[0m[49m[39m  90, 134[0m:[39m[49m     loading() {
+[0m[49m[39m  91, 135[0m:[39m[49m         return `<div class="text-center py-16"><i class="fa fa-spinner fa-spin text-3xl" style="color:var(--accent)"></i></div>`;
+[0m[49m[38;5;10m+     136[0m:[38;5;10m[49m     },
+[0m[49m[38;5;10m+     137[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     138[0m:[38;5;10m[49m     skeleton(type = 'card', count = 6) {
+[0m[49m[38;5;10m+     139[0m:[38;5;10m[49m         if (type === 'card') {
+[0m[49m[38;5;10m+     140[0m:[38;5;10m[49m             let html = '';
+[0m[49m[38;5;10m+     141[0m:[38;5;10m[49m             for (let i = 0; i < count; i++) {
+[0m[49m[38;5;10m+     142[0m:[38;5;10m[49m                 html += `<div class="card p-5"><div class="skeleton-line h-5 w-3/4 mb-3"></div><div class="skeleton-line h-3 w-full mb-2"></div><div class="skeleton-line h-3 w-2/3"></div></div>`;
+[0m[49m[38;5;10m+     143[0m:[38;5;10m[49m             }
+[0m[49m[38;5;10m+     144[0m:[38;5;10m[49m             return html;
+[0m[49m[38;5;10m+     145[0m:[38;5;10m[49m         }
+[0m[49m[38;5;10m+     146[0m:[38;5;10m[49m         if (type === 'table') {
+[0m[49m[38;5;10m+     147[0m:[38;5;10m[49m             let html = '';
+[0m[49m[38;5;10m+     148[0m:[38;5;10m[49m             for (let i = 0; i < count; i++) {
+[0m[49m[38;5;10m+     149[0m:[38;5;10m[49m                 html += `<div class="skeleton-line h-4 w-full mb-3"></div>`;
+[0m[49m[38;5;10m+     150[0m:[38;5;10m[49m             }
+[0m[49m[38;5;10m+     151[0m:[38;5;10m[49m             return html;
+[0m[49m[38;5;10m+     152[0m:[38;5;10m[49m         }
+[0m[49m[38;5;10m+     153[0m:[38;5;10m[49m         return components.loading();
+[0m[49m[39m  92, 154[0m:[39m[49m     }
+[0m[49m[39m  93, 155[0m:[39m[49m };
+[0m[K
+Replacing: [38;5;141mknowledge/static/js/components.js[0m
+[38;5;244m - Completed in 0.1s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[?25l[38;5;141m> [0m[38;5;252m[1m### 3. 更新 custom.css — 添加 Toast 新样式、骨架屏 shimmer、prefers-reduced-motion[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/server/routers/knowledge.py[0m[38;5;244m (using tool: write)[0m
+Purpose: 更新 knowledge.py：新增 keyword/tags 筛选参数、修复分页参数名为 page_size、响应增加 page/page_size
+
+[49m[39m   1,   1[0m:[39m[49m from fastapi import APIRouter, Depends, Query, HTTPException
+[0m[49m[39m   2,   2[0m:[39m[49m from sqlalchemy.ext.asyncio import AsyncSession
+[0m[49m[38;5;9m-  3     [0m:[38;5;9m[49m from sqlalchemy import select, func
+[0m[49m[38;5;10m+       3[0m:[38;5;10m[49m from sqlalchemy import select, func, cast, String
+[0m[49m[39m   4,   4[0m:[39m[49m from pydantic import BaseModel
+[0m[49m[39m   5,   5[0m:[39m[49m from typing import Optional, List
+[0m[49m[39m   6,   6[0m:[39m[49m from ..database import get_db
+[0m[49m[39m   7,   7[0m:[39m[49m from ..models.knowledge import KnowledgeItem
+[0m[49m[39m   8,   8[0m:[39m[49m 
+[0m[49m[39m   9,   9[0m:[39m[49m router = APIRouter(prefix="/api/v1/knowledge", tags=["knowledge"])
+[0m[49m[39m  10,  10[0m:[39m[49m 
+[0m[49m[39m  11,  11[0m:[39m[49m 
+[0m[49m[39m  12,  12[0m:[39m[49m class KnowledgeCreate(BaseModel):
+[0m[49m[39m  13,  13[0m:[39m[49m     title: str
+[0m[49m[39m  14,  14[0m:[39m[49m     content: str
+[0m[49m[39m  15,  15[0m:[39m[49m     category: Optional[str] = None
+[0m[49m[39m  16,  16[0m:[39m[49m     tags: Optional[List[str]] = None
+[0m[49m[39m  17,  17[0m:[39m[49m     team_id: Optional[int] = None
+[0m[49m[39m  18,  18[0m:[39m[49m     created_by: Optional[str] = None
+[0m[49m[39m  19,  19[0m:[39m[49m 
+[0m[49m[39m  20,  20[0m:[39m[49m 
+[0m[49m[39m  21,  21[0m:[39m[49m class KnowledgeUpdate(BaseModel):
+[0m[49m[39m  22,  22[0m:[39m[49m     title: Optional[str] = None
+[0m[49m[39m  23,  23[0m:[39m[49m     content: Optional[str] = None
+[0m[49m[39m  24,  24[0m:[39m[49m     category: Optional[str] = None
+[0m[49m[39m  25,  25[0m:[39m[49m     tags: Optional[List[str]] = None
+[0m[49m[39m  26,  26[0m:[39m[49m 
+[0m[49m[39m  27,  27[0m:[39m[49m 
+[0m[49m[39m  28,  28[0m:[39m[49m @router.get("")
+[0m[49m[39m  29,  29[0m:[39m[49m async def list_knowledge(
+[0m[49m[39m  30,  30[0m:[39m[49m     page: int = Query(1, ge=1),
+[0m[49m[38;5;9m- 31     [0m:[38;5;9m[49m     size: int = Query(20, ge=1, le=100),
+[0m[49m[38;5;10m+      31[0m:[38;5;10m[49m     page_size: int = Query(20, ge=1, le=100),
+[0m[49m[39m  32,  32[0m:[39m[49m     category: Optional[str] = None,
+[0m[49m[38;5;10m+      33[0m:[38;5;10m[49m     keyword: Optional[str] = None,
+[0m[49m[38;5;10m+      34[0m:[38;5;10m[49m     tags: Optional[str] = None,
+[0m[49m[39m  33,  35[0m:[39m[49m     db: AsyncSession = Depends(get_db),
+[0m[49m[39m  34,  36[0m:[39m[49m ):
+[0m[49m[39m  35,  37[0m:[39m[49m     q = select(KnowledgeItem).where(KnowledgeItem.is_deleted == 0)
+[0m[49m[39m  36,  38[0m:[39m[49m     if category:
+[0m[49m[39m  37,  39[0m:[39m[49m         q = q.where(KnowledgeItem.category == category)
+[0m[49m[38;5;10m+      40[0m:[38;5;10m[49m     if keyword:
+[0m[49m[38;5;10m+      41[0m:[38;5;10m[49m         q = q.where(KnowledgeItem.title.contains(keyword) | KnowledgeItem.content.contains(keyword))
+[0m[49m[38;5;10m+      42[0m:[38;5;10m[49m     if tags:
+[0m[49m[38;5;10m+      43[0m:[38;5;10m[49m         for tag in tags.split(","):
+[0m[49m[38;5;10m+      44[0m:[38;5;10m[49m             tag = tag.strip()
+[0m[49m[38;5;10m+      45[0m:[38;5;10m[49m             if tag:
+[0m[49m[38;5;10m+      46[0m:[38;5;10m[49m                 q = q.where(cast(KnowledgeItem.tags, String).contains(tag))
+[0m[49m[39m  38,  47[0m:[39m[49m     total = await db.scalar(select(func.count()).select_from(q.subquery()))
+[0m[49m[38;5;9m- 39     [0m:[38;5;9m[49m     items = (await db.execute(q.order_by(KnowledgeItem.created_at.desc()).offset((page - 1) * size).limit(size))).scalars().all()
+[0m[49m[38;5;9m- 40     [0m:[38;5;9m[49m     return {"total": total, "items": [_to_dict(i) for i in items]}
+[0m[49m[38;5;10m+      48[0m:[38;5;10m[49m     items = (await db.execute(
+[0m[49m[38;5;10m+      49[0m:[38;5;10m[49m         q.order_by(KnowledgeItem.created_at.desc()).offset((page - 1) * page_size).limit(page_size)
+[0m[49m[38;5;10m+      50[0m:[38;5;10m[49m     )).scalars().all()
+[0m[49m[38;5;10m+      51[0m:[38;5;10m[49m     return {"total": total, "page": page, "page_size": page_size, "items": [_to_dict(i) for i in items]}
+[0m[49m[39m  41,  52[0m:[39m[49m 
+[0m[49m[39m  42,  53[0m:[39m[49m 
+[0m[49m[39m  43,  54[0m:[39m[49m @router.post("")
+[0m[49m[39m  44,  55[0m:[39m[49m async def create_knowledge(body: KnowledgeCreate, db: AsyncSession = Depends(get_db)):
+[0m[49m[39m  45,  56[0m:[39m[49m     item = KnowledgeItem(**body.model_dump())
+[0m[49m[39m  46,  57[0m:[39m[49m     db.add(item)
+[0m[49m[39m  47,  58[0m:[39m[49m     await db.commit()
+[0m[49m[39m  48,  59[0m:[39m[49m     await db.refresh(item)
+[0m[49m[39m  49,  60[0m:[39m[49m     return _to_dict(item)
+[0m[49m[39m  50,  61[0m:[39m[49m 
+[0m[49m[39m  51,  62[0m:[39m[49m 
+[0m[49m[39m  52,  63[0m:[39m[49m @router.get("/{item_id}")
+[0m[49m[39m  53,  64[0m:[39m[49m async def get_knowledge(item_id: int, db: AsyncSession = Depends(get_db)):
+[0m[49m[39m  54,  65[0m:[39m[49m     item = await db.get(KnowledgeItem, item_id)
+[0m[49m[39m  55,  66[0m:[39m[49m     if not item or item.is_deleted:
+[0m[49m[39m  56,  67[0m:[39m[49m         raise HTTPException(404, "Not found")
+[0m[49m[39m  57,  68[0m:[39m[49m     return _to_dict(item)
+[0m[49m[39m  58,  69[0m:[39m[49m 
+[0m[49m[39m  59,  70[0m:[39m[49m 
+[0m[49m[39m  60,  71[0m:[39m[49m @router.put("/{item_id}")
+[0m[49m[39m  61,  72[0m:[39m[49m async def update_knowledge(item_id: int, body: KnowledgeUpdate, db: AsyncSession = Depends(get_db)):
+[0m[49m[39m  62,  73[0m:[39m[49m     item = await db.get(KnowledgeItem, item_id)
+[0m[49m[39m  63,  74[0m:[39m[49m     if not item or item.is_deleted:
+[0m[49m[39m  64,  75[0m:[39m[49m         raise HTTPException(404, "Not found")
+[0m[49m[39m  65,  76[0m:[39m[49m     for k, v in body.model_dump(exclude_unset=True).items():
+[0m[49m[39m  66,  77[0m:[39m[49m         setattr(item, k, v)
+[0m[49m[39m  67,  78[0m:[39m[49m     await db.commit()
+[0m[49m[39m  68,  79[0m:[39m[49m     await db.refresh(item)
+[0m[49m[39m  69,  80[0m:[39m[49m     return _to_dict(item)
+[0m[49m[39m  70,  81[0m:[39m[49m 
+[0m[49m[39m  71,  82[0m:[39m[49m 
+[0m[49m[39m  72,  83[0m:[39m[49m @router.delete("/{item_id}")
+[0m[49m[39m  73,  84[0m:[39m[49m async def delete_knowledge(item_id: int, db: AsyncSession = Depends(get_db)):
+[0m[49m[39m  74,  85[0m:[39m[49m     item = await db.get(KnowledgeItem, item_id)
+[0m[49m[39m  75,  86[0m:[39m[49m     if not item:
+[0m[49m[39m  76,  87[0m:[39m[49m         raise HTTPException(404, "Not found")
+[0m[49m[39m  77,  88[0m:[39m[49m     item.is_deleted = 1
+[0m[49m[39m  78,  89[0m:[39m[49m     await db.commit()
+[0m[49m[39m  79,  90[0m:[39m[49m     return {"ok": True}
+[0m[49m[39m  80,  91[0m:[39m[49m 
+[0m[49m[39m  81,  92[0m:[39m[49m 
+[0m[49m[39m  82,  93[0m:[39m[49m def _to_dict(item: KnowledgeItem):
+[0m[49m[39m  83,  94[0m:[39m[49m     return {
+[0m[49m[39m  84,  95[0m:[39m[49m         "id": item.id, "title": item.title, "content": item.content,
+[0m[49m[39m  85,  96[0m:[39m[49m         "category": item.category, "tags": item.tags, "team_id": item.team_id,
+[0m[49m[39m  86,  97[0m:[39m[49m         "created_by": item.created_by,
+[0m[49m[39m  87,  98[0m:[39m[49m         "created_at": item.created_at.isoformat() if item.created_at else None,
+[0m[49m[39m  88,  99[0m:[39m[49m         "updated_at": item.updated_at.isoformat() if item.updated_at else None,
+[0m[49m[39m  89, 100[0m:[39m[49m     }
+[0m[K
+Replacing: [38;5;141mknowledge/server/routers/knowledge.py[0m
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.16 s
+[0mI'll modify the following file: [38;5;141mknowledge/static/css/custom.css[0m[38;5;244m (using tool: write)[0m
+Purpose: 添加骨架屏 shimmer、reduced-motion、搜索页样式、索引 Badge、分类 Tab、标签 chip、分数条等新 CSS
+
+[49m[39m  244, 244[0m:[39m[49m /* ===== Toast ===== */
+[0m[49m[39m  245, 245[0m:[39m[49m .toast-item {
+[0m[49m[38;5;9m- 246     [0m:[38;5;9m[49m   border-radius: 0.5rem !important;
+[0m[49m[39m  247, 246[0m:[39m[49m   font-weight: 500;
+[0m[49m[38;5;9m- 248     [0m:[38;5;9m[49m }
+[0m[49m[38;5;10m+      247[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+      248[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      249[0m:[38;5;10m[49m /* ===== Skeleton shimmer ===== */
+[0m[49m[38;5;10m+      250[0m:[38;5;10m[49m @keyframes shimmer {
+[0m[49m[38;5;10m+      251[0m:[38;5;10m[49m   0% { background-position: -200% 0; }
+[0m[49m[38;5;10m+      252[0m:[38;5;10m[49m   100% { background-position: 200% 0; }
+[0m[49m[38;5;10m+      253[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+      254[0m:[38;5;10m[49m .skeleton-line {
+[0m[49m[38;5;10m+      255[0m:[38;5;10m[49m   background: linear-gradient(90deg, var(--border) 25%, var(--bg-card-hover) 50%, var(--border) 75%);
+[0m[49m[38;5;10m+      256[0m:[38;5;10m[49m   background-size: 200% 100%;
+[0m[49m[38;5;10m+      257[0m:[38;5;10m[49m   animation: shimmer 1.5s linear infinite;
+[0m[49m[38;5;10m+      258[0m:[38;5;10m[49m   border-radius: 4px;
+[0m[49m[38;5;10m+      259[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+      260[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      261[0m:[38;5;10m[49m /* ===== Reduced motion ===== */
+[0m[49m[38;5;10m+      262[0m:[38;5;10m[49m @media (prefers-reduced-motion: reduce) {
+[0m[49m[38;5;10m+      263[0m:[38;5;10m[49m   *, *::before, *::after {
+[0m[49m[38;5;10m+      264[0m:[38;5;10m[49m     animation-duration: 0.01ms !important;
+[0m[49m[38;5;10m+      265[0m:[38;5;10m[49m     transition-duration: 0.01ms !important;
+[0m[49m[38;5;10m+      266[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+      267[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+      268[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      269[0m:[38;5;10m[49m /* ===== Search page ===== */
+[0m[49m[38;5;10m+      270[0m:[38;5;10m[49m .search-hero { transition: all 0.3s ease-out; }
+[0m[49m[38;5;10m+      271[0m:[38;5;10m[49m .search-hero.compact { padding-top: 0; }
+[0m[49m[38;5;10m+      272[0m:[38;5;10m[49m .filter-panel { transition: opacity 0.2s ease-out, transform 0.2s ease-out; }
+[0m[49m[38;5;10m+      273[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      274[0m:[38;5;10m[49m /* ===== Index badges ===== */
+[0m[49m[38;5;10m+      275[0m:[38;5;10m[49m .badge-pk { background: #fef2f2; color: #d32f2f; border: 1px solid rgba(211,47,47,0.2); }
+[0m[49m[38;5;10m+      276[0m:[38;5;10m[49m .badge-idx { background: #e6f2ff; color: #0066cc; border: 1px solid rgba(0,102,204,0.2); }
+[0m[49m[38;5;10m+      277[0m:[38;5;10m[49m .badge-uni { background: #ecfdf5; color: #2e7d32; border: 1px solid rgba(46,125,50,0.2); }
+[0m[49m[38;5;10m+      278[0m:[38;5;10m[49m .badge-pk, .badge-idx, .badge-uni {
+[0m[49m[38;5;10m+      279[0m:[38;5;10m[49m   display: inline-flex; align-items: center; padding: 0 6px;
+[0m[49m[38;5;10m+      280[0m:[38;5;10m[49m   border-radius: 4px; font-size: 11px; font-weight: 600; font-family: monospace;
+[0m[49m[38;5;10m+      281[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+      282[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      283[0m:[38;5;10m[49m /* ===== Category tabs ===== */
+[0m[49m[38;5;10m+      284[0m:[38;5;10m[49m .cat-tab {
+[0m[49m[38;5;10m+      285[0m:[38;5;10m[49m   padding: 0.5rem 1rem; cursor: pointer; font-size: 0.875rem;
+[0m[49m[38;5;10m+      286[0m:[38;5;10m[49m   color: var(--text-secondary); border-bottom: 2px solid transparent;
+[0m[49m[38;5;10m+      287[0m:[38;5;10m[49m   transition: all 0.15s ease;
+[0m[49m[38;5;10m+      288[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+      289[0m:[38;5;10m[49m .cat-tab:hover { color: var(--text-primary); }
+[0m[49m[38;5;10m+      290[0m:[38;5;10m[49m .cat-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+[0m[49m[38;5;10m+      291[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      292[0m:[38;5;10m[49m /* ===== Tag chips ===== */
+[0m[49m[38;5;10m+      293[0m:[38;5;10m[49m .tag-chip {
+[0m[49m[38;5;10m+      294[0m:[38;5;10m[49m   display: inline-flex; align-items: center; gap: 4px;
+[0m[49m[38;5;10m+      295[0m:[38;5;10m[49m   padding: 2px 8px; border-radius: 999px; font-size: 12px;
+[0m[49m[38;5;10m+      296[0m:[38;5;10m[49m   background: #e6f2ff; color: var(--accent); border: 1px solid rgba(0,102,204,0.15);
+[0m[49m[38;5;10m+      297[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+      298[0m:[38;5;10m[49m .tag-chip .remove { cursor: pointer; opacity: 0.6; }
+[0m[49m[38;5;10m+      299[0m:[38;5;10m[49m .tag-chip .remove:hover { opacity: 1; }
+[0m[49m[38;5;10m+      300[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      301[0m:[38;5;10m[49m /* ===== Score bar ===== */
+[0m[49m[38;5;10m+      302[0m:[38;5;10m[49m .score-bar { height: 4px; border-radius: 2px; background: var(--border); }
+[0m[49m[38;5;10m+      303[0m:[38;5;10m[49m .score-bar-fill { height: 100%; border-radius: 2px; background: var(--accent); transition: width 0.3s ease; }
+[0m[K
+Updating: [38;5;141mknowledge/static/css/custom.css[0m
+[38;5;244m - Completed in 0.1s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m[38;5;252m[1m### 4. 更新 knowledge.html — 添加操作栏（分类+标签+搜索）、3 列卡片、详情 Modal、标签输入[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/server/routers/team.py[0m[38;5;244m (using tool: write)[0m
+Purpose: 更新 team.py：新增 PUT/DELETE member 接口、修复响应字段补全 created_at/team_id、add_member 冲突检测
+
+[49m[39m   1,  1[0m:[39m[49m from fastapi import APIRouter, Depends, HTTPException
+[0m[49m[39m   2,  2[0m:[39m[49m from sqlalchemy.ext.asyncio import AsyncSession
+[0m[49m[39m   3,  3[0m:[39m[49m from sqlalchemy import select
+[0m[49m[39m   4,  4[0m:[39m[49m from pydantic import BaseModel
+[0m[49m[39m   5,  5[0m:[39m[49m from typing import Optional
+[0m[49m[39m   6,  6[0m:[39m[49m from ..database import get_db
+[0m[49m[39m   7,  7[0m:[39m[49m from ..models.team import Team, TeamMember
+[0m[49m[39m   8,  8[0m:[39m[49m 
+[0m[49m[39m   9,  9[0m:[39m[49m router = APIRouter(prefix="/api/v1/teams", tags=["teams"])
+[0m[49m[39m  10, 10[0m:[39m[49m 
+[0m[49m[39m  11, 11[0m:[39m[49m 
+[0m[49m[39m  12, 12[0m:[39m[49m class TeamCreate(BaseModel):
+[0m[49m[39m  13, 13[0m:[39m[49m     name: str
+[0m[49m[39m  14, 14[0m:[39m[49m     description: Optional[str] = None
+[0m[49m[39m  15, 15[0m:[39m[49m     created_by: Optional[str] = None
+[0m[49m[39m  16, 16[0m:[39m[49m 
+[0m[49m[39m  17, 17[0m:[39m[49m 
+[0m[49m[39m  18, 18[0m:[39m[49m class MemberAdd(BaseModel):
+[0m[49m[39m  19, 19[0m:[39m[49m     user_name: str
+[0m[49m[39m  20, 20[0m:[39m[49m     role: str = "viewer"
+[0m[49m[39m  21, 21[0m:[39m[49m 
+[0m[49m[39m  22, 22[0m:[39m[49m 
+[0m[49m[38;5;10m+     23[0m:[38;5;10m[49m class RoleUpdate(BaseModel):
+[0m[49m[38;5;10m+     24[0m:[38;5;10m[49m     role: str
+[0m[49m[38;5;10m+     25[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     26[0m:[38;5;10m[49m 
+[0m[49m[39m  23, 27[0m:[39m[49m @router.get("")
+[0m[49m[39m  24, 28[0m:[39m[49m async def list_teams(db: AsyncSession = Depends(get_db)):
+[0m[49m[39m  25, 29[0m:[39m[49m     items = (await db.execute(select(Team).order_by(Team.created_at.desc()))).scalars().all()
+[0m[49m[38;5;9m- 26    [0m:[38;5;9m[49m     return {"items": [{"id": t.id, "name": t.name, "description": t.description, "created_by": t.created_by} for t in items]}
+[0m[49m[38;5;10m+     30[0m:[38;5;10m[49m     return {"items": [
+[0m[49m[38;5;10m+     31[0m:[38;5;10m[49m         {"id": t.id, "name": t.name, "description": t.description,
+[0m[49m[38;5;10m+     32[0m:[38;5;10m[49m          "created_by": t.created_by, "created_at": t.created_at.isoformat() if t.created_at else None}
+[0m[49m[38;5;10m+     33[0m:[38;5;10m[49m         for t in items
+[0m[49m[38;5;10m+     34[0m:[38;5;10m[49m     ]}
+[0m[49m[39m  27, 35[0m:[39m[49m 
+[0m[49m[39m  28, 36[0m:[39m[49m 
+[0m[49m[39m  29, 37[0m:[39m[49m @router.post("")
+[0m[49m[39m  30, 38[0m:[39m[49m async def create_team(body: TeamCreate, db: AsyncSession = Depends(get_db)):
+[0m[49m[39m  31, 39[0m:[39m[49m     team = Team(**body.model_dump())
+[0m[49m[39m  32, 40[0m:[39m[49m     db.add(team)
+[0m[49m[39m  33, 41[0m:[39m[49m     await db.commit()
+[0m[49m[39m  34, 42[0m:[39m[49m     await db.refresh(team)
+[0m[49m[38;5;9m- 35    [0m:[38;5;9m[49m     return {"id": team.id, "name": team.name}
+[0m[49m[38;5;10m+     43[0m:[38;5;10m[49m     return {"id": team.id, "name": team.name, "description": team.description,
+[0m[49m[38;5;10m+     44[0m:[38;5;10m[49m             "created_by": team.created_by, "created_at": team.created_at.isoformat() if team.created_at else None}
+[0m[49m[39m  36, 45[0m:[39m[49m 
+[0m[49m[39m  37, 46[0m:[39m[49m 
+[0m[49m[39m  38, 47[0m:[39m[49m @router.get("/{team_id}/members")
+[0m[49m[39m  39, 48[0m:[39m[49m async def list_members(team_id: int, db: AsyncSession = Depends(get_db)):
+[0m[49m[39m  40, 49[0m:[39m[49m     members = (await db.execute(select(TeamMember).where(TeamMember.team_id == team_id))).scalars().all()
+[0m[49m[38;5;9m- 41    [0m:[38;5;9m[49m     return {"items": [{"id": m.id, "user_name": m.user_name, "role": m.role} for m in members]}
+[0m[49m[38;5;10m+     50[0m:[38;5;10m[49m     return {"items": [
+[0m[49m[38;5;10m+     51[0m:[38;5;10m[49m         {"id": m.id, "team_id": m.team_id, "user_name": m.user_name, "role": m.role,
+[0m[49m[38;5;10m+     52[0m:[38;5;10m[49m          "created_at": m.created_at.isoformat() if m.created_at else None}
+[0m[49m[38;5;10m+     53[0m:[38;5;10m[49m         for m in members
+[0m[49m[38;5;10m+     54[0m:[38;5;10m[49m     ]}
+[0m[49m[39m  42, 55[0m:[39m[49m 
+[0m[49m[39m  43, 56[0m:[39m[49m 
+[0m[49m[39m  44, 57[0m:[39m[49m @router.post("/{team_id}/members")
+[0m[49m[39m  45, 58[0m:[39m[49m async def add_member(team_id: int, body: MemberAdd, db: AsyncSession = Depends(get_db)):
+[0m[49m[38;5;10m+     59[0m:[38;5;10m[49m     existing = (await db.execute(
+[0m[49m[38;5;10m+     60[0m:[38;5;10m[49m         select(TeamMember).where(TeamMember.team_id == team_id, TeamMember.user_name == body.user_name)
+[0m[49m[38;5;10m+     61[0m:[38;5;10m[49m     )).scalar_one_or_none()
+[0m[49m[38;5;10m+     62[0m:[38;5;10m[49m     if existing:
+[0m[49m[38;5;10m+     63[0m:[38;5;10m[49m         raise HTTPException(409, detail={"code": "CONFLICT", "message": "该成员已存在"})
+[0m[49m[39m  46, 64[0m:[39m[49m     db.add(TeamMember(team_id=team_id, user_name=body.user_name, role=body.role))
+[0m[49m[39m  47, 65[0m:[39m[49m     await db.commit()
+[0m[49m[39m  48, 66[0m:[39m[49m     return {"ok": True}
+[0m[49m[38;5;10m+     67[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     68[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     69[0m:[38;5;10m[49m @router.put("/{team_id}/members/{uid}")
+[0m[49m[38;5;10m+     70[0m:[38;5;10m[49m async def update_member_role(team_id: int, uid: str, body: RoleUpdate, db: AsyncSession = Depends(get_db)):
+[0m[49m[38;5;10m+     71[0m:[38;5;10m[49m     member = (await db.execute(
+[0m[49m[38;5;10m+     72[0m:[38;5;10m[49m         select(TeamMember).where(TeamMember.team_id == team_id, TeamMember.user_name == uid)
+[0m[49m[38;5;10m+     73[0m:[38;5;10m[49m     )).scalar_one_or_none()
+[0m[49m[38;5;10m+     74[0m:[38;5;10m[49m     if not member:
+[0m[49m[38;5;10m+     75[0m:[38;5;10m[49m         raise HTTPException(404, "Member not found")
+[0m[49m[38;5;10m+     76[0m:[38;5;10m[49m     member.role = body.role
+[0m[49m[38;5;10m+     77[0m:[38;5;10m[49m     await db.commit()
+[0m[49m[38;5;10m+     78[0m:[38;5;10m[49m     await db.refresh(member)
+[0m[49m[38;5;10m+     79[0m:[38;5;10m[49m     return {"id": member.id, "team_id": member.team_id, "user_name": member.user_name, "role": member.role,
+[0m[49m[38;5;10m+     80[0m:[38;5;10m[49m             "created_at": member.created_at.isoformat() if member.created_at else None}
+[0m[49m[38;5;10m+     81[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     82[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     83[0m:[38;5;10m[49m @router.delete("/{team_id}/members/{uid}")
+[0m[49m[38;5;10m+     84[0m:[38;5;10m[49m async def remove_member(team_id: int, uid: str, db: AsyncSession = Depends(get_db)):
+[0m[49m[38;5;10m+     85[0m:[38;5;10m[49m     member = (await db.execute(
+[0m[49m[38;5;10m+     86[0m:[38;5;10m[49m         select(TeamMember).where(TeamMember.team_id == team_id, TeamMember.user_name == uid)
+[0m[49m[38;5;10m+     87[0m:[38;5;10m[49m     )).scalar_one_or_none()
+[0m[49m[38;5;10m+     88[0m:[38;5;10m[49m     if not member:
+[0m[49m[38;5;10m+     89[0m:[38;5;10m[49m         raise HTTPException(404, "Member not found")
+[0m[49m[38;5;10m+     90[0m:[38;5;10m[49m     await db.delete(member)
+[0m[49m[38;5;10m+     91[0m:[38;5;10m[49m     await db.commit()
+[0m[49m[38;5;10m+     92[0m:[38;5;10m[49m     return {"ok": True}
+[0m[K
+Replacing: [38;5;141mknowledge/server/routers/team.py[0m
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.16 s
+[0mI'll create the following file: [38;5;141mknowledge/server/routers/metadata.py[0m[38;5;244m (using tool: write)[0m
+Purpose: 更新 metadata.py：list_tables 响应改为 tables key + column_count、import 增量更新 + 返回 imported_tables/imported_columns
+
+[49m[39m   1,  1[0m:[39m[49m from fastapi import APIRouter, Depends, HTTPException
+[0m[49m[39m   2,  2[0m:[39m[49m from sqlalchemy.ext.asyncio import AsyncSession
+[0m[49m[39m   3,  3[0m:[39m[49m from sqlalchemy import select, func, text
+[0m[49m[39m   4,  4[0m:[39m[49m from pydantic import BaseModel
+[0m[49m[39m   5,  5[0m:[39m[49m from typing import Optional
+[0m[49m[39m   6,  6[0m:[39m[49m from ..database import get_db
+[0m[49m[39m   7,  7[0m:[39m[49m from ..models.metadata import DbMetadata
+[0m[49m[39m   8,  8[0m:[39m[49m 
+[0m[49m[39m   9,  9[0m:[39m[49m router = APIRouter(prefix="/api/v1/metadata", tags=["metadata"])
+[0m[49m[39m  10, 10[0m:[39m[49m 
+[0m[49m[39m  11, 11[0m:[39m[49m 
+[0m[49m[39m  12, 12[0m:[39m[49m class MetadataImport(BaseModel):
+[0m[49m[39m  13, 13[0m:[39m[49m     db_name: str
+[0m[49m[38;5;9m- 14    [0m:[38;5;9m[49m     connection_string: Optional[str] = None
+[0m[49m[39m  15, 14[0m:[39m[49m 
+[0m[49m[39m  16, 15[0m:[39m[49m 
+[0m[49m[39m  17, 16[0m:[39m[49m @router.get("/tables")
+[0m[49m[39m  18, 17[0m:[39m[49m async def list_tables(db: AsyncSession = Depends(get_db)):
+[0m[49m[39m  19, 18[0m:[39m[49m     rows = (await db.execute(
+[0m[49m[38;5;9m- 20    [0m:[38;5;9m[49m         select(DbMetadata.db_name, DbMetadata.table_name, DbMetadata.table_comment)
+[0m[49m[38;5;9m- 21    [0m:[38;5;9m[49m         .distinct()
+[0m[49m[38;5;9m- 22    [0m:[38;5;9m[49m         .order_by(DbMetadata.table_name)
+[0m[49m[38;5;10m+     19[0m:[38;5;10m[49m         select(
+[0m[49m[38;5;10m+     20[0m:[38;5;10m[49m             DbMetadata.table_name,
+[0m[49m[38;5;10m+     21[0m:[38;5;10m[49m             func.max(DbMetadata.table_comment).label("table_comment"),
+[0m[49m[38;5;10m+     22[0m:[38;5;10m[49m             func.count(DbMetadata.column_name).label("column_count"),
+[0m[49m[38;5;10m+     23[0m:[38;5;10m[49m         ).group_by(DbMetadata.table_name).order_by(DbMetadata.table_name)
+[0m[49m[39m  23, 24[0m:[39m[49m     )).all()
+[0m[49m[38;5;9m- 24    [0m:[38;5;9m[49m     return {"items": [{"db_name": r[0], "table_name": r[1], "table_comment": r[2]} for r in rows]}
+[0m[49m[38;5;10m+     25[0m:[38;5;10m[49m     return {"tables": [
+[0m[49m[38;5;10m+     26[0m:[38;5;10m[49m         {"table_name": r[0], "table_comment": r[1], "column_count": r[2]}
+[0m[49m[38;5;10m+     27[0m:[38;5;10m[49m         for r in rows
+[0m[49m[38;5;10m+     28[0m:[38;5;10m[49m     ]}
+[0m[49m[39m  25, 29[0m:[39m[49m 
+[0m[49m[39m  26, 30[0m:[39m[49m 
+[0m[49m[39m  27, 31[0m:[39m[49m @router.get("/tables/{table_name}")
+[0m[49m[39m  28, 32[0m:[39m[49m async def get_table(table_name: str, db: AsyncSession = Depends(get_db)):
+[0m[49m[39m  29, 33[0m:[39m[49m     rows = (await db.execute(
+[0m[49m[39m  30, 34[0m:[39m[49m         select(DbMetadata).where(DbMetadata.table_name == table_name)
+[0m[49m[39m  31, 35[0m:[39m[49m     )).scalars().all()
+[0m[49m[39m  32, 36[0m:[39m[49m     if not rows:
+[0m[49m[39m  33, 37[0m:[39m[49m         raise HTTPException(404, "Table not found")
+[0m[49m[39m  34, 38[0m:[39m[49m     return {
+[0m[49m[39m  35, 39[0m:[39m[49m         "table_name": table_name,
+[0m[49m[39m  36, 40[0m:[39m[49m         "table_comment": rows[0].table_comment,
+[0m[49m[39m  37, 41[0m:[39m[49m         "columns": [
+[0m[49m[38;5;9m- 38    [0m:[38;5;9m[49m             {"name": r.column_name, "type": r.column_type, "comment": r.column_comment}
+[0m[49m[38;5;10m+     42[0m:[38;5;10m[49m             {"column_name": r.column_name, "column_type": r.column_type, "column_comment": r.column_comment}
+[0m[49m[39m  39, 43[0m:[39m[49m             for r in rows if r.column_name
+[0m[49m[39m  40, 44[0m:[39m[49m         ],
+[0m[49m[39m  41, 45[0m:[39m[49m     }
+[0m[49m[39m  42, 46[0m:[39m[49m 
+[0m[49m[39m  43, 47[0m:[39m[49m 
+[0m[49m[39m  44, 48[0m:[39m[49m @router.post("/import")
+[0m[49m[39m  45, 49[0m:[39m[49m async def import_metadata(body: MetadataImport, db: AsyncSession = Depends(get_db)):
+[0m[49m[38;5;9m- 46    [0m:[38;5;9m[49m     """从 information_schema 导入当前数据库的表结构元数据"""
+[0m[49m[38;5;10m+     50[0m:[38;5;10m[49m     """从 information_schema 导入，增量更新（先删旧数据再插入）"""
+[0m[49m[38;5;10m+     51[0m:[38;5;10m[49m     # 删除该 db 的旧元数据
+[0m[49m[38;5;10m+     52[0m:[38;5;10m[49m     old = (await db.execute(select(DbMetadata).where(DbMetadata.db_name == body.db_name))).scalars().all()
+[0m[49m[38;5;10m+     53[0m:[38;5;10m[49m     for o in old:
+[0m[49m[38;5;10m+     54[0m:[38;5;10m[49m         await db.delete(o)
+[0m[49m[38;5;10m+     55[0m:[38;5;10m[49m 
+[0m[49m[39m  47, 56[0m:[39m[49m     rows = (await db.execute(text(
+[0m[49m[39m  48, 57[0m:[39m[49m         "SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, COLUMN_COMMENT, TABLE_COMMENT "
+[0m[49m[39m  49, 58[0m:[39m[49m         "FROM information_schema.COLUMNS c "
+[0m[49m[39m  50, 59[0m:[39m[49m         "JOIN information_schema.TABLES t USING(TABLE_SCHEMA, TABLE_NAME) "
+[0m[49m[39m  51, 60[0m:[39m[49m         "WHERE c.TABLE_SCHEMA = :db_name"
+[0m[49m[39m  52, 61[0m:[39m[49m     ), {"db_name": body.db_name})).all()
+[0m[49m[38;5;9m- 53    [0m:[38;5;9m[49m     count = 0
+[0m[49m[38;5;10m+     62[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     63[0m:[38;5;10m[49m     tables = set()
+[0m[49m[39m  54, 64[0m:[39m[49m     for r in rows:
+[0m[49m[38;5;10m+     65[0m:[38;5;10m[49m         tables.add(r[0])
+[0m[49m[39m  55, 66[0m:[39m[49m         db.add(DbMetadata(
+[0m[49m[39m  56, 67[0m:[39m[49m             db_name=body.db_name, table_name=r[0], column_name=r[1],
+[0m[49m[39m  57, 68[0m:[39m[49m             column_type=r[2], column_comment=r[3], table_comment=r[4],
+[0m[49m[39m  58, 69[0m:[39m[49m         ))
+[0m[49m[38;5;9m- 59    [0m:[38;5;9m[49m         count += 1
+[0m[49m[39m  60, 70[0m:[39m[49m     await db.commit()
+[0m[49m[38;5;9m- 61    [0m:[38;5;9m[49m     return {"ok": True, "imported": count}
+[0m[49m[38;5;10m+     71[0m:[38;5;10m[49m     return {"imported_tables": len(tables), "imported_columns": len(rows)}
+[0m[K
+Replacing: [38;5;141mknowledge/server/routers/metadata.py[0m
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/server/main.py[0m[38;5;244m (using tool: write)[0m
+Purpose: 更新 main.py：版本号升级到 1.1.0、新增 GET /api/v1/health 健康检查接口
+
+[49m[39m   1,  1[0m:[39m[49m from fastapi import FastAPI
+[0m[49m[39m   2,  2[0m:[39m[49m from fastapi.middleware.cors import CORSMiddleware
+[0m[49m[39m   3,  3[0m:[39m[49m from fastapi.staticfiles import StaticFiles
+[0m[49m[39m   4,  4[0m:[39m[49m from contextlib import asynccontextmanager
+[0m[49m[39m   5,  5[0m:[39m[49m from pathlib import Path
+[0m[49m[38;5;9m-  6    [0m:[38;5;9m[49m from .database import init_db
+[0m[49m[38;5;10m+      6[0m:[38;5;10m[49m from .database import init_db, engine
+[0m[49m[38;5;10m+      7[0m:[38;5;10m[49m from .redis_client import redis_client
+[0m[49m[39m   7,  8[0m:[39m[49m from .routers import knowledge, skill, metadata, search, team, dashboard
+[0m[49m[39m   8,  9[0m:[39m[49m 
+[0m[49m[39m   9, 10[0m:[39m[49m 
+[0m[49m[39m  10, 11[0m:[39m[49m @asynccontextmanager
+[0m[49m[39m  11, 12[0m:[39m[49m async def lifespan(app: FastAPI):
+[0m[49m[39m  12, 13[0m:[39m[49m     await init_db()
+[0m[49m[39m  13, 14[0m:[39m[49m     yield
+[0m[49m[39m  14, 15[0m:[39m[49m 
+[0m[49m[38;5;9m- 15    [0m:[38;5;9m[49m app = FastAPI(title="Knowledge API", version="1.0.0", lifespan=lifespan)
+[0m[49m[38;5;10m+     16[0m:[38;5;10m[49m app = FastAPI(title="Knowledge API", version="1.1.0", lifespan=lifespan)
+[0m[49m[39m  16, 17[0m:[39m[49m 
+[0m[49m[39m  17, 18[0m:[39m[49m app.add_middleware(
+[0m[49m[39m  18, 19[0m:[39m[49m     CORSMiddleware,
+[0m[49m[39m  19, 20[0m:[39m[49m     allow_origins=["*"],
+[0m[49m[39m  20, 21[0m:[39m[49m     allow_credentials=True,
+[0m[49m[39m  21, 22[0m:[39m[49m     allow_methods=["*"],
+[0m[49m[39m  22, 23[0m:[39m[49m     allow_headers=["*"],
+[0m[49m[39m  23, 24[0m:[39m[49m )
+[0m[49m[39m  24, 25[0m:[39m[49m 
+[0m[49m[39m  25, 26[0m:[39m[49m app.include_router(knowledge.router)
+[0m[49m[39m  26, 27[0m:[39m[49m app.include_router(skill.router)
+[0m[49m[39m  27, 28[0m:[39m[49m app.include_router(metadata.router)
+[0m[49m[39m  28, 29[0m:[39m[49m app.include_router(search.router)
+[0m[49m[39m  29, 30[0m:[39m[49m app.include_router(team.router)
+[0m[49m[39m  30, 31[0m:[39m[49m app.include_router(dashboard.router)
+[0m[49m[39m  31, 32[0m:[39m[49m 
+[0m[49m[38;5;10m+     33[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     34[0m:[38;5;10m[49m @app.get("/api/v1/health", tags=["dashboard"])
+[0m[49m[38;5;10m+     35[0m:[38;5;10m[49m async def health_check():
+[0m[49m[38;5;10m+     36[0m:[38;5;10m[49m     mysql_ok = False
+[0m[49m[38;5;10m+     37[0m:[38;5;10m[49m     redis_ok = False
+[0m[49m[38;5;10m+     38[0m:[38;5;10m[49m     try:
+[0m[49m[38;5;10m+     39[0m:[38;5;10m[49m         async with engine.connect() as conn:
+[0m[49m[38;5;10m+     40[0m:[38;5;10m[49m             await conn.execute(__import__("sqlalchemy").text("SELECT 1"))
+[0m[49m[38;5;10m+     41[0m:[38;5;10m[49m         mysql_ok = True
+[0m[49m[38;5;10m+     42[0m:[38;5;10m[49m     except Exception:
+[0m[49m[38;5;10m+     43[0m:[38;5;10m[49m         pass
+[0m[49m[38;5;10m+     44[0m:[38;5;10m[49m     try:
+[0m[49m[38;5;10m+     45[0m:[38;5;10m[49m         redis_ok = await redis_client.ping()
+[0m[49m[38;5;10m+     46[0m:[38;5;10m[49m     except Exception:
+[0m[49m[38;5;10m+     47[0m:[38;5;10m[49m         pass
+[0m[49m[38;5;10m+     48[0m:[38;5;10m[49m     status = "healthy" if (mysql_ok and redis_ok) else ("degraded" if (mysql_ok or redis_ok) else "unhealthy")
+[0m[49m[38;5;10m+     49[0m:[38;5;10m[49m     return {"status": status, "mysql": mysql_ok, "redis": redis_ok, "version": "1.1.0"}
+[0m[49m[38;5;10m+     50[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     51[0m:[38;5;10m[49m 
+[0m[49m[39m  32, 52[0m:[39m[49m static_dir = Path(__file__).parent.parent / "static"
+[0m[49m[39m  33, 53[0m:[39m[49m app.mount("/", StaticFiles(directory=str(static_dir), html=True), name="static")
+[0m[K
+Replacing: [38;5;141mknowledge/server/main.py[0m
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[38;5;141m> [0m现在验证代码能否正常加载：[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI will run the following command: [38;5;141mcd /Volumes/data/modellabs/openclaw-agent/knowledge && python3 -c "
+import sys
+sys.path.insert(0, '.')
+from server.main import app
+print('✅ App loaded successfully')
+print(f'Version: {app.version}')
+routes = [r.path for r in app.routes if hasattr(r, 'path')]
+for r in sorted(routes):
+    if r.startswith('/api'):
+        print(f'  {r}')
+"[0m[38;5;244m (using tool: shell)[0m
+Purpose: 验证 FastAPI 应用能否正常加载，列出所有 API 路由
+
+✅ App loaded successfully
+Version: 1.1.0
+  /api/v1/dashboard/stats
+  /api/v1/health
+  /api/v1/knowledge
+  /api/v1/knowledge
+  /api/v1/knowledge/{item_id}
+  /api/v1/knowledge/{item_id}
+  /api/v1/knowledge/{item_id}
+  /api/v1/metadata/import
+  /api/v1/metadata/tables
+  /api/v1/metadata/tables/{table_name}
+  /api/v1/search
+  /api/v1/skills
+  /api/v1/skills
+  /api/v1/skills/{skill_id}
+  /api/v1/skills/{skill_id}
+  /api/v1/skills/{skill_id}
+  /api/v1/skills/{skill_id}/favorite
+  /api/v1/skills/{skill_id}/use
+  /api/v1/teams
+  /api/v1/teams
+  /api/v1/teams/{team_id}/members
+  /api/v1/teams/{team_id}/members
+  /api/v1/teams/{team_id}/members/{uid}
+  /api/v1/teams/{team_id}/members/{uid}
+[38;5;244m - Completed in 0.569s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m所有路由加载成功。现在重启后端服务验证：[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI will run the following command: [38;5;141mcd /Volumes/data/modellabs/openclaw-agent/knowledge && bash restart.sh[0m[38;5;244m (using tool: shell)[0m
+Purpose: 重启后端服务
+
+Killing processes on port 9998: 22390
+Killing processes on port 9999: 22389
+[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/static/knowledge.html[0m[38;5;244m (using tool: write)[0m
+Purpose: 重写 knowledge.html：添加操作栏（分类下拉+标签筛选+搜索框）、3列卡片、详情Modal、标签输入、表单校验、空状态CTA
+
+[49m[39m    1,   1[0m:[39m[49m <!DOCTYPE html>
+[0m[49m[39m    2,   2[0m:[39m[49m <html lang="zh-CN">
+[0m[49m[39m    3,   3[0m:[39m[49m <head>
+[0m[49m[39m    4,   4[0m:[39m[49m     <meta charset="UTF-8">
+[0m[49m[39m    5,   5[0m:[39m[49m     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+[0m[49m[39m    6,   6[0m:[39m[49m     <title>知识管理 - Knowledge</title>
+[0m[49m[39m    7,   7[0m:[39m[49m     <script src="https://cdn.tailwindcss.com"></script>
+[0m[49m[39m    8,   8[0m:[39m[49m     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+[0m[49m[39m    9,   9[0m:[39m[49m     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+[0m[49m[39m   10,  10[0m:[39m[49m     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+[0m[49m[39m   11,  11[0m:[39m[49m     <link rel="stylesheet" href="/css/custom.css">
+[0m[49m[39m   12,  12[0m:[39m[49m </head>
+[0m[49m[39m   13,  13[0m:[39m[49m <body>
+[0m[49m[38;5;9m-  14     [0m:[38;5;9m[49m     <main class="ml-56 p-10 relative">
+[0m[49m[38;5;9m-  15     [0m:[38;5;9m[49m         <div class="geo-deco w-14 h-14 -top-2 right-32 opacity-15" style="animation-delay:1s"></div>
+[0m[49m[38;5;9m-  16     [0m:[38;5;9m[49m 
+[0m[49m[38;5;10m+       14[0m:[38;5;10m[49m     <main class="ml-60 p-10 relative">
+[0m[49m[39m   17,  15[0m:[39m[49m         <div class="flex items-center justify-between mb-8">
+[0m[49m[39m   18,  16[0m:[39m[49m             <div class="title-enter">
+[0m[49m[39m   19,  17[0m:[39m[49m                 <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">知识管理</h2>
+[0m[49m[39m   20,  18[0m:[39m[49m                 <p class="mt-2" style="color:var(--text-muted)">管理团队知识条目</p>
+[0m[49m[39m   21,  19[0m:[39m[49m             </div>
+[0m[49m[39m   22,  20[0m:[39m[49m             <button onclick="showCreateModal()" class="btn-accent">
+[0m[49m[39m   23,  21[0m:[39m[49m                 <i class="fa fa-plus mr-1"></i>新建知识
+[0m[49m[39m   24,  22[0m:[39m[49m             </button>
+[0m[49m[39m   25,  23[0m:[39m[49m         </div>
+[0m[49m[39m   26,  24[0m:[39m[49m 
+[0m[49m[38;5;9m-  27     [0m:[38;5;9m[49m         <div id="knowledge-list" class="grid grid-cols-2 gap-5"></div>
+[0m[49m[38;5;10m+       25[0m:[38;5;10m[49m         <!-- 操作栏 -->
+[0m[49m[38;5;10m+       26[0m:[38;5;10m[49m         <div class="card p-4 mb-6 flex flex-wrap items-center gap-3">
+[0m[49m[38;5;10m+       27[0m:[38;5;10m[49m             <select id="filter-category" class="input-dark text-sm" style="min-width:120px" onchange="loadList(1)">
+[0m[49m[38;5;10m+       28[0m:[38;5;10m[49m                 <option value="">全部分类</option>
+[0m[49m[38;5;10m+       29[0m:[38;5;10m[49m             </select>
+[0m[49m[38;5;10m+       30[0m:[38;5;10m[49m             <div id="tag-filter" class="flex items-center gap-2 flex-1">
+[0m[49m[38;5;10m+       31[0m:[38;5;10m[49m                 <input id="filter-tag-input" class="input-dark text-sm" placeholder="输入标签回车筛选" style="width:160px">
+[0m[49m[38;5;10m+       32[0m:[38;5;10m[49m                 <div id="selected-tags" class="flex gap-1 flex-wrap"></div>
+[0m[49m[38;5;10m+       33[0m:[38;5;10m[49m             </div>
+[0m[49m[38;5;10m+       34[0m:[38;5;10m[49m             <input id="filter-keyword" class="input-dark text-sm flex-1" placeholder="搜索知识..." style="min-width:180px">
+[0m[49m[38;5;10m+       35[0m:[38;5;10m[49m         </div>
+[0m[49m[38;5;10m+       36[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+       37[0m:[38;5;10m[49m         <div id="knowledge-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+[0m[49m[39m   28,  38[0m:[39m[49m         <div id="pagination"></div>
+[0m[49m[39m   29,  39[0m:[39m[49m     </main>
+[0m[49m[39m   30,  40[0m:[39m[49m 
+[0m[49m[39m   31,  41[0m:[39m[49m     <script src="/js/api.js"></script>
+[0m[49m[39m   32,  42[0m:[39m[49m     <script src="/js/components.js"></script>
+[0m[49m[39m   33,  43[0m:[39m[49m     <script src="/js/app.js"></script>
+[0m[49m[39m   34,  44[0m:[39m[49m     <script>
+[0m[49m[39m   35,  45[0m:[39m[49m     let currentPage = 1;
+[0m[49m[38;5;10m+       46[0m:[38;5;10m[49m     let selectedTags = [];
+[0m[49m[38;5;10m+       47[0m:[38;5;10m[49m     let _kwTimer = null;
+[0m[49m[39m   36,  48[0m:[39m[49m 
+[0m[49m[38;5;10m+       49[0m:[38;5;10m[49m     // 关键词搜索防抖
+[0m[49m[38;5;10m+       50[0m:[38;5;10m[49m     $('#filter-keyword').on('input', function() {
+[0m[49m[38;5;10m+       51[0m:[38;5;10m[49m         clearTimeout(_kwTimer);
+[0m[49m[38;5;10m+       52[0m:[38;5;10m[49m         _kwTimer = setTimeout(() => loadList(1), 300);
+[0m[49m[38;5;10m+       53[0m:[38;5;10m[49m     });
+[0m[49m[38;5;10m+       54[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+       55[0m:[38;5;10m[49m     // 标签输入
+[0m[49m[38;5;10m+       56[0m:[38;5;10m[49m     $('#filter-tag-input').on('keydown', function(e) {
+[0m[49m[38;5;10m+       57[0m:[38;5;10m[49m         if (e.key === 'Enter') {
+[0m[49m[38;5;10m+       58[0m:[38;5;10m[49m             e.preventDefault();
+[0m[49m[38;5;10m+       59[0m:[38;5;10m[49m             const tag = $(this).val().trim();
+[0m[49m[38;5;10m+       60[0m:[38;5;10m[49m             if (tag && !selectedTags.includes(tag)) {
+[0m[49m[38;5;10m+       61[0m:[38;5;10m[49m                 selectedTags.push(tag);
+[0m[49m[38;5;10m+       62[0m:[38;5;10m[49m                 renderSelectedTags();
+[0m[49m[38;5;10m+       63[0m:[38;5;10m[49m                 loadList(1);
+[0m[49m[38;5;10m+       64[0m:[38;5;10m[49m             }
+[0m[49m[38;5;10m+       65[0m:[38;5;10m[49m             $(this).val('');
+[0m[49m[38;5;10m+       66[0m:[38;5;10m[49m         }
+[0m[49m[38;5;10m+       67[0m:[38;5;10m[49m     });
+[0m[49m[38;5;10m+       68[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+       69[0m:[38;5;10m[49m     function renderSelectedTags() {
+[0m[49m[38;5;10m+       70[0m:[38;5;10m[49m         $('#selected-tags').html(selectedTags.map(t =>
+[0m[49m[38;5;10m+       71[0m:[38;5;10m[49m             `<span class="tag-chip">${escapeHtml(t)}<span class="remove" onclick="removeTag('${escapeHtml(t)}')">&times;</span></span>`
+[0m[49m[38;5;10m+       72[0m:[38;5;10m[49m         ).join(''));
+[0m[49m[38;5;10m+       73[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+       74[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+       75[0m:[38;5;10m[49m     function removeTag(tag) {
+[0m[49m[38;5;10m+       76[0m:[38;5;10m[49m         selectedTags = selectedTags.filter(t => t !== tag);
+[0m[49m[38;5;10m+       77[0m:[38;5;10m[49m         renderSelectedTags();
+[0m[49m[38;5;10m+       78[0m:[38;5;10m[49m         loadList(1);
+[0m[49m[38;5;10m+       79[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+       80[0m:[38;5;10m[49m 
+[0m[49m[39m   37,  81[0m:[39m[49m     async function loadList(page) {
+[0m[49m[39m   38,  82[0m:[39m[49m         currentPage = page || 1;
+[0m[49m[38;5;9m-  39     [0m:[38;5;9m[49m         $('#knowledge-list').html(components.loading());
+[0m[49m[38;5;10m+       83[0m:[38;5;10m[49m         const container = $('#knowledge-list');
+[0m[49m[38;5;10m+       84[0m:[38;5;10m[49m         container.html(components.skeleton('card', 6));
+[0m[49m[39m   40,  85[0m:[39m[49m         try {
+[0m[49m[38;5;9m-  41     [0m:[38;5;9m[49m             const data = await api.getKnowledgeList(currentPage);
+[0m[49m[38;5;9m-  42     [0m:[38;5;9m[49m             if (!data.items.length) { $('#knowledge-list').html(components.emptyState('暂无知识条目')); $('#pagination').html(''); return; }
+[0m[49m[38;5;10m+       86[0m:[38;5;10m[49m             const data = await api.getKnowledgeList(currentPage, {
+[0m[49m[38;5;10m+       87[0m:[38;5;10m[49m                 category: $('#filter-category').val(),
+[0m[49m[38;5;10m+       88[0m:[38;5;10m[49m                 keyword: $('#filter-keyword').val().trim(),
+[0m[49m[38;5;10m+       89[0m:[38;5;10m[49m                 tags: selectedTags.join(',')
+[0m[49m[38;5;10m+       90[0m:[38;5;10m[49m             });
+[0m[49m[38;5;10m+       91[0m:[38;5;10m[49m             if (!data.items || !data.items.length) {
+[0m[49m[38;5;10m+       92[0m:[38;5;10m[49m                 container.html(components.emptyState('还没有知识条目', '创建第一条知识', 'showCreateModal()'));
+[0m[49m[38;5;10m+       93[0m:[38;5;10m[49m                 $('#pagination').html('');
+[0m[49m[38;5;10m+       94[0m:[38;5;10m[49m                 return;
+[0m[49m[38;5;10m+       95[0m:[38;5;10m[49m             }
+[0m[49m[39m   43,  96[0m:[39m[49m             let html = '';
+[0m[49m[39m   44,  97[0m:[39m[49m             data.items.forEach((item, i) => {
+[0m[49m[38;5;10m+       98[0m:[38;5;10m[49m                 const tags = (item.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('');
+[0m[49m[39m   45,  99[0m:[39m[49m                 html += `
+[0m[49m[38;5;9m-  46     [0m:[38;5;9m[49m                 <div class="card p-5 card-hover stagger" style="animation-delay:${i*0.05}s">
+[0m[49m[38;5;10m+      100[0m:[38;5;10m[49m                 <div class="card p-5 card-hover cursor-pointer" onclick="showDetail(${item.id})">
+[0m[49m[39m   47, 101[0m:[39m[49m                     <div class="flex items-start justify-between">
+[0m[49m[38;5;9m-  48     [0m:[38;5;9m[49m                         <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(item.title)}</h3>
+[0m[49m[38;5;9m-  49     [0m:[38;5;9m[49m                         <div class="flex gap-2">
+[0m[49m[38;5;9m-  50     [0m:[38;5;9m[49m                             <button onclick="editItem(${item.id})" style="color:var(--text-muted)" class="hover:opacity-80"><i class="fa fa-edit"></i></button>
+[0m[49m[38;5;9m-  51     [0m:[38;5;9m[49m                             <button onclick="deleteItem(${item.id})" style="color:var(--text-muted)" class="hover:opacity-80"><i class="fa fa-trash"></i></button>
+[0m[49m[38;5;10m+      102[0m:[38;5;10m[49m                         <h3 class="font-display font-semibold truncate flex-1" style="color:var(--text-primary)">${escapeHtml(item.title)}</h3>
+[0m[49m[38;5;10m+      103[0m:[38;5;10m[49m                         <div class="flex gap-2 ml-2" onclick="event.stopPropagation()">
+[0m[49m[38;5;10m+      104[0m:[38;5;10m[49m                             <button onclick="editItem(${item.id})" style="color:var(--text-muted)" class="hover:opacity-80" title="编辑"><i class="fa fa-edit"></i></button>
+[0m[49m[38;5;10m+      105[0m:[38;5;10m[49m                             <button onclick="deleteItem(${item.id},'${escapeHtml(item.title)}')" style="color:var(--text-muted)" class="hover:opacity-80" title="删除"><i class="fa fa-trash"></i></button>
+[0m[49m[39m   52, 106[0m:[39m[49m                         </div>
+[0m[49m[39m   53, 107[0m:[39m[49m                     </div>
+[0m[49m[38;5;9m-  54     [0m:[38;5;9m[49m                     <p class="text-sm mt-3" style="color:var(--text-secondary)">${truncate(item.content, 120)}</p>
+[0m[49m[38;5;9m-  55     [0m:[38;5;9m[49m                     <div class="flex items-center gap-3 mt-4 text-xs">
+[0m[49m[38;5;10m+      108[0m:[38;5;10m[49m                     <p class="text-sm mt-3 line-clamp-2" style="color:var(--text-secondary)">${truncate(item.content, 120)}</p>
+[0m[49m[38;5;10m+      109[0m:[38;5;10m[49m                     <div class="flex items-center gap-2 mt-4 text-xs flex-wrap">
+[0m[49m[39m   56, 110[0m:[39m[49m                         ${item.category ? '<span class="tag">' + escapeHtml(item.category) + '</span>' : ''}
+[0m[49m[38;5;9m-  57     [0m:[38;5;9m[49m                         <span style="color:var(--text-muted)"><i class="fa fa-clock-o mr-1"></i>${formatDate(item.created_at)}</span>
+[0m[49m[38;5;10m+      111[0m:[38;5;10m[49m                         ${tags}
+[0m[49m[38;5;10m+      112[0m:[38;5;10m[49m                         <span class="ml-auto" style="color:var(--text-muted)"><i class="fa fa-clock-o mr-1"></i>${formatDate(item.updated_at || item.created_at)}</span>
+[0m[49m[39m   58, 113[0m:[39m[49m                     </div>
+[0m[49m[39m   59, 114[0m:[39m[49m                 </div>`;
+[0m[49m[39m   60, 115[0m:[39m[49m             });
+[0m[49m[38;5;9m-  61     [0m:[38;5;9m[49m             $('#knowledge-list').html(html);
+[0m[49m[38;5;9m-  62     [0m:[38;5;9m[49m             $('#pagination').html(components.pagination(data.total || data.items.length, currentPage, data.size || 20, 'loadList'));
+[0m[49m[38;5;9m-  63     [0m:[38;5;9m[49m         } catch(e) { $('#knowledge-list').html(components.emptyState('加载失败')); }
+[0m[49m[38;5;10m+      116[0m:[38;5;10m[49m             container.html(html);
+[0m[49m[38;5;10m+      117[0m:[38;5;10m[49m             $('#pagination').html(components.pagination(data.total, currentPage, data.page_size || 20, 'loadList'));
+[0m[49m[38;5;10m+      118[0m:[38;5;10m[49m             // 填充分类下拉（首次）
+[0m[49m[38;5;10m+      119[0m:[38;5;10m[49m             if ($('#filter-category option').length <= 1 && data.items.length) {
+[0m[49m[38;5;10m+      120[0m:[38;5;10m[49m                 const cats = [...new Set(data.items.map(i => i.category).filter(Boolean))];
+[0m[49m[38;5;10m+      121[0m:[38;5;10m[49m                 cats.forEach(c => $('#filter-category').append(`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`));
+[0m[49m[38;5;10m+      122[0m:[38;5;10m[49m             }
+[0m[49m[38;5;10m+      123[0m:[38;5;10m[49m         } catch(e) { container.html(components.emptyState('加载失败')); }
+[0m[49m[39m   64, 124[0m:[39m[49m     }
+[0m[49m[39m   65, 125[0m:[39m[49m 
+[0m[49m[38;5;10m+      126[0m:[38;5;10m[49m     async function showDetail(id) {
+[0m[49m[38;5;10m+      127[0m:[38;5;10m[49m         const item = await api.getKnowledge(id);
+[0m[49m[38;5;10m+      128[0m:[38;5;10m[49m         const tags = (item.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join(' ');
+[0m[49m[38;5;10m+      129[0m:[38;5;10m[49m         const content = `
+[0m[49m[38;5;10m+      130[0m:[38;5;10m[49m             <div class="flex items-center gap-2 mb-4 text-xs" style="color:var(--text-muted)">
+[0m[49m[38;5;10m+      131[0m:[38;5;10m[49m                 ${item.category ? '<span class="tag">' + escapeHtml(item.category) + '</span>' : ''}
+[0m[49m[38;5;10m+      132[0m:[38;5;10m[49m                 ${tags}
+[0m[49m[38;5;10m+      133[0m:[38;5;10m[49m                 <span class="ml-auto">创建: ${formatDate(item.created_at)} · 更新: ${formatDate(item.updated_at)}</span>
+[0m[49m[38;5;10m+      134[0m:[38;5;10m[49m             </div>
+[0m[49m[38;5;10m+      135[0m:[38;5;10m[49m             <div class="prose max-w-none text-sm" style="color:var(--text-secondary);white-space:pre-wrap;line-height:1.8">${escapeHtml(item.content)}</div>
+[0m[49m[38;5;10m+      136[0m:[38;5;10m[49m             <div class="flex gap-3 mt-6 pt-4" style="border-top:1px solid var(--border)">
+[0m[49m[38;5;10m+      137[0m:[38;5;10m[49m                 <button onclick="$('#modal-overlay').remove();editItem(${item.id})" class="btn-ghost text-sm"><i class="fa fa-edit mr-1"></i>编辑</button>
+[0m[49m[38;5;10m+      138[0m:[38;5;10m[49m                 <button onclick="$('#modal-overlay').remove();deleteItem(${item.id},'${escapeHtml(item.title)}')" class="text-sm px-3 py-1.5 rounded-lg" style="color:var(--danger)"><i class="fa fa-trash mr-1"></i>删除</button>
+[0m[49m[38;5;10m+      139[0m:[38;5;10m[49m             </div>`;
+[0m[49m[38;5;10m+      140[0m:[38;5;10m[49m         components.modal(item.title, content, null, { width: 'max-w-2xl' });
+[0m[49m[38;5;10m+      141[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      142[0m:[38;5;10m[49m 
+[0m[49m[39m   66, 143[0m:[39m[49m     function showCreateModal() {
+[0m[49m[38;5;9m-  67     [0m:[38;5;9m[49m         components.modal('新建知识', `
+[0m[49m[38;5;9m-  68     [0m:[38;5;9m[49m             <input id="m-title" class="input-dark w-full mb-3" placeholder="标题">
+[0m[49m[38;5;9m-  69     [0m:[38;5;9m[49m             <textarea id="m-content" class="input-dark w-full mb-3" rows="5" placeholder="内容（支持Markdown）"></textarea>
+[0m[49m[38;5;9m-  70     [0m:[38;5;9m[49m             <input id="m-category" class="input-dark w-full" placeholder="分类">
+[0m[49m[38;5;9m-  71     [0m:[38;5;9m[49m         `, async () => {
+[0m[49m[38;5;9m-  72     [0m:[38;5;9m[49m             await api.createKnowledge({ title: $('#m-title').val(), content: $('#m-content').val(), category: $('#m-category').val() });
+[0m[49m[38;5;10m+      144[0m:[38;5;10m[49m         const form = `
+[0m[49m[38;5;10m+      145[0m:[38;5;10m[49m             <div class="space-y-3">
+[0m[49m[38;5;10m+      146[0m:[38;5;10m[49m                 <div><label class="text-xs font-medium" style="color:var(--text-muted)">标题 <span style="color:var(--danger)">*</span></label>
+[0m[49m[38;5;10m+      147[0m:[38;5;10m[49m                 <input id="m-title" class="input-dark w-full mt-1" placeholder="输入知识标题"></div>
+[0m[49m[38;5;10m+      148[0m:[38;5;10m[49m                 <div><label class="text-xs font-medium" style="color:var(--text-muted)">内容 <span style="color:var(--danger)">*</span></label>
+[0m[49m[38;5;10m+      149[0m:[38;5;10m[49m                 <textarea id="m-content" class="input-dark w-full mt-1" rows="8" placeholder="内容（支持 Markdown）"></textarea></div>
+[0m[49m[38;5;10m+      150[0m:[38;5;10m[49m                 <div class="grid grid-cols-2 gap-3">
+[0m[49m[38;5;10m+      151[0m:[38;5;10m[49m                     <div><label class="text-xs font-medium" style="color:var(--text-muted)">分类</label>
+[0m[49m[38;5;10m+      152[0m:[38;5;10m[49m                     <input id="m-category" class="input-dark w-full mt-1" placeholder="分类"></div>
+[0m[49m[38;5;10m+      153[0m:[38;5;10m[49m                     <div><label class="text-xs font-medium" style="color:var(--text-muted)">标签</label>
+[0m[49m[38;5;10m+      154[0m:[38;5;10m[49m                     <input id="m-tags" class="input-dark w-full mt-1" placeholder="逗号分隔，如: mysql,性能"></div>
+[0m[49m[38;5;10m+      155[0m:[38;5;10m[49m                 </div>
+[0m[49m[38;5;10m+      156[0m:[38;5;10m[49m                 <div id="m-error" class="text-xs" style="color:var(--danger);display:none"></div>
+[0m[49m[38;5;10m+      157[0m:[38;5;10m[49m             </div>`;
+[0m[49m[38;5;10m+      158[0m:[38;5;10m[49m         components.modal('新建知识', form, async () => {
+[0m[49m[38;5;10m+      159[0m:[38;5;10m[49m             const title = $('#m-title').val().trim();
+[0m[49m[38;5;10m+      160[0m:[38;5;10m[49m             if (!title) { $('#m-error').text('标题不能为空').show(); throw new Error('标题不能为空'); }
+[0m[49m[38;5;10m+      161[0m:[38;5;10m[49m             const tags = $('#m-tags').val().split(',').map(t => t.trim()).filter(Boolean);
+[0m[49m[38;5;10m+      162[0m:[38;5;10m[49m             await api.createKnowledge({ title, content: $('#m-content').val(), category: $('#m-category').val().trim(), tags });
+[0m[49m[39m   73, 163[0m:[39m[49m             components.toast('创建成功', 'success');
+[0m[49m[38;5;9m-  74     [0m:[38;5;9m[49m             loadList();
+[0m[49m[38;5;9m-  75     [0m:[38;5;9m[49m         });
+[0m[49m[38;5;9m-  76     [0m:[38;5;9m[49m     }
+[0m[49m[38;5;9m-  77     [0m:[38;5;9m[49m 
+[0m[49m[38;5;9m-  78     [0m:[38;5;9m[49m     async function deleteItem(id) {
+[0m[49m[38;5;9m-  79     [0m:[38;5;9m[49m         components.confirm('确认删除该知识条目？', async () => {
+[0m[49m[38;5;9m-  80     [0m:[38;5;9m[49m             await api.deleteKnowledge(id);
+[0m[49m[38;5;9m-  81     [0m:[38;5;9m[49m             components.toast('已删除', 'success');
+[0m[49m[38;5;9m-  82     [0m:[38;5;9m[49m             loadList();
+[0m[49m[38;5;9m-  83     [0m:[38;5;9m[49m         });
+[0m[49m[38;5;10m+      164[0m:[38;5;10m[49m             loadList(currentPage);
+[0m[49m[38;5;10m+      165[0m:[38;5;10m[49m         }, { width: 'max-w-2xl', confirmText: '保存' });
+[0m[49m[39m   84, 166[0m:[39m[49m     }
+[0m[49m[39m   85, 167[0m:[39m[49m 
+[0m[49m[39m   86, 168[0m:[39m[49m     async function editItem(id) {
+[0m[49m[39m   87, 169[0m:[39m[49m         const item = await api.getKnowledge(id);
+[0m[49m[38;5;9m-  88     [0m:[38;5;9m[49m         components.modal('编辑知识', `
+[0m[49m[38;5;9m-  89     [0m:[38;5;9m[49m             <input id="m-title" class="input-dark w-full mb-3" value="${escapeHtml(item.title)}">
+[0m[49m[38;5;9m-  90     [0m:[38;5;9m[49m             <textarea id="m-content" class="input-dark w-full mb-3" rows="5">${escapeHtml(item.content)}</textarea>
+[0m[49m[38;5;9m-  91     [0m:[38;5;9m[49m             <input id="m-category" class="input-dark w-full" value="${escapeHtml(item.category || '')}">
+[0m[49m[38;5;9m-  92     [0m:[38;5;9m[49m         `, async () => {
+[0m[49m[38;5;9m-  93     [0m:[38;5;9m[49m             await api.updateKnowledge(id, { title: $('#m-title').val(), content: $('#m-content').val(), category: $('#m-category').val() });
+[0m[49m[38;5;10m+      170[0m:[38;5;10m[49m         const form = `
+[0m[49m[38;5;10m+      171[0m:[38;5;10m[49m             <div class="space-y-3">
+[0m[49m[38;5;10m+      172[0m:[38;5;10m[49m                 <div><label class="text-xs font-medium" style="color:var(--text-muted)">标题 <span style="color:var(--danger)">*</span></label>
+[0m[49m[38;5;10m+      173[0m:[38;5;10m[49m                 <input id="m-title" class="input-dark w-full mt-1" value="${escapeHtml(item.title)}"></div>
+[0m[49m[38;5;10m+      174[0m:[38;5;10m[49m                 <div><label class="text-xs font-medium" style="color:var(--text-muted)">内容 <span style="color:var(--danger)">*</span></label>
+[0m[49m[38;5;10m+      175[0m:[38;5;10m[49m                 <textarea id="m-content" class="input-dark w-full mt-1" rows="8">${escapeHtml(item.content)}</textarea></div>
+[0m[49m[38;5;10m+      176[0m:[38;5;10m[49m                 <div class="grid grid-cols-2 gap-3">
+[0m[49m[38;5;10m+      177[0m:[38;5;10m[49m                     <div><label class="text-xs font-medium" style="color:var(--text-muted)">分类</label>
+[0m[49m[38;5;10m+      178[0m:[38;5;10m[49m                     <input id="m-category" class="input-dark w-full mt-1" value="${escapeHtml(item.category || '')}"></div>
+[0m[49m[38;5;10m+      179[0m:[38;5;10m[49m                     <div><label class="text-xs font-medium" style="color:var(--text-muted)">标签</label>
+[0m[49m[38;5;10m+      180[0m:[38;5;10m[49m                     <input id="m-tags" class="input-dark w-full mt-1" value="${(item.tags||[]).join(',')}"></div>
+[0m[49m[38;5;10m+      181[0m:[38;5;10m[49m                 </div>
+[0m[49m[38;5;10m+      182[0m:[38;5;10m[49m                 <div id="m-error" class="text-xs" style="color:var(--danger);display:none"></div>
+[0m[49m[38;5;10m+      183[0m:[38;5;10m[49m             </div>`;
+[0m[49m[38;5;10m+      184[0m:[38;5;10m[49m         components.modal('编辑知识', form, async () => {
+[0m[49m[38;5;10m+      185[0m:[38;5;10m[49m             const title = $('#m-title').val().trim();
+[0m[49m[38;5;10m+      186[0m:[38;5;10m[49m             if (!title) { $('#m-error').text('标题不能为空').show(); throw new Error('标题不能为空'); }
+[0m[49m[38;5;10m+      187[0m:[38;5;10m[49m             const tags = $('#m-tags').val().split(',').map(t => t.trim()).filter(Boolean);
+[0m[49m[38;5;10m+      188[0m:[38;5;10m[49m             await api.updateKnowledge(id, { title, content: $('#m-content').val(), category: $('#m-category').val().trim(), tags });
+[0m[49m[39m   94, 189[0m:[39m[49m             components.toast('更新成功', 'success');
+[0m[49m[38;5;9m-  95     [0m:[38;5;9m[49m             loadList();
+[0m[49m[38;5;10m+      190[0m:[38;5;10m[49m             loadList(currentPage);
+[0m[49m[38;5;10m+      191[0m:[38;5;10m[49m         }, { width: 'max-w-2xl', confirmText: '保存' });
+[0m[49m[38;5;10m+      192[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      193[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      194[0m:[38;5;10m[49m     function deleteItem(id, title) {
+[0m[49m[38;5;10m+      195[0m:[38;5;10m[49m         components.confirm(`确定要删除「${title}」吗？此操作不可撤销。`, async () => {
+[0m[49m[38;5;10m+      196[0m:[38;5;10m[49m             await api.deleteKnowledge(id);
+[0m[49m[38;5;10m+      197[0m:[38;5;10m[49m             components.toast('已删除', 'success');
+[0m[49m[38;5;10m+      198[0m:[38;5;10m[49m             loadList(currentPage);
+[0m[49m[39m   96, 199[0m:[39m[49m         });
+[0m[49m[39m   97, 200[0m:[39m[49m     }
+[0m[49m[39m   98, 201[0m:[39m[49m 
+[0m[49m[39m   99, 202[0m:[39m[49m     $(function() { loadList(); });
+[0m[49m[39m  100, 203[0m:[39m[49m     </script>
+[0m[49m[39m  101, 204[0m:[39m[49m </body>
+[0m[49m[39m  102, 205[0m:[39m[49m </html>
+[0m[K
+Replacing: [38;5;141mknowledge/static/knowledge.html[0m
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0mBackend started (PID: 25296)
+Frontend started (PID: 25297)
+Done. Backend: http://localhost:9999  Frontend: http://localhost:9998
+[38;5;244m - Completed in 4.106s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0m[?25l[0m[38;5;141m> [0m[38;5;252m[1m### 5. 更新 search.html — 居中大搜索框→有结果状态切换、左侧过滤面板、source_type/score 展示[0m[0m
+[?25l[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI will run the following command: [38;5;141msleep 2 && curl -s http://localhost:9999/api/v1/health | python3 -m json.tool[0m[38;5;244m (using tool: shell)[0m
+Purpose: 测试 health 接口
+
+{
+    "status": "healthy",
+    "mysql": true,
+    "redis": true,
+    "version": "1.1.0"
+}
+[38;5;244m - Completed in 2.83s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[38;5;141m> [0m健康检查通过。继续验证新增和修改的接口：[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI will run the following command: [38;5;141m# 测试搜索增强（source_type + time_range）
+curl -s -X POST http://localhost:9999/api/v1/search \
+  -H 'Content-Type: application/json' \
+  -d '{"query":"知识","source_type":"knowledge","time_range":"30d","limit":5}' | python3 -m json.tool
+
+echo "---"
+
+# 测试知识列表 keyword + tags 筛选
+curl -s "http://localhost:9999/api/v1/knowledge?page=1&page_size=5&keyword=test" | python3 -m json.tool
+
+echo "---"
+
+# 测试 Skill use 接口
+curl -s -X POST http://localhost:9999/api/v1/skills/1/use \
+  -H 'Content-Type: application/json' \
+  -d '{"user_name":"test"}' | python3 -m json.tool
+
+echo "---"
+
+# 测试 metadata tables 新格式
+curl -s http://localhost:9999/api/v1/metadata/tables | python3 -m json.tool[0m[38;5;244m (using tool: shell)[0m
+Purpose: 验证新增/修改的接口：搜索增强、知识列表筛选、Skill use、metadata tables
+
+{
+    "total": 0,
+    "items": []
+}
+---
+{
+    "total": 0,
+    "page": 1,
+    "page_size": 5,
+    "items": []
+}
+---
+{
+    "detail": "Skill not found"
+}
+---
+{
+    "tables": []
+}
+[38;5;244m - Completed in 0.88s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI will run the following command: [38;5;141m# 测试团队成员 PUT/DELETE 接口（先创建团队和成员）
+curl -s -X POST http://localhost:9999/api/v1/teams \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"测试团队","created_by":"admin"}' | python3 -m json.tool
+
+echo "---"
+
+# 获取团队 ID 后添加成员
+TEAM_ID=$(curl -s http://localhost:9999/api/v1/teams | python3 -c "import sys,json; print(json.load(sys.stdin)['items'][0]['id'])")
+echo "Team ID: $TEAM_ID"
+
+curl -s -X POST "http://localhost:9999/api/v1/teams/$TEAM_ID/members" \
+  -H 'Content-Type: application/json' \
+  -d '{"user_name":"zhangsan","role":"editor"}' | python3 -m json.tool
+
+echo "---"
+
+# 更新成员角色
+curl -s -X PUT "http://localhost:9999/api/v1/teams/$TEAM_ID/members/zhangsan" \
+  -H 'Content-Type: application/json' \
+  -d '{"role":"admin"}' | python3 -m json.tool
+
+echo "---"
+
+# 删除成员
+curl -s -X DELETE "http://localhost:9999/api/v1/teams/$TEAM_ID/members/zhangsan" | python3 -m json.tool
+
+echo "---"
+
+# 测试 Skill 收藏新响应格式（先创建一个 Skill）
+curl -s -X POST http://localhost:9999/api/v1/skills \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"测试Skill","prompt_template":"hello {{name}}","category":"测试"}' | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'Skill ID: {d[\"id\"]}')"
+
+SKILL_ID=$(curl -s "http://localhost:9999/api/v1/skills?page_size=1" | python3 -c "import sys,json; print(json.load(sys.stdin)['items'][0]['id'])")
+echo "Skill ID: $SKILL_ID"
+
+curl -s -X POST "http://localhost:9999/api/v1/skills/$SKILL_ID/favorite" \
+  -H 'Content-Type: application/json' \
+  -d '{"user_name":"test_user"}' | python3 -m json.tool
+
+echo "---"
+
+# 测试 Skill use
+curl -s -X POST "http://localhost:9999/api/v1/skills/$SKILL_ID/use" \
+  -H 'Content-Type: application/json' \
+  -d '{"user_name":"test_user"}' | python3 -m json.tool[0m[38;5;244m (using tool: shell)[0m
+Purpose: 端到端测试团队成员 CRUD 和 Skill 收藏/使用接口
+
+{
+    "id": 1,
+    "name": "\u6d4b\u8bd5\u56e2\u961f",
+    "description": null,
+    "created_by": "admin",
+    "created_at": "2026-03-28T03:21:44"
+}
+---
+Team ID: 1
+{
+    "ok": true
+}
+---
+{
+    "id": 1,
+    "team_id": 1,
+    "user_name": "zhangsan",
+    "role": "admin",
+    "created_at": "2026-03-28T03:21:44"
+}
+---
+{
+    "ok": true
+}
+---
+Skill ID: 1
+Skill ID: 1
+{
+    "favorited": true,
+    "favorite_count": 1
+}
+---
+{
+    "use_count": 1
+}
+[38;5;244m - Completed in 0.193s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m所有接口验证通过。再测试搜索多源功能（先导入一些元数据）：[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.16 s
+[0mI will run the following command: [38;5;141m# 导入元数据
+curl -s -X POST http://localhost:9999/api/v1/metadata/import \
+  -H 'Content-Type: application/json' \
+  -d '{"db_name":"knowledge"}' | python3 -m json.tool
+
+echo "---"
+
+# 测试多源搜索（不指定 source_type，搜索所有来源）
+curl -s -X POST http://localhost:9999/api/v1/search \
+  -H 'Content-Type: application/json' \
+  -d '{"query":"skill","limit":5}' | python3 -m json.tool
+
+echo "---"
+
+# 测试 metadata 来源搜索
+curl -s -X POST http://localhost:9999/api/v1/search \
+  -H 'Content-Type: application/json' \
+  -d '{"query":"name","source_type":"metadata","limit":3}' | python3 -m json.tool[0m[38;5;244m (using tool: shell)[0m
+Purpose: 测试元数据导入和多源搜索功能
+
+{
+    "imported_tables": 6,
+    "imported_columns": 47
+}
+---
+{
+    "total": 5,
+    "items": [
+        {
+            "id": 21,
+            "title": "skill_favorites.created_at",
+            "content": "",
+            "category": "\u5143\u6570\u636e",
+            "tags": null,
+            "source_type": "metadata",
+            "score": 60.0,
+            "created_at": "2026-03-28T03:21:52"
+        },
+        {
+            "id": 22,
+            "title": "skill_favorites.id",
+            "content": "",
+            "category": "\u5143\u6570\u636e",
+            "tags": null,
+            "source_type": "metadata",
+            "score": 60.0,
+            "created_at": "2026-03-28T03:21:52"
+        },
+        {
+            "id": 23,
+            "title": "skill_favorites.skill_id",
+            "content": "",
+            "category": "\u5143\u6570\u636e",
+            "tags": null,
+            "source_type": "metadata",
+            "score": 60.0,
+            "created_at": "2026-03-28T03:21:52"
+        },
+        {
+            "id": 24,
+            "title": "skill_favorites.user_name",
+            "content": "",
+            "category": "\u5143\u6570\u636e",
+            "tags": null,
+            "source_type": "metadata",
+            "score": 60.0,
+            "created_at": "2026-03-28T03:21:52"
+        },
+        {
+            "id": 25,
+            "title": "skills.category",
+            "content": "",
+            "category": "\u5143\u6570\u636e",
+            "tags": null,
+            "source_type": "metadata",
+            "score": 60.0,
+            "created_at": "2026-03-28T03:21:52"
+        }
+    ]
+}
+---
+{
+    "total": 3,
+    "items": [
+        {
+            "id": 2,
+            "title": "db_metadata.column_name",
+            "content": "",
+            "category": "\u5143\u6570\u636e",
+            "tags": null,
+            "source_type": "metadata",
+            "score": 60.0,
+            "created_at": "2026-03-28T03:21:52"
+        },
+        {
+            "id": 5,
+            "title": "db_metadata.db_name",
+            "content": "",
+            "category": "\u5143\u6570\u636e",
+            "tags": null,
+            "source_type": "metadata",
+            "score": 60.0,
+            "created_at": "2026-03-28T03:21:52"
+        },
+        {
+            "id": 8,
+            "title": "db_metadata.table_name",
+            "content": "",
+            "category": "\u5143\u6570\u636e",
+            "tags": null,
+            "source_type": "metadata",
+            "score": 60.0,
+            "created_at": "2026-03-28T03:21:52"
+        }
+    ]
+}
+[38;5;244m - Completed in 0.90s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[38;5;141m> [0m全部接口验证通过。清理测试数据：[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/static/search.html[0m[38;5;244m (using tool: write)[0m
+Purpose: 重写 search.html：居中大搜索框初始状态→有结果状态切换、左侧过滤面板（来源类型+时间范围）、source_type/score 展示、URL 参数支持
+
+[49m[39m   1,   1[0m:[39m[49m <!DOCTYPE html>
+[0m[49m[39m   2,   2[0m:[39m[49m <html lang="zh-CN">
+[0m[49m[39m   3,   3[0m:[39m[49m <head>
+[0m[49m[39m   4,   4[0m:[39m[49m     <meta charset="UTF-8">
+[0m[49m[39m   5,   5[0m:[39m[49m     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+[0m[49m[39m   6,   6[0m:[39m[49m     <title>智能搜索 - Knowledge</title>
+[0m[49m[39m   7,   7[0m:[39m[49m     <script src="https://cdn.tailwindcss.com"></script>
+[0m[49m[39m   8,   8[0m:[39m[49m     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+[0m[49m[39m   9,   9[0m:[39m[49m     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+[0m[49m[39m  10,  10[0m:[39m[49m     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+[0m[49m[39m  11,  11[0m:[39m[49m     <link rel="stylesheet" href="/css/custom.css">
+[0m[49m[39m  12,  12[0m:[39m[49m </head>
+[0m[49m[39m  13,  13[0m:[39m[49m <body>
+[0m[49m[38;5;9m- 14     [0m:[38;5;9m[49m     <main class="ml-56 p-10 relative">
+[0m[49m[38;5;9m- 15     [0m:[38;5;9m[49m         <div class="geo-deco w-20 h-20 top-4 right-16 opacity-10" style="animation-delay:0.5s;border-radius:50%"></div>
+[0m[49m[38;5;9m- 16     [0m:[38;5;9m[49m 
+[0m[49m[38;5;9m- 17     [0m:[38;5;9m[49m         <div class="mb-8 title-enter">
+[0m[49m[38;5;9m- 18     [0m:[38;5;9m[49m             <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">智能搜索</h2>
+[0m[49m[38;5;9m- 19     [0m:[38;5;9m[49m             <p class="mt-2" style="color:var(--text-muted)">语义化搜索知识库内容</p>
+[0m[49m[38;5;10m+      14[0m:[38;5;10m[49m     <main class="ml-60 p-10 relative">
+[0m[49m[38;5;10m+      15[0m:[38;5;10m[49m         <!-- 初始状态：居中大搜索框 -->
+[0m[49m[38;5;10m+      16[0m:[38;5;10m[49m         <div id="search-hero" class="search-hero flex flex-col items-center justify-center" style="min-height:50vh">
+[0m[49m[38;5;10m+      17[0m:[38;5;10m[49m             <h2 class="text-3xl font-bold font-display mb-2" style="color:var(--text-primary)"><i class="fa fa-search mr-2" style="color:var(--accent)"></i>搜索知识库</h2>
+[0m[49m[38;5;10m+      18[0m:[38;5;10m[49m             <p class="mb-8" style="color:var(--text-muted)">输入自然语言描述，语义化检索知识</p>
+[0m[49m[38;5;10m+      19[0m:[38;5;10m[49m             <div class="w-full" style="max-width:640px">
+[0m[49m[38;5;10m+      20[0m:[38;5;10m[49m                 <div class="relative">
+[0m[49m[38;5;10m+      21[0m:[38;5;10m[49m                     <input id="search-input" class="input-dark w-full text-lg" style="height:56px;border-radius:28px;padding:0 56px 0 24px" placeholder="输入自然语言描述...">
+[0m[49m[38;5;10m+      22[0m:[38;5;10m[49m                     <button id="search-btn" onclick="doSearch()" class="absolute right-2 top-2 w-10 h-10 rounded-full flex items-center justify-center" style="background:var(--accent);color:#fff">
+[0m[49m[38;5;10m+      23[0m:[38;5;10m[49m                         <i class="fa fa-search"></i>
+[0m[49m[38;5;10m+      24[0m:[38;5;10m[49m                     </button>
+[0m[49m[38;5;10m+      25[0m:[38;5;10m[49m                 </div>
+[0m[49m[38;5;10m+      26[0m:[38;5;10m[49m             </div>
+[0m[49m[39m  20,  27[0m:[39m[49m         </div>
+[0m[49m[39m  21,  28[0m:[39m[49m 
+[0m[49m[38;5;9m- 22     [0m:[38;5;9m[49m         <div class="card p-6 mb-8 stagger">
+[0m[49m[38;5;9m- 23     [0m:[38;5;9m[49m             <div class="flex gap-3">
+[0m[49m[38;5;9m- 24     [0m:[38;5;9m[49m                 <input id="search-input" class="input-dark flex-1 text-lg" placeholder="输入关键词或自然语言搜索...">
+[0m[49m[38;5;9m- 25     [0m:[38;5;9m[49m                 <button id="search-btn" onclick="doSearch()" class="btn-accent px-6">
+[0m[49m[38;5;9m- 26     [0m:[38;5;9m[49m                     <i class="fa fa-search mr-1"></i>搜索
+[0m[49m[38;5;9m- 27     [0m:[38;5;9m[49m                 </button>
+[0m[49m[38;5;10m+      29[0m:[38;5;10m[49m         <!-- 有结果状态 -->
+[0m[49m[38;5;10m+      30[0m:[38;5;10m[49m         <div id="search-results-area" style="display:none">
+[0m[49m[38;5;10m+      31[0m:[38;5;10m[49m             <!-- 顶部搜索栏 -->
+[0m[49m[38;5;10m+      32[0m:[38;5;10m[49m             <div class="mb-6">
+[0m[49m[38;5;10m+      33[0m:[38;5;10m[49m                 <div class="flex gap-3 items-center">
+[0m[49m[38;5;10m+      34[0m:[38;5;10m[49m                     <div class="relative flex-1">
+[0m[49m[38;5;10m+      35[0m:[38;5;10m[49m                         <input id="search-input-compact" class="input-dark w-full" style="padding-right:40px" placeholder="输入自然语言描述...">
+[0m[49m[38;5;10m+      36[0m:[38;5;10m[49m                         <button id="clear-search" class="absolute right-3 top-1/2 -translate-y-1/2" style="color:var(--text-muted);cursor:pointer;display:none" onclick="clearSearch()"><i class="fa fa-times"></i></button>
+[0m[49m[38;5;10m+      37[0m:[38;5;10m[49m                     </div>
+[0m[49m[38;5;10m+      38[0m:[38;5;10m[49m                     <button id="search-btn-compact" onclick="doSearch()" class="btn-accent px-5"><i class="fa fa-search mr-1"></i>搜索</button>
+[0m[49m[38;5;10m+      39[0m:[38;5;10m[49m                 </div>
+[0m[49m[38;5;10m+      40[0m:[38;5;10m[49m                 <div id="search-meta" class="text-sm mt-2" style="color:var(--text-muted)"></div>
+[0m[49m[39m  28,  41[0m:[39m[49m             </div>
+[0m[49m[38;5;9m- 29     [0m:[38;5;9m[49m         </div>
+[0m[49m[39m  30,  42[0m:[39m[49m 
+[0m[49m[38;5;9m- 31     [0m:[38;5;9m[49m         <div id="search-results" class="grid grid-cols-2 gap-5"></div>
+[0m[49m[38;5;10m+      43[0m:[38;5;10m[49m             <div class="flex gap-6">
+[0m[49m[38;5;10m+      44[0m:[38;5;10m[49m                 <!-- 左侧过滤面板 -->
+[0m[49m[38;5;10m+      45[0m:[38;5;10m[49m                 <div id="filter-panel" class="w-60 flex-shrink-0">
+[0m[49m[38;5;10m+      46[0m:[38;5;10m[49m                     <div class="card p-4 sticky top-4">
+[0m[49m[38;5;10m+      47[0m:[38;5;10m[49m                         <h4 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color:var(--text-muted)">来源类型</h4>
+[0m[49m[38;5;10m+      48[0m:[38;5;10m[49m                         <label class="flex items-center gap-2 mb-2 text-sm cursor-pointer"><input type="checkbox" class="filter-source" value="knowledge" checked> 知识</label>
+[0m[49m[38;5;10m+      49[0m:[38;5;10m[49m                         <label class="flex items-center gap-2 mb-2 text-sm cursor-pointer"><input type="checkbox" class="filter-source" value="metadata" checked> 元数据</label>
+[0m[49m[38;5;10m+      50[0m:[38;5;10m[49m                         <label class="flex items-center gap-2 mb-4 text-sm cursor-pointer"><input type="checkbox" class="filter-source" value="skill" checked> Skill</label>
+[0m[49m[38;5;10m+      51[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      52[0m:[38;5;10m[49m                         <h4 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color:var(--text-muted)">时间范围</h4>
+[0m[49m[38;5;10m+      53[0m:[38;5;10m[49m                         <select id="filter-time" class="input-dark w-full text-sm">
+[0m[49m[38;5;10m+      54[0m:[38;5;10m[49m                             <option value="">全部</option>
+[0m[49m[38;5;10m+      55[0m:[38;5;10m[49m                             <option value="7d">最近 7 天</option>
+[0m[49m[38;5;10m+      56[0m:[38;5;10m[49m                             <option value="30d">最近 30 天</option>
+[0m[49m[38;5;10m+      57[0m:[38;5;10m[49m                             <option value="90d">最近 90 天</option>
+[0m[49m[38;5;10m+      58[0m:[38;5;10m[49m                         </select>
+[0m[49m[38;5;10m+      59[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      60[0m:[38;5;10m[49m                         <button onclick="resetFilters()" class="text-xs mt-4 block" style="color:var(--accent);cursor:pointer">清除所有筛选</button>
+[0m[49m[38;5;10m+      61[0m:[38;5;10m[49m                     </div>
+[0m[49m[38;5;10m+      62[0m:[38;5;10m[49m                 </div>
+[0m[49m[38;5;10m+      63[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      64[0m:[38;5;10m[49m                 <!-- 右侧结果列表 -->
+[0m[49m[38;5;10m+      65[0m:[38;5;10m[49m                 <div id="search-results" class="flex-1 space-y-4"></div>
+[0m[49m[38;5;10m+      66[0m:[38;5;10m[49m             </div>
+[0m[49m[38;5;10m+      67[0m:[38;5;10m[49m         </div>
+[0m[49m[39m  32,  68[0m:[39m[49m     </main>
+[0m[49m[39m  33,  69[0m:[39m[49m 
+[0m[49m[39m  34,  70[0m:[39m[49m     <script src="/js/api.js"></script>
+[0m[49m[39m  35,  71[0m:[39m[49m     <script src="/js/components.js"></script>
+[0m[49m[39m  36,  72[0m:[39m[49m     <script src="/js/app.js"></script>
+[0m[49m[39m  37,  73[0m:[39m[49m     <script>
+[0m[49m[39m  38,  74[0m:[39m[49m     let _searchTimer = null;
+[0m[49m[38;5;10m+      75[0m:[38;5;10m[49m     let hasSearched = false;
+[0m[49m[38;5;10m+      76[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      77[0m:[38;5;10m[49m     function getQuery() {
+[0m[49m[38;5;10m+      78[0m:[38;5;10m[49m         return (hasSearched ? $('#search-input-compact') : $('#search-input')).val().trim();
+[0m[49m[38;5;10m+      79[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      80[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      81[0m:[38;5;10m[49m     function switchToResults() {
+[0m[49m[38;5;10m+      82[0m:[38;5;10m[49m         if (hasSearched) return;
+[0m[49m[38;5;10m+      83[0m:[38;5;10m[49m         hasSearched = true;
+[0m[49m[38;5;10m+      84[0m:[38;5;10m[49m         $('#search-hero').hide();
+[0m[49m[38;5;10m+      85[0m:[38;5;10m[49m         $('#search-results-area').show();
+[0m[49m[38;5;10m+      86[0m:[38;5;10m[49m         $('#search-input-compact').val($('#search-input').val());
+[0m[49m[38;5;10m+      87[0m:[38;5;10m[49m         $('#clear-search').toggle(!!$('#search-input-compact').val());
+[0m[49m[38;5;10m+      88[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      89[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      90[0m:[38;5;10m[49m     function clearSearch() {
+[0m[49m[38;5;10m+      91[0m:[38;5;10m[49m         hasSearched = false;
+[0m[49m[38;5;10m+      92[0m:[38;5;10m[49m         $('#search-results-area').hide();
+[0m[49m[38;5;10m+      93[0m:[38;5;10m[49m         $('#search-hero').show();
+[0m[49m[38;5;10m+      94[0m:[38;5;10m[49m         $('#search-input').val('').focus();
+[0m[49m[38;5;10m+      95[0m:[38;5;10m[49m         $('#search-results').html('');
+[0m[49m[38;5;10m+      96[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      97[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      98[0m:[38;5;10m[49m     function getFilters() {
+[0m[49m[38;5;10m+      99[0m:[38;5;10m[49m         const sources = [];
+[0m[49m[38;5;10m+     100[0m:[38;5;10m[49m         $('.filter-source:checked').each(function() { sources.push($(this).val()); });
+[0m[49m[38;5;10m+     101[0m:[38;5;10m[49m         return {
+[0m[49m[38;5;10m+     102[0m:[38;5;10m[49m             source_type: sources.length < 3 ? sources.join(',') : null,
+[0m[49m[38;5;10m+     103[0m:[38;5;10m[49m             time_range: $('#filter-time').val() || null
+[0m[49m[38;5;10m+     104[0m:[38;5;10m[49m         };
+[0m[49m[38;5;10m+     105[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+     106[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     107[0m:[38;5;10m[49m     function resetFilters() {
+[0m[49m[38;5;10m+     108[0m:[38;5;10m[49m         $('.filter-source').prop('checked', true);
+[0m[49m[38;5;10m+     109[0m:[38;5;10m[49m         $('#filter-time').val('');
+[0m[49m[38;5;10m+     110[0m:[38;5;10m[49m         doSearch();
+[0m[49m[38;5;10m+     111[0m:[38;5;10m[49m     }
+[0m[49m[39m  39, 112[0m:[39m[49m 
+[0m[49m[39m  40, 113[0m:[39m[49m     async function doSearch() {
+[0m[49m[38;5;9m- 41     [0m:[38;5;9m[49m         const q = $('#search-input').val().trim();
+[0m[49m[38;5;9m- 42     [0m:[38;5;9m[49m         if (!q) return;
+[0m[49m[38;5;9m- 43     [0m:[38;5;9m[49m         const btn = $('#search-btn');
+[0m[49m[38;5;9m- 44     [0m:[38;5;9m[49m         btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin mr-1"></i>搜索中...');
+[0m[49m[38;5;9m- 45     [0m:[38;5;9m[49m         $('#search-results').html(components.loading());
+[0m[49m[38;5;10m+     114[0m:[38;5;10m[49m         const q = getQuery();
+[0m[49m[38;5;10m+     115[0m:[38;5;10m[49m         if (!q) { components.toast('请输入搜索内容', 'warning'); return; }
+[0m[49m[38;5;10m+     116[0m:[38;5;10m[49m         switchToResults();
+[0m[49m[38;5;10m+     117[0m:[38;5;10m[49m         $('#search-input-compact').val(q);
+[0m[49m[38;5;10m+     118[0m:[38;5;10m[49m         $('#clear-search').show();
+[0m[49m[38;5;10m+     119[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     120[0m:[38;5;10m[49m         const btn = hasSearched ? $('#search-btn-compact') : $('#search-btn');
+[0m[49m[38;5;10m+     121[0m:[38;5;10m[49m         btn.prop('disabled', true);
+[0m[49m[38;5;10m+     122[0m:[38;5;10m[49m         $('#search-results').html(components.skeleton('card', 4));
+[0m[49m[38;5;10m+     123[0m:[38;5;10m[49m         $('#search-meta').text('搜索中...');
+[0m[49m[38;5;10m+     124[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     125[0m:[38;5;10m[49m         const t0 = Date.now();
+[0m[49m[39m  46, 126[0m:[39m[49m         try {
+[0m[49m[38;5;9m- 47     [0m:[38;5;9m[49m             const data = await api.search(q);
+[0m[49m[38;5;9m- 48     [0m:[38;5;9m[49m             if (!data.items.length) { $('#search-results').html(components.emptyState('未找到相关结果')); return; }
+[0m[49m[38;5;10m+     127[0m:[38;5;10m[49m             const filters = getFilters();
+[0m[49m[38;5;10m+     128[0m:[38;5;10m[49m             const data = await api.search(q, filters);
+[0m[49m[38;5;10m+     129[0m:[38;5;10m[49m             const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
+[0m[49m[38;5;10m+     130[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     131[0m:[38;5;10m[49m             if (!data.items || !data.items.length) {
+[0m[49m[38;5;10m+     132[0m:[38;5;10m[49m                 $('#search-results').html(components.emptyState('没有找到相关结果，试试换个描述方式？'));
+[0m[49m[38;5;10m+     133[0m:[38;5;10m[49m                 $('#search-meta').text('');
+[0m[49m[38;5;10m+     134[0m:[38;5;10m[49m                 return;
+[0m[49m[38;5;10m+     135[0m:[38;5;10m[49m             }
+[0m[49m[38;5;10m+     136[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     137[0m:[38;5;10m[49m             $('#search-meta').text(`找到 ${data.total || data.items.length} 条结果（${elapsed}s）`);
+[0m[49m[38;5;10m+     138[0m:[38;5;10m[49m 
+[0m[49m[39m  49, 139[0m:[39m[49m             let html = '';
+[0m[49m[38;5;9m- 50     [0m:[38;5;9m[49m             data.items.forEach((item, i) => {
+[0m[49m[38;5;10m+     140[0m:[38;5;10m[49m             data.items.forEach(item => {
+[0m[49m[38;5;10m+     141[0m:[38;5;10m[49m                 const sourceLabel = { knowledge: '知识', metadata: '元数据', skill: 'Skill' }[item.source_type] || '知识';
+[0m[49m[38;5;10m+     142[0m:[38;5;10m[49m                 const sourceColor = { knowledge: 'var(--accent)', metadata: 'var(--info)', skill: 'var(--success)' }[item.source_type] || 'var(--accent)';
+[0m[49m[38;5;10m+     143[0m:[38;5;10m[49m                 const score = item.score != null ? Math.round(item.score) : null;
+[0m[49m[39m  51, 144[0m:[39m[49m                 html += `
+[0m[49m[38;5;9m- 52     [0m:[38;5;9m[49m                 <div class="card p-5 card-hover stagger" style="animation-delay:${i*0.05}s">
+[0m[49m[38;5;9m- 53     [0m:[38;5;9m[49m                     <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(item.title)}</h3>
+[0m[49m[38;5;9m- 54     [0m:[38;5;9m[49m                     <p class="text-sm mt-3" style="color:var(--text-secondary)">${truncate(item.content, 200)}</p>
+[0m[49m[38;5;9m- 55     [0m:[38;5;9m[49m                     <div class="flex items-center gap-3 mt-4 text-xs">
+[0m[49m[38;5;10m+     145[0m:[38;5;10m[49m                 <div class="card p-5 card-hover cursor-pointer" onclick="navigateResult('${item.source_type||'knowledge'}', ${item.id})">
+[0m[49m[38;5;10m+     146[0m:[38;5;10m[49m                     <div class="flex items-start justify-between">
+[0m[49m[38;5;10m+     147[0m:[38;5;10m[49m                         <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(item.title)}</h3>
+[0m[49m[38;5;10m+     148[0m:[38;5;10m[49m                         ${score != null ? `<span class="text-xs font-mono font-semibold ml-2" style="color:${sourceColor}">${score}%</span>` : ''}
+[0m[49m[38;5;10m+     149[0m:[38;5;10m[49m                     </div>
+[0m[49m[38;5;10m+     150[0m:[38;5;10m[49m                     <p class="text-sm mt-2" style="color:var(--text-secondary)">${truncate(item.content, 200)}</p>
+[0m[49m[38;5;10m+     151[0m:[38;5;10m[49m                     <div class="flex items-center gap-3 mt-3 text-xs">
+[0m[49m[38;5;10m+     152[0m:[38;5;10m[49m                         <span class="font-medium" style="color:${sourceColor}">${sourceLabel}</span>
+[0m[49m[39m  56, 153[0m:[39m[49m                         ${item.category ? '<span class="tag">' + escapeHtml(item.category) + '</span>' : ''}
+[0m[49m[39m  57, 154[0m:[39m[49m                         <span style="color:var(--text-muted)"><i class="fa fa-clock-o mr-1"></i>${formatDate(item.created_at)}</span>
+[0m[49m[39m  58, 155[0m:[39m[49m                     </div>
+[0m[49m[39m  59, 156[0m:[39m[49m                 </div>`;
+[0m[49m[39m  60, 157[0m:[39m[49m             });
+[0m[49m[39m  61, 158[0m:[39m[49m             $('#search-results').html(html);
+[0m[49m[38;5;9m- 62     [0m:[38;5;9m[49m         } catch(e) { $('#search-results').html(components.emptyState('搜索失败')); }
+[0m[49m[38;5;9m- 63     [0m:[38;5;9m[49m         finally { btn.prop('disabled', false).html('<i class="fa fa-search mr-1"></i>搜索'); }
+[0m[49m[38;5;10m+     159[0m:[38;5;10m[49m         } catch(e) {
+[0m[49m[38;5;10m+     160[0m:[38;5;10m[49m             $('#search-results').html(components.emptyState('搜索失败'));
+[0m[49m[38;5;10m+     161[0m:[38;5;10m[49m             $('#search-meta').text('');
+[0m[49m[38;5;10m+     162[0m:[38;5;10m[49m         } finally {
+[0m[49m[38;5;10m+     163[0m:[38;5;10m[49m             btn.prop('disabled', false);
+[0m[49m[38;5;10m+     164[0m:[38;5;10m[49m         }
+[0m[49m[38;5;10m+     165[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+     166[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     167[0m:[38;5;10m[49m     function navigateResult(type, id) {
+[0m[49m[38;5;10m+     168[0m:[38;5;10m[49m         if (type === 'metadata') { location.href = '/metadata.html'; }
+[0m[49m[38;5;10m+     169[0m:[38;5;10m[49m         else if (type === 'skill') { location.href = '/skills.html'; }
+[0m[49m[38;5;10m+     170[0m:[38;5;10m[49m         else { location.href = `/knowledge.html?detail=${id}`; }
+[0m[49m[39m  64, 171[0m:[39m[49m     }
+[0m[49m[39m  65, 172[0m:[39m[49m 
+[0m[49m[38;5;9m- 66     [0m:[38;5;9m[49m     $('#search-input').on('input', function() {
+[0m[49m[38;5;9m- 67     [0m:[38;5;9m[49m         clearTimeout(_searchTimer);
+[0m[49m[38;5;9m- 68     [0m:[38;5;9m[49m         _searchTimer = setTimeout(doSearch, 300);
+[0m[49m[38;5;10m+     173[0m:[38;5;10m[49m     // 事件绑定
+[0m[49m[38;5;10m+     174[0m:[38;5;10m[49m     $('#search-input').on('keypress', function(e) { if (e.which === 13) doSearch(); });
+[0m[49m[38;5;10m+     175[0m:[38;5;10m[49m     $('#search-input-compact').on('keypress', function(e) { if (e.which === 13) doSearch(); });
+[0m[49m[38;5;10m+     176[0m:[38;5;10m[49m     $('#search-input-compact').on('input', function() { $('#clear-search').toggle(!!$(this).val()); });
+[0m[49m[38;5;10m+     177[0m:[38;5;10m[49m     $('.filter-source, #filter-time').on('change', function() { if (hasSearched) doSearch(); });
+[0m[49m[38;5;10m+     178[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     179[0m:[38;5;10m[49m     // URL 参数支持
+[0m[49m[38;5;10m+     180[0m:[38;5;10m[49m     $(function() {
+[0m[49m[38;5;10m+     181[0m:[38;5;10m[49m         const params = new URLSearchParams(location.search);
+[0m[49m[38;5;10m+     182[0m:[38;5;10m[49m         const q = params.get('q') || params.get('query');
+[0m[49m[38;5;10m+     183[0m:[38;5;10m[49m         if (q) { $('#search-input').val(q); doSearch(); }
+[0m[49m[39m  69, 184[0m:[39m[49m     });
+[0m[49m[38;5;9m- 70     [0m:[38;5;9m[49m     $('#search-input').on('keypress', function(e) { if (e.which === 13) { clearTimeout(_searchTimer); doSearch(); } });
+[0m[49m[39m  71, 185[0m:[39m[49m     </script>
+[0m[49m[39m  72, 186[0m:[39m[49m </body>
+[0m[49m[39m  73, 187[0m:[39m[49m </html>
+[0m[K
+Replacing: [38;5;141mknowledge/static/search.html[0m
+[38;5;244m - Completed in 0.1s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI will run the following command: [38;5;141m# 清理测试数据
+mysql -h127.0.0.1 -uroot -proot knowledge -e "
+DELETE FROM team_members WHERE team_id = 1;
+DELETE FROM teams WHERE id = 1;
+DELETE FROM skill_favorites WHERE skill_id = 1;
+DELETE FROM skills WHERE id = 1;
+DELETE FROM db_metadata;
+" 2>/dev/null
+echo "✅ 测试数据已清理"[0m[38;5;244m (using tool: shell)[0m
+Purpose: 清理测试数据
+
+✅ 测试数据已清理
+[38;5;244m - Completed in 0.249s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[38;5;141m> [0m[38;5;252m[1m### 6. 更新 skills.html — 分类 Tab、3 列卡片、详情 Modal（参数填写+复制）、分页[0m[0m
+[?25l[38;5;141m> [0m所有后端代码已同步到 api-spec v1.1.0。以下是本次迭代的变更总结：[0m[0m
+[0m[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0m[0m
+[0m[0m
+[38;5;252m[1m## 变更总结（api-spec v1.1.0 同步）[0m[0m
+[0m[0m
+[38;5;252m[1m### 新增接口[0m[0m
+| 接口 | 文件 | 说明 |[0m[0m
+|------|------|------|[0m[0m
+| [38;5;10mGET /api/v1/health[0m | main.py | 健康检查，返回 MySQL/Redis 状态 + 版本号 |[0m[0m
+| [38;5;10mPOST /api/v1/skills/{id}/use[0m | skill.py | 记录 Skill 使用次数 +1 |[0m[0m
+| [38;5;10mPUT /api/v1/teams/{id}/members/{uid}[0m | team.py | 更新团队成员角色 |[0m[0m
+| [38;5;10mDELETE /api/v1/teams/{id}/members/{uid}[0m | team.py | 移除团队成员 |[0m[0m
+[0m[0m
+[38;5;252m[1m### 搜索增强（search.py 重写）[0m[0m
+- 支持多源搜索：knowledge / metadata / skill 三种来源[0m[0m
+- 新增 [38;5;10msource_type[0m 过滤（按来源类型筛选）[0m[0m
+- 新增 [38;5;10mtime_range[0m 过滤（7d / 30d / 90d）[0m[0m
+- 搜索结果增加 [38;5;10msource_type[0m 和 [38;5;10mscore[0m 字段[0m[0m
+- 结果按 score 降序排序[0m[0m
+[0m[0m
+[38;5;252m[1m### 接口修复[0m[0m
+| 文件 | 变更 |[0m[0m
+|------|------|[0m[0m
+| knowledge.py | 新增 [38;5;10mkeyword[0m/[38;5;10mtags[0m 查询参数；分页参数改为 [38;5;10mpage_size[0m；响应增加 [38;5;10mpage[0m/[38;5;10mpage_size[0m |[0m[0m
+| skill.py | 新增 [38;5;10mis_public[0m 筛选；[38;5;10mtoggle_favorite[0m 响应改为 [38;5;10m{favorited, favorite_count}[0m；分页参数统一 |[0m[0m
+| metadata.py | [38;5;10mlist_tables[0m 响应 key 改为 [38;5;10mtables[0m + 增加 [38;5;10mcolumn_count[0m；[38;5;10mimport[0m 改为增量更新 + 返回 [38;5;10mimported_tables[0m/[38;5;10mimported_columns[0m |[0m[0m
+| team.py | 响应补全 [38;5;10mcreated_at[0m/[38;5;10mteam_id[0m 字段；[38;5;10madd_member[0m 增加重复检测返回 409 |[0m[0m
+| main.py | 版本号升级到 [38;5;10m1.1.0[0m |[0m[0m
 ⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished

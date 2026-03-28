@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
+from sqlalchemy import select, func, cast, String
 from pydantic import BaseModel
 from typing import Optional, List
 from ..database import get_db
@@ -28,16 +28,27 @@ class KnowledgeUpdate(BaseModel):
 @router.get("")
 async def list_knowledge(
     page: int = Query(1, ge=1),
-    size: int = Query(20, ge=1, le=100),
+    page_size: int = Query(20, ge=1, le=100),
     category: Optional[str] = None,
+    keyword: Optional[str] = None,
+    tags: Optional[str] = None,
     db: AsyncSession = Depends(get_db),
 ):
     q = select(KnowledgeItem).where(KnowledgeItem.is_deleted == 0)
     if category:
         q = q.where(KnowledgeItem.category == category)
+    if keyword:
+        q = q.where(KnowledgeItem.title.contains(keyword) | KnowledgeItem.content.contains(keyword))
+    if tags:
+        for tag in tags.split(","):
+            tag = tag.strip()
+            if tag:
+                q = q.where(cast(KnowledgeItem.tags, String).contains(tag))
     total = await db.scalar(select(func.count()).select_from(q.subquery()))
-    items = (await db.execute(q.order_by(KnowledgeItem.created_at.desc()).offset((page - 1) * size).limit(size))).scalars().all()
-    return {"total": total, "items": [_to_dict(i) for i in items]}
+    items = (await db.execute(
+        q.order_by(KnowledgeItem.created_at.desc()).offset((page - 1) * page_size).limit(page_size)
+    )).scalars().all()
+    return {"total": total, "page": page, "page_size": page_size, "items": [_to_dict(i) for i in items]}
 
 
 @router.post("")

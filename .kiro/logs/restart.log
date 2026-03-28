@@ -26,3 +26,9 @@ Done. Backend: http://localhost:9999  Frontend: http://localhost:9998
 Backend started (PID: 19490)
 Frontend started (PID: 19491)
 Done. Backend: http://localhost:9999  Frontend: http://localhost:9998
+[2026年 3月28日 星期六 11时11分05秒 CST] 执行 knowledge/restart.sh (by architect-agent)
+Killing processes on port 9998: 19491
+Killing processes on port 9999: 19490
+Backend started (PID: 22389)
+Frontend started (PID: 22390)
+Done. Backend: http://localhost:9999  Frontend: http://localhost:9998

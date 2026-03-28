@@ -1,8 +1,8 @@
 {
   "id": "feature-knowledge-20260325204315",
   "feature": "knowledge",
-  "stage": "architect",
-  "updated_at": "2026-03-28T11:02:00.000000",
+  "stage": "frontend+backend",
+  "updated_at": "2026-03-28T11:10:00.000000",
   "steps": {
     "pm": {
       "status": "completed",
@@ -19,23 +19,23 @@
       "error": null
     },
     "architect": {
-      "status": "in_progress",
+      "status": "completed",
       "retries": 1,
       "startTime": "2026-03-28T11:02:00.000000",
-      "output": null,
+      "output": ".kiro/specs/knowledge/design.md",
       "error": null
     },
     "frontend": {
-      "status": "pending",
-      "retries": 0,
-      "startTime": null,
+      "status": "in_progress",
+      "retries": 1,
+      "startTime": "2026-03-28T11:10:00.000000",
       "output": null,
       "error": null
     },
     "backend": {
-      "status": "pending",
-      "retries": 0,
-      "startTime": null,
+      "status": "in_progress",
+      "retries": 1,
+      "startTime": "2026-03-28T11:10:00.000000",
       "output": null,
       "error": null
     },

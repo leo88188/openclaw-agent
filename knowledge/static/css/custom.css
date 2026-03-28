@@ -243,9 +243,64 @@ nav.sidebar a.active::before {
 
 /* ===== Toast ===== */
 .toast-item {
-  border-radius: 0.5rem !important;
   font-weight: 500;
 }
+
+/* ===== Skeleton shimmer ===== */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton-line {
+  background: linear-gradient(90deg, var(--border) 25%, var(--bg-card-hover) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: 4px;
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== Search page ===== */
+.search-hero { transition: all 0.3s ease-out; }
+.search-hero.compact { padding-top: 0; }
+.filter-panel { transition: opacity 0.2s ease-out, transform 0.2s ease-out; }
+
+/* ===== Index badges ===== */
+.badge-pk { background: #fef2f2; color: #d32f2f; border: 1px solid rgba(211,47,47,0.2); }
+.badge-idx { background: #e6f2ff; color: #0066cc; border: 1px solid rgba(0,102,204,0.2); }
+.badge-uni { background: #ecfdf5; color: #2e7d32; border: 1px solid rgba(46,125,50,0.2); }
+.badge-pk, .badge-idx, .badge-uni {
+  display: inline-flex; align-items: center; padding: 0 6px;
+  border-radius: 4px; font-size: 11px; font-weight: 600; font-family: monospace;
+}
+
+/* ===== Category tabs ===== */
+.cat-tab {
+  padding: 0.5rem 1rem; cursor: pointer; font-size: 0.875rem;
+  color: var(--text-secondary); border-bottom: 2px solid transparent;
+  transition: all 0.15s ease;
+}
+.cat-tab:hover { color: var(--text-primary); }
+.cat-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+/* ===== Tag chips ===== */
+.tag-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 999px; font-size: 12px;
+  background: #e6f2ff; color: var(--accent); border: 1px solid rgba(0,102,204,0.15);
+}
+.tag-chip .remove { cursor: pointer; opacity: 0.6; }
+.tag-chip .remove:hover { opacity: 1; }
+
+/* ===== Score bar ===== */
+.score-bar { height: 4px; border-radius: 2px; background: var(--border); }
+.score-bar-fill { height: 100%; border-radius: 2px; background: var(--accent); transition: width 0.3s ease; }
 
 /* ===== Scrollbar ===== */
 ::-webkit-scrollbar { width: 6px; }

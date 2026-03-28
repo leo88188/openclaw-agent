@@ -11,9 +11,7 @@
     <link rel="stylesheet" href="/css/custom.css">
 </head>
 <body>
-    <main class="ml-56 p-10 relative">
-        <div class="geo-deco w-14 h-14 -top-2 right-32 opacity-15" style="animation-delay:1s"></div>
-
+    <main class="ml-60 p-10 relative">
         <div class="flex items-center justify-between mb-8">
             <div class="title-enter">
                 <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">知识管理</h2>
@@ -24,7 +22,19 @@
             </button>
         </div>
 
-        <div id="knowledge-list" class="grid grid-cols-2 gap-5"></div>
+        <!-- 操作栏 -->
+        <div class="card p-4 mb-6 flex flex-wrap items-center gap-3">
+            <select id="filter-category" class="input-dark text-sm" style="min-width:120px" onchange="loadList(1)">
+                <option value="">全部分类</option>
+            </select>
+            <div id="tag-filter" class="flex items-center gap-2 flex-1">
+                <input id="filter-tag-input" class="input-dark text-sm" placeholder="输入标签回车筛选" style="width:160px">
+                <div id="selected-tags" class="flex gap-1 flex-wrap"></div>
+            </div>
+            <input id="filter-keyword" class="input-dark text-sm flex-1" placeholder="搜索知识..." style="min-width:180px">
+        </div>
+
+        <div id="knowledge-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
         <div id="pagination"></div>
     </main>
 
@@ -33,66 +43,159 @@
     <script src="/js/app.js"></script>
     <script>
     let currentPage = 1;
+    let selectedTags = [];
+    let _kwTimer = null;
+
+    // 关键词搜索防抖
+    $('#filter-keyword').on('input', function() {
+        clearTimeout(_kwTimer);
+        _kwTimer = setTimeout(() => loadList(1), 300);
+    });
+
+    // 标签输入
+    $('#filter-tag-input').on('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const tag = $(this).val().trim();
+            if (tag && !selectedTags.includes(tag)) {
+                selectedTags.push(tag);
+                renderSelectedTags();
+                loadList(1);
+            }
+            $(this).val('');
+        }
+    });
+
+    function renderSelectedTags() {
+        $('#selected-tags').html(selectedTags.map(t =>
+            `<span class="tag-chip">${escapeHtml(t)}<span class="remove" onclick="removeTag('${escapeHtml(t)}')">&times;</span></span>`
+        ).join(''));
+    }
+
+    function removeTag(tag) {
+        selectedTags = selectedTags.filter(t => t !== tag);
+        renderSelectedTags();
+        loadList(1);
+    }
 
     async function loadList(page) {
         currentPage = page || 1;
-        $('#knowledge-list').html(components.loading());
+        const container = $('#knowledge-list');
+        container.html(components.skeleton('card', 6));
         try {
-            const data = await api.getKnowledgeList(currentPage);
-            if (!data.items.length) { $('#knowledge-list').html(components.emptyState('暂无知识条目')); $('#pagination').html(''); return; }
+            const data = await api.getKnowledgeList(currentPage, {
+                category: $('#filter-category').val(),
+                keyword: $('#filter-keyword').val().trim(),
+                tags: selectedTags.join(',')
+            });
+            if (!data.items || !data.items.length) {
+                container.html(components.emptyState('还没有知识条目', '创建第一条知识', 'showCreateModal()'));
+                $('#pagination').html('');
+                return;
+            }
             let html = '';
             data.items.forEach((item, i) => {
+                const tags = (item.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('');
                 html += `
-                <div class="card p-5 card-hover stagger" style="animation-delay:${i*0.05}s">
+                <div class="card p-5 card-hover cursor-pointer" onclick="showDetail(${item.id})">
                     <div class="flex items-start justify-between">
-                        <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(item.title)}</h3>
-                        <div class="flex gap-2">
-                            <button onclick="editItem(${item.id})" style="color:var(--text-muted)" class="hover:opacity-80"><i class="fa fa-edit"></i></button>
-                            <button onclick="deleteItem(${item.id})" style="color:var(--text-muted)" class="hover:opacity-80"><i class="fa fa-trash"></i></button>
+                        <h3 class="font-display font-semibold truncate flex-1" style="color:var(--text-primary)">${escapeHtml(item.title)}</h3>
+                        <div class="flex gap-2 ml-2" onclick="event.stopPropagation()">
+                            <button onclick="editItem(${item.id})" style="color:var(--text-muted)" class="hover:opacity-80" title="编辑"><i class="fa fa-edit"></i></button>
+                            <button onclick="deleteItem(${item.id},'${escapeHtml(item.title)}')" style="color:var(--text-muted)" class="hover:opacity-80" title="删除"><i class="fa fa-trash"></i></button>
                         </div>
                     </div>
-                    <p class="text-sm mt-3" style="color:var(--text-secondary)">${truncate(item.content, 120)}</p>
-                    <div class="flex items-center gap-3 mt-4 text-xs">
+                    <p class="text-sm mt-3 line-clamp-2" style="color:var(--text-secondary)">${truncate(item.content, 120)}</p>
+                    <div class="flex items-center gap-2 mt-4 text-xs flex-wrap">
                         ${item.category ? '<span class="tag">' + escapeHtml(item.category) + '</span>' : ''}
-                        <span style="color:var(--text-muted)"><i class="fa fa-clock-o mr-1"></i>${formatDate(item.created_at)}</span>
+                        ${tags}
+                        <span class="ml-auto" style="color:var(--text-muted)"><i class="fa fa-clock-o mr-1"></i>${formatDate(item.updated_at || item.created_at)}</span>
                     </div>
                 </div>`;
             });
-            $('#knowledge-list').html(html);
-            $('#pagination').html(components.pagination(data.total || data.items.length, currentPage, data.size || 20, 'loadList'));
-        } catch(e) { $('#knowledge-list').html(components.emptyState('加载失败')); }
+            container.html(html);
+            $('#pagination').html(components.pagination(data.total, currentPage, data.page_size || 20, 'loadList'));
+            // 填充分类下拉（首次）
+            if ($('#filter-category option').length <= 1 && data.items.length) {
+                const cats = [...new Set(data.items.map(i => i.category).filter(Boolean))];
+                cats.forEach(c => $('#filter-category').append(`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`));
+            }
+        } catch(e) { container.html(components.emptyState('加载失败')); }
+    }
+
+    async function showDetail(id) {
+        const item = await api.getKnowledge(id);
+        const tags = (item.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join(' ');
+        const content = `
+            <div class="flex items-center gap-2 mb-4 text-xs" style="color:var(--text-muted)">
+                ${item.category ? '<span class="tag">' + escapeHtml(item.category) + '</span>' : ''}
+                ${tags}
+                <span class="ml-auto">创建: ${formatDate(item.created_at)} · 更新: ${formatDate(item.updated_at)}</span>
+            </div>
+            <div class="prose max-w-none text-sm" style="color:var(--text-secondary);white-space:pre-wrap;line-height:1.8">${escapeHtml(item.content)}</div>
+            <div class="flex gap-3 mt-6 pt-4" style="border-top:1px solid var(--border)">
+                <button onclick="$('#modal-overlay').remove();editItem(${item.id})" class="btn-ghost text-sm"><i class="fa fa-edit mr-1"></i>编辑</button>
+                <button onclick="$('#modal-overlay').remove();deleteItem(${item.id},'${escapeHtml(item.title)}')" class="text-sm px-3 py-1.5 rounded-lg" style="color:var(--danger)"><i class="fa fa-trash mr-1"></i>删除</button>
+            </div>`;
+        components.modal(item.title, content, null, { width: 'max-w-2xl' });
     }
 
     function showCreateModal() {
-        components.modal('新建知识', `
-            <input id="m-title" class="input-dark w-full mb-3" placeholder="标题">
-            <textarea id="m-content" class="input-dark w-full mb-3" rows="5" placeholder="内容（支持Markdown）"></textarea>
-            <input id="m-category" class="input-dark w-full" placeholder="分类">
-        `, async () => {
-            await api.createKnowledge({ title: $('#m-title').val(), content: $('#m-content').val(), category: $('#m-category').val() });
+        const form = `
+            <div class="space-y-3">
+                <div><label class="text-xs font-medium" style="color:var(--text-muted)">标题 <span style="color:var(--danger)">*</span></label>
+                <input id="m-title" class="input-dark w-full mt-1" placeholder="输入知识标题"></div>
+                <div><label class="text-xs font-medium" style="color:var(--text-muted)">内容 <span style="color:var(--danger)">*</span></label>
+                <textarea id="m-content" class="input-dark w-full mt-1" rows="8" placeholder="内容（支持 Markdown）"></textarea></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="text-xs font-medium" style="color:var(--text-muted)">分类</label>
+                    <input id="m-category" class="input-dark w-full mt-1" placeholder="分类"></div>
+                    <div><label class="text-xs font-medium" style="color:var(--text-muted)">标签</label>
+                    <input id="m-tags" class="input-dark w-full mt-1" placeholder="逗号分隔，如: mysql,性能"></div>
+                </div>
+                <div id="m-error" class="text-xs" style="color:var(--danger);display:none"></div>
+            </div>`;
+        components.modal('新建知识', form, async () => {
+            const title = $('#m-title').val().trim();
+            if (!title) { $('#m-error').text('标题不能为空').show(); throw new Error('标题不能为空'); }
+            const tags = $('#m-tags').val().split(',').map(t => t.trim()).filter(Boolean);
+            await api.createKnowledge({ title, content: $('#m-content').val(), category: $('#m-category').val().trim(), tags });
             components.toast('创建成功', 'success');
-            loadList();
-        });
-    }
-
-    async function deleteItem(id) {
-        components.confirm('确认删除该知识条目？', async () => {
-            await api.deleteKnowledge(id);
-            components.toast('已删除', 'success');
-            loadList();
-        });
+            loadList(currentPage);
+        }, { width: 'max-w-2xl', confirmText: '保存' });
     }
 
     async function editItem(id) {
         const item = await api.getKnowledge(id);
-        components.modal('编辑知识', `
-            <input id="m-title" class="input-dark w-full mb-3" value="${escapeHtml(item.title)}">
-            <textarea id="m-content" class="input-dark w-full mb-3" rows="5">${escapeHtml(item.content)}</textarea>
-            <input id="m-category" class="input-dark w-full" value="${escapeHtml(item.category || '')}">
-        `, async () => {
-            await api.updateKnowledge(id, { title: $('#m-title').val(), content: $('#m-content').val(), category: $('#m-category').val() });
+        const form = `
+            <div class="space-y-3">
+                <div><label class="text-xs font-medium" style="color:var(--text-muted)">标题 <span style="color:var(--danger)">*</span></label>
+                <input id="m-title" class="input-dark w-full mt-1" value="${escapeHtml(item.title)}"></div>
+                <div><label class="text-xs font-medium" style="color:var(--text-muted)">内容 <span style="color:var(--danger)">*</span></label>
+                <textarea id="m-content" class="input-dark w-full mt-1" rows="8">${escapeHtml(item.content)}</textarea></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="text-xs font-medium" style="color:var(--text-muted)">分类</label>
+                    <input id="m-category" class="input-dark w-full mt-1" value="${escapeHtml(item.category || '')}"></div>
+                    <div><label class="text-xs font-medium" style="color:var(--text-muted)">标签</label>
+                    <input id="m-tags" class="input-dark w-full mt-1" value="${(item.tags||[]).join(',')}"></div>
+                </div>
+                <div id="m-error" class="text-xs" style="color:var(--danger);display:none"></div>
+            </div>`;
+        components.modal('编辑知识', form, async () => {
+            const title = $('#m-title').val().trim();
+            if (!title) { $('#m-error').text('标题不能为空').show(); throw new Error('标题不能为空'); }
+            const tags = $('#m-tags').val().split(',').map(t => t.trim()).filter(Boolean);
+            await api.updateKnowledge(id, { title, content: $('#m-content').val(), category: $('#m-category').val().trim(), tags });
             components.toast('更新成功', 'success');
-            loadList();
+            loadList(currentPage);
+        }, { width: 'max-w-2xl', confirmText: '保存' });
+    }
+
+    function deleteItem(id, title) {
+        components.confirm(`确定要删除「${title}」吗？此操作不可撤销。`, async () => {
+            await api.deleteKnowledge(id);
+            components.toast('已删除', 'success');
+            loadList(currentPage);
         });
     }
 
