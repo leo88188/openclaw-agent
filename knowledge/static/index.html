@@ -11,19 +11,14 @@
     <link rel="stylesheet" href="/css/custom.css">
 </head>
 <body>
-    <main class="ml-56 p-10 relative">
-        <!-- Decorative elements -->
-        <div class="geo-deco w-16 h-16 -top-2 right-24 opacity-20" style="animation-delay:0s"></div>
-        <div class="geo-deco w-10 h-10 top-32 right-8 opacity-10" style="animation-delay:2s;border-radius:50%"></div>
-        <div class="deco-line top-20 right-40"></div>
-
+    <main class="ml-60 p-10 relative">
         <div class="mb-10 title-enter">
             <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">仪表盘</h2>
             <p class="mt-2" style="color:var(--text-muted)">知识库概览与快捷操作</p>
         </div>
 
-        <div class="grid grid-cols-4 gap-5 mb-10">
-            <div class="card p-6 stagger glow-pulse">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+            <div class="card p-6">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">知识条目</p>
@@ -34,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card p-6 stagger">
+            <div class="card p-6">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">Skill 模板</p>
@@ -45,7 +40,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card p-6 stagger">
+            <div class="card p-6">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">数据表</p>
@@ -56,11 +51,11 @@
                     </div>
                 </div>
             </div>
-            <div class="card p-6 stagger">
+            <div class="card p-6">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">系统状态</p>
-                        <p class="text-lg font-bold mt-2" style="color:var(--success)"><i class="fa fa-circle text-xs mr-1"></i>运行中</p>
+                        <p id="stat-health" class="text-lg font-bold mt-2" style="color:var(--text-muted)">检测中...</p>
                     </div>
                     <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(52,211,153,0.12)">
                         <i class="fa fa-heartbeat text-lg" style="color:var(--success)"></i>
@@ -69,30 +64,31 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-5">
-            <div class="card p-6 stagger">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div class="card p-6">
                 <h3 class="font-display font-semibold mb-5" style="color:var(--text-primary)"><i class="fa fa-bolt mr-2" style="color:var(--accent)"></i>快捷操作</h3>
                 <div class="grid grid-cols-2 gap-3">
-                    <a href="/knowledge.html" class="flex items-center gap-3 p-3 rounded-xl transition" style="background:var(--accent-dim);color:var(--accent)">
+                    <a href="/knowledge.html" class="flex items-center gap-3 p-3 rounded-xl transition card-hover" style="background:var(--accent-dim);color:var(--accent)">
                         <i class="fa fa-plus-circle"></i><span class="font-medium text-sm">新建知识</span>
                     </a>
-                    <a href="/search.html" class="flex items-center gap-3 p-3 rounded-xl transition" style="background:rgba(52,211,153,0.1);color:var(--success)">
+                    <a href="/search.html" class="flex items-center gap-3 p-3 rounded-xl transition card-hover" style="background:rgba(52,211,153,0.1);color:var(--success)">
                         <i class="fa fa-search"></i><span class="font-medium text-sm">搜索知识</span>
                     </a>
-                    <a href="/skills.html" class="flex items-center gap-3 p-3 rounded-xl transition" style="background:rgba(96,165,250,0.1);color:var(--info)">
+                    <a href="/skills.html" class="flex items-center gap-3 p-3 rounded-xl transition card-hover" style="background:rgba(96,165,250,0.1);color:var(--info)">
                         <i class="fa fa-magic"></i><span class="font-medium text-sm">浏览 Skill</span>
                     </a>
-                    <a href="/metadata.html" class="flex items-center gap-3 p-3 rounded-xl transition" style="background:rgba(251,146,60,0.1);color:#fb923c">
+                    <a href="/metadata.html" class="flex items-center gap-3 p-3 rounded-xl transition card-hover" style="background:rgba(251,146,60,0.1);color:#fb923c">
                         <i class="fa fa-database"></i><span class="font-medium text-sm">导入元数据</span>
                     </a>
                 </div>
             </div>
-            <div class="card p-6 stagger">
+            <div class="card p-6">
                 <h3 class="font-display font-semibold mb-5" style="color:var(--text-primary)"><i class="fa fa-info-circle mr-2" style="color:var(--info)"></i>系统信息</h3>
                 <div class="space-y-4 text-sm">
-                    <div class="flex justify-between"><span style="color:var(--text-muted)">平台版本</span><span class="font-mono" style="color:var(--text-secondary)">v1.0.0</span></div>
+                    <div class="flex justify-between"><span style="color:var(--text-muted)">平台版本</span><span id="sys-version" class="font-mono" style="color:var(--text-secondary)">-</span></div>
                     <div class="flex justify-between"><span style="color:var(--text-muted)">后端框架</span><span style="color:var(--text-secondary)">FastAPI + MySQL + Redis</span></div>
-                    <div class="flex justify-between"><span style="color:var(--text-muted)">向量引擎</span><span style="color:var(--text-secondary)">内置 (可扩展)</span></div>
+                    <div class="flex justify-between"><span style="color:var(--text-muted)">MySQL</span><span id="sys-mysql" style="color:var(--text-secondary)">-</span></div>
+                    <div class="flex justify-between"><span style="color:var(--text-muted)">Redis</span><span id="sys-redis" style="color:var(--text-secondary)">-</span></div>
                 </div>
             </div>
         </div>
@@ -102,14 +98,40 @@
     <script src="/js/components.js"></script>
     <script src="/js/app.js"></script>
     <script>
+    // 数字递增动画
+    function animateNumber(el, target, duration = 300) {
+        if (isNaN(target)) { el.text(target); return; }
+        const start = 0;
+        const startTime = performance.now();
+        function step(now) {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // ease-out
+            el.text(Math.round(start + (target - start) * eased));
+            if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    }
+
     $(async function() {
+        // 加载统计
         try {
             const stats = await api.getStats();
-            $('#stat-knowledge').text(stats.knowledge_count);
-            $('#stat-skills').text(stats.skill_count);
-            $('#stat-tables').text(stats.table_count);
+            animateNumber($('#stat-knowledge'), stats.knowledge_count);
+            animateNumber($('#stat-skills'), stats.skill_count);
+            animateNumber($('#stat-tables'), stats.table_count);
         } catch(e) {
-            console.log('Stats API not available yet');
+            console.log('Stats API not available');
+        }
+        // 健康检查
+        try {
+            const health = await api.healthCheck();
+            const ok = health.status === 'healthy';
+            $('#stat-health').html(`<i class="fa fa-circle text-xs mr-1" style="color:${ok?'var(--success)':'var(--danger)'}"></i>${ok?'运行中':'异常'}`).css('color', ok?'var(--success)':'var(--danger)');
+            $('#sys-version').text(health.version || 'v1.0.0');
+            $('#sys-mysql').html(health.mysql ? '<span style="color:var(--success)">● 已连接</span>' : '<span style="color:var(--danger)">● 未连接</span>');
+            $('#sys-redis').html(health.redis ? '<span style="color:var(--success)">● 已连接</span>' : '<span style="color:var(--danger)">● 未连接</span>');
+        } catch(e) {
+            $('#stat-health').html('<i class="fa fa-circle text-xs mr-1" style="color:var(--danger)"></i>无法连接').css('color', 'var(--danger)');
         }
     });
     </script>

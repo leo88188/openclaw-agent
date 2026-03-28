@@ -17122,4 +17122,989 @@ Purpose: 清理测试数据
 | metadata.py | [38;5;10mlist_tables[0m 响应 key 改为 [38;5;10mtables[0m + 增加 [38;5;10mcolumn_count[0m；[38;5;10mimport[0m 改为增量更新 + 返回 [38;5;10mimported_tables[0m/[38;5;10mimported_columns[0m |[0m[0m
 | team.py | 响应补全 [38;5;10mcreated_at[0m/[38;5;10mteam_id[0m 字段；[38;5;10madd_member[0m 增加重复检测返回 409 |[0m[0m
 | main.py | 版本号升级到 [38;5;10m1.1.0[0m |[0m[0m
-⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢂⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡂⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠅⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢃⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡃⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠍⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢋⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡋⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠍⠁ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢋⠁ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡋⠁ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠍⠉ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠋⠉ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠋⠉ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠉⠙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠉⠙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠉⠩ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠈⢙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠈⡙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢈⠩ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⢙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⡙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢂⠩ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡂⢘ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠅⡘ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢃⠨ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡃⢐ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠍⡐ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢋⠠ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡋⢀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠍⡁ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢋⠁ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡋⠁ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠍⠉ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠋⠉ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠋⠉ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠉⠙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠉⠙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠉⠩ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠈⢙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠈⡙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠈⠩ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⢙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⡙ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⠩ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⢘ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⡘ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⠨ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⢐ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⡐ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⠠ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⢀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠀⡀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢂⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡂⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠅⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⢃⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡃⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m5.24 s
+[0m[38;5;8m
+ ▸ Credits: 6.13 • Time: 10m 10s
+
+[0m[1G[0m[0m[?25h[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/static/skills.html[0m[38;5;244m (using tool: write)[0m
+Purpose: 重写 skills.html：分类 Tab、3列卡片、详情 Modal（参数填写+生成+复制）、分页、收藏、使用统计、表单校验
+
+[49m[39m   1,   1[0m:[39m[49m <!DOCTYPE html>
+[0m[49m[39m   2,   2[0m:[39m[49m <html lang="zh-CN">
+[0m[49m[39m   3,   3[0m:[39m[49m <head>
+[0m[49m[39m   4,   4[0m:[39m[49m     <meta charset="UTF-8">
+[0m[49m[39m   5,   5[0m:[39m[49m     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+[0m[49m[39m   6,   6[0m:[39m[49m     <title>Skill 市场 - Knowledge</title>
+[0m[49m[39m   7,   7[0m:[39m[49m     <script src="https://cdn.tailwindcss.com"></script>
+[0m[49m[39m   8,   8[0m:[39m[49m     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+[0m[49m[39m   9,   9[0m:[39m[49m     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+[0m[49m[39m  10,  10[0m:[39m[49m     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+[0m[49m[39m  11,  11[0m:[39m[49m     <link rel="stylesheet" href="/css/custom.css">
+[0m[49m[39m  12,  12[0m:[39m[49m </head>
+[0m[49m[39m  13,  13[0m:[39m[49m <body>
+[0m[49m[38;5;9m- 14     [0m:[38;5;9m[49m     <main class="ml-56 p-10 relative">
+[0m[49m[38;5;9m- 15     [0m:[38;5;9m[49m         <div class="deco-line top-16 right-48"></div>
+[0m[49m[38;5;9m- 16     [0m:[38;5;9m[49m 
+[0m[49m[38;5;9m- 17     [0m:[38;5;9m[49m         <div class="flex items-center justify-between mb-8">
+[0m[49m[38;5;10m+      14[0m:[38;5;10m[49m     <main class="ml-60 p-10 relative">
+[0m[49m[38;5;10m+      15[0m:[38;5;10m[49m         <div class="flex items-center justify-between mb-6">
+[0m[49m[39m  18,  16[0m:[39m[49m             <div class="title-enter">
+[0m[49m[39m  19,  17[0m:[39m[49m                 <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">Skill 市场</h2>
+[0m[49m[39m  20,  18[0m:[39m[49m                 <p class="mt-2" style="color:var(--text-muted)">浏览和分享提示词模板</p>
+[0m[49m[39m  21,  19[0m:[39m[49m             </div>
+[0m[49m[38;5;9m- 22     [0m:[38;5;9m[49m             <button onclick="showCreateSkill()" class="btn-accent">
+[0m[49m[38;5;9m- 23     [0m:[38;5;9m[49m                 <i class="fa fa-plus mr-1"></i>创建 Skill
+[0m[49m[38;5;9m- 24     [0m:[38;5;9m[49m             </button>
+[0m[49m[38;5;10m+      20[0m:[38;5;10m[49m             <button onclick="showCreateSkill()" class="btn-accent"><i class="fa fa-plus mr-1"></i>创建 Skill</button>
+[0m[49m[38;5;10m+      21[0m:[38;5;10m[49m         </div>
+[0m[49m[38;5;10m+      22[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      23[0m:[38;5;10m[49m         <!-- 分类 Tab -->
+[0m[49m[38;5;10m+      24[0m:[38;5;10m[49m         <div id="category-tabs" class="flex gap-1 mb-6 border-b" style="border-color:var(--border)">
+[0m[49m[38;5;10m+      25[0m:[38;5;10m[49m             <span class="cat-tab active" data-cat="" onclick="switchCategory(this)">全部</span>
+[0m[49m[39m  25,  26[0m:[39m[49m         </div>
+[0m[49m[38;5;9m- 26     [0m:[38;5;9m[49m         <div id="skill-list" class="grid grid-cols-4 gap-5"></div>
+[0m[49m[38;5;10m+      27[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      28[0m:[38;5;10m[49m         <div id="skill-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+[0m[49m[38;5;10m+      29[0m:[38;5;10m[49m         <div id="pagination"></div>
+[0m[49m[39m  27,  30[0m:[39m[49m     </main>
+[0m[49m[39m  28,  31[0m:[39m[49m 
+[0m[49m[39m  29,  32[0m:[39m[49m     <script src="/js/api.js"></script>
+[0m[49m[39m  30,  33[0m:[39m[49m     <script src="/js/components.js"></script>
+[0m[49m[39m  31,  34[0m:[39m[49m     <script src="/js/app.js"></script>
+[0m[49m[39m  32,  35[0m:[39m[49m     <script>
+[0m[49m[38;5;9m- 33     [0m:[38;5;9m[49m     async function loadSkills() {
+[0m[49m[38;5;9m- 34     [0m:[38;5;9m[49m         $('#skill-list').html(components.loading());
+[0m[49m[38;5;10m+      36[0m:[38;5;10m[49m     let currentPage = 1, currentCategory = '', knownCategories = new Set();
+[0m[49m[38;5;10m+      37[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      38[0m:[38;5;10m[49m     function switchCategory(el) {
+[0m[49m[38;5;10m+      39[0m:[38;5;10m[49m         currentCategory = $(el).data('cat') || '';
+[0m[49m[38;5;10m+      40[0m:[38;5;10m[49m         $('.cat-tab').removeClass('active');
+[0m[49m[38;5;10m+      41[0m:[38;5;10m[49m         $(el).addClass('active');
+[0m[49m[38;5;10m+      42[0m:[38;5;10m[49m         loadSkills(1);
+[0m[49m[38;5;10m+      43[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      44[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      45[0m:[38;5;10m[49m     async function loadSkills(page) {
+[0m[49m[38;5;10m+      46[0m:[38;5;10m[49m         currentPage = page || 1;
+[0m[49m[38;5;10m+      47[0m:[38;5;10m[49m         $('#skill-list').html(components.skeleton('card', 6));
+[0m[49m[39m  35,  48[0m:[39m[49m         try {
+[0m[49m[38;5;9m- 36     [0m:[38;5;9m[49m             const data = await api.getSkillList();
+[0m[49m[38;5;9m- 37     [0m:[38;5;9m[49m             if (!data.items.length) { $('#skill-list').html(components.emptyState('暂无 Skill')); return; }
+[0m[49m[38;5;10m+      49[0m:[38;5;10m[49m             const data = await api.getSkillList(currentPage, { category: currentCategory });
+[0m[49m[38;5;10m+      50[0m:[38;5;10m[49m             if (!data.items || !data.items.length) {
+[0m[49m[38;5;10m+      51[0m:[38;5;10m[49m                 const msg = currentCategory ? '该分类下暂无 Skill' : '还没有 Skill，成为第一个贡献者';
+[0m[49m[38;5;10m+      52[0m:[38;5;10m[49m                 $('#skill-list').html(components.emptyState(msg, '创建 Skill', 'showCreateSkill()'));
+[0m[49m[38;5;10m+      53[0m:[38;5;10m[49m                 $('#pagination').html('');
+[0m[49m[38;5;10m+      54[0m:[38;5;10m[49m                 return;
+[0m[49m[38;5;10m+      55[0m:[38;5;10m[49m             }
+[0m[49m[38;5;10m+      56[0m:[38;5;10m[49m             // 动态填充分类 Tab
+[0m[49m[38;5;10m+      57[0m:[38;5;10m[49m             data.items.forEach(s => { if (s.category) knownCategories.add(s.category); });
+[0m[49m[38;5;10m+      58[0m:[38;5;10m[49m             renderCategoryTabs();
+[0m[49m[38;5;10m+      59[0m:[38;5;10m[49m 
+[0m[49m[39m  38,  60[0m:[39m[49m             let html = '';
+[0m[49m[38;5;9m- 39     [0m:[38;5;9m[49m             data.items.forEach((item, i) => {
+[0m[49m[38;5;10m+      61[0m:[38;5;10m[49m             data.items.forEach(item => {
+[0m[49m[39m  40,  62[0m:[39m[49m                 html += `
+[0m[49m[38;5;9m- 41     [0m:[38;5;9m[49m                 <div class="card p-5 card-hover stagger" style="animation-delay:${i*0.05}s">
+[0m[49m[38;5;10m+      63[0m:[38;5;10m[49m                 <div class="card p-5 card-hover cursor-pointer" onclick="showSkillDetail(${item.id})">
+[0m[49m[39m  42,  64[0m:[39m[49m                     <div class="flex items-center justify-between mb-3">
+[0m[49m[39m  43,  65[0m:[39m[49m                         <span class="tag">${escapeHtml(item.category || '通用')}</span>
+[0m[49m[38;5;9m- 44     [0m:[38;5;9m[49m                         <button onclick="api.toggleFavorite(${item.id}).then(loadSkills)" style="color:var(--text-muted)" class="hover:opacity-80"><i class="fa fa-heart-o"></i></button>
+[0m[49m[38;5;10m+      66[0m:[38;5;10m[49m                         <button onclick="event.stopPropagation();toggleFav(${item.id})" style="color:${item.favorited?'var(--danger)':'var(--text-muted)'}" class="hover:opacity-80">
+[0m[49m[38;5;10m+      67[0m:[38;5;10m[49m                             <i class="fa ${item.favorited?'fa-heart':'fa-heart-o'}"></i>
+[0m[49m[38;5;10m+      68[0m:[38;5;10m[49m                         </button>
+[0m[49m[39m  45,  69[0m:[39m[49m                     </div>
+[0m[49m[39m  46,  70[0m:[39m[49m                     <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(item.name)}</h3>
+[0m[49m[38;5;9m- 47     [0m:[38;5;9m[49m                     <p class="text-sm mt-2" style="color:var(--text-secondary)">${truncate(item.description, 80)}</p>
+[0m[49m[38;5;10m+      71[0m:[38;5;10m[49m                     <p class="text-sm mt-2 line-clamp-2" style="color:var(--text-secondary)">${truncate(item.description, 80)}</p>
+[0m[49m[39m  48,  72[0m:[39m[49m                     <div class="flex items-center gap-4 mt-4 text-xs" style="color:var(--text-muted)">
+[0m[49m[39m  49,  73[0m:[39m[49m                         <span><i class="fa fa-heart mr-1"></i>${item.favorite_count || 0}</span>
+[0m[49m[39m  50,  74[0m:[39m[49m                         <span><i class="fa fa-play mr-1"></i>${item.use_count || 0}</span>
+[0m[49m[39m  51,  75[0m:[39m[49m                     </div>
+[0m[49m[39m  52,  76[0m:[39m[49m                 </div>`;
+[0m[49m[39m  53,  77[0m:[39m[49m             });
+[0m[49m[39m  54,  78[0m:[39m[49m             $('#skill-list').html(html);
+[0m[49m[38;5;10m+      79[0m:[38;5;10m[49m             $('#pagination').html(components.pagination(data.total, currentPage, data.page_size || 20, 'loadSkills'));
+[0m[49m[39m  55,  80[0m:[39m[49m         } catch(e) { $('#skill-list').html(components.emptyState('加载失败')); }
+[0m[49m[39m  56,  81[0m:[39m[49m     }
+[0m[49m[39m  57,  82[0m:[39m[49m 
+[0m[49m[38;5;10m+      83[0m:[38;5;10m[49m     function renderCategoryTabs() {
+[0m[49m[38;5;10m+      84[0m:[38;5;10m[49m         const tabs = $('#category-tabs');
+[0m[49m[38;5;10m+      85[0m:[38;5;10m[49m         if (tabs.find('.cat-tab').length - 1 >= knownCategories.size) return;
+[0m[49m[38;5;10m+      86[0m:[38;5;10m[49m         let html = `<span class="cat-tab${!currentCategory?' active':''}" data-cat="" onclick="switchCategory(this)">全部</span>`;
+[0m[49m[38;5;10m+      87[0m:[38;5;10m[49m         knownCategories.forEach(c => {
+[0m[49m[38;5;10m+      88[0m:[38;5;10m[49m             html += `<span class="cat-tab${currentCategory===c?' active':''}" data-cat="${escapeHtml(c)}" onclick="switchCategory(this)">${escapeHtml(c)}</span>`;
+[0m[49m[38;5;10m+      89[0m:[38;5;10m[49m         });
+[0m[49m[38;5;10m+      90[0m:[38;5;10m[49m         tabs.html(html);
+[0m[49m[38;5;10m+      91[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      92[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      93[0m:[38;5;10m[49m     async function toggleFav(id) {
+[0m[49m[38;5;10m+      94[0m:[38;5;10m[49m         await api.toggleFavorite(id);
+[0m[49m[38;5;10m+      95[0m:[38;5;10m[49m         loadSkills(currentPage);
+[0m[49m[38;5;10m+      96[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      97[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      98[0m:[38;5;10m[49m     async function showSkillDetail(id) {
+[0m[49m[38;5;10m+      99[0m:[38;5;10m[49m         const item = await api.getSkill(id);
+[0m[49m[38;5;10m+     100[0m:[38;5;10m[49m         const params = item.params || [];
+[0m[49m[38;5;10m+     101[0m:[38;5;10m[49m         let paramsHtml = '';
+[0m[49m[38;5;10m+     102[0m:[38;5;10m[49m         if (params.length) {
+[0m[49m[38;5;10m+     103[0m:[38;5;10m[49m             paramsHtml = '<div class="mt-4"><h4 class="text-xs font-semibold uppercase mb-2" style="color:var(--text-muted)">参数填写</h4>';
+[0m[49m[38;5;10m+     104[0m:[38;5;10m[49m             params.forEach(p => {
+[0m[49m[38;5;10m+     105[0m:[38;5;10m[49m                 paramsHtml += `<div class="mb-2"><label class="text-xs" style="color:var(--text-muted)">${escapeHtml(p.name)}${p.required?' *':''}</label>
+[0m[49m[38;5;10m+     106[0m:[38;5;10m[49m                     <input class="input-dark w-full mt-1 text-sm skill-param" data-name="${escapeHtml(p.name)}" placeholder="${escapeHtml(p.name)}"></div>`;
+[0m[49m[38;5;10m+     107[0m:[38;5;10m[49m             });
+[0m[49m[38;5;10m+     108[0m:[38;5;10m[49m             paramsHtml += '</div>';
+[0m[49m[38;5;10m+     109[0m:[38;5;10m[49m         }
+[0m[49m[38;5;10m+     110[0m:[38;5;10m[49m         const content = `
+[0m[49m[38;5;10m+     111[0m:[38;5;10m[49m             <p class="text-sm mb-4" style="color:var(--text-secondary)">${escapeHtml(item.description || '')}</p>
+[0m[49m[38;5;10m+     112[0m:[38;5;10m[49m             <div class="mb-3"><span class="text-xs font-semibold uppercase" style="color:var(--text-muted)">提示词模板</span></div>
+[0m[49m[38;5;10m+     113[0m:[38;5;10m[49m             <pre class="p-4 rounded-lg text-sm overflow-x-auto" style="background:var(--bg-deep);color:var(--text-secondary);white-space:pre-wrap">${escapeHtml(item.prompt_template)}</pre>
+[0m[49m[38;5;10m+     114[0m:[38;5;10m[49m             ${paramsHtml}
+[0m[49m[38;5;10m+     115[0m:[38;5;10m[49m             <div id="generated-prompt" class="mt-4" style="display:none">
+[0m[49m[38;5;10m+     116[0m:[38;5;10m[49m                 <div class="text-xs font-semibold uppercase mb-2" style="color:var(--text-muted)">生成结果</div>
+[0m[49m[38;5;10m+     117[0m:[38;5;10m[49m                 <pre id="prompt-output" class="p-4 rounded-lg text-sm" style="background:var(--bg-deep);color:var(--text-primary);white-space:pre-wrap"></pre>
+[0m[49m[38;5;10m+     118[0m:[38;5;10m[49m                 <button onclick="copyPrompt()" class="btn-ghost text-xs mt-2"><i class="fa fa-copy mr-1"></i>复制</button>
+[0m[49m[38;5;10m+     119[0m:[38;5;10m[49m             </div>
+[0m[49m[38;5;10m+     120[0m:[38;5;10m[49m             <div class="flex items-center gap-3 mt-4 text-xs" style="color:var(--text-muted)">
+[0m[49m[38;5;10m+     121[0m:[38;5;10m[49m                 <span><i class="fa fa-heart mr-1"></i>${item.favorite_count || 0} 收藏</span>
+[0m[49m[38;5;10m+     122[0m:[38;5;10m[49m                 <span><i class="fa fa-play mr-1"></i>${item.use_count || 0} 使用</span>
+[0m[49m[38;5;10m+     123[0m:[38;5;10m[49m             </div>`;
+[0m[49m[38;5;10m+     124[0m:[38;5;10m[49m         components.modal(item.name, content, params.length ? async () => {
+[0m[49m[38;5;10m+     125[0m:[38;5;10m[49m             generatePrompt(item);
+[0m[49m[38;5;10m+     126[0m:[38;5;10m[49m             throw new Error('__keep_open__');
+[0m[49m[38;5;10m+     127[0m:[38;5;10m[49m         } : null, { width: 'max-w-2xl', confirmText: params.length ? '生成提示词' : undefined });
+[0m[49m[38;5;10m+     128[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     129[0m:[38;5;10m[49m         // 如果没有参数，直接显示使用按钮
+[0m[49m[38;5;10m+     130[0m:[38;5;10m[49m         if (!params.length) {
+[0m[49m[38;5;10m+     131[0m:[38;5;10m[49m             $('#modal-overlay .btn-cancel').text('关闭');
+[0m[49m[38;5;10m+     132[0m:[38;5;10m[49m             const useBtn = $(`<button class="btn-accent text-sm"><i class="fa fa-play mr-1"></i>使用并复制</button>`);
+[0m[49m[38;5;10m+     133[0m:[38;5;10m[49m             useBtn.click(async () => {
+[0m[49m[38;5;10m+     134[0m:[38;5;10m[49m                 await api.recordUse(id);
+[0m[49m[38;5;10m+     135[0m:[38;5;10m[49m                 await navigator.clipboard.writeText(item.prompt_template).catch(() => {});
+[0m[49m[38;5;10m+     136[0m:[38;5;10m[49m                 components.toast('已复制到剪贴板', 'success');
+[0m[49m[38;5;10m+     137[0m:[38;5;10m[49m             });
+[0m[49m[38;5;10m+     138[0m:[38;5;10m[49m             $('#modal-overlay .flex.justify-end').prepend(useBtn);
+[0m[49m[38;5;10m+     139[0m:[38;5;10m[49m         }
+[0m[49m[38;5;10m+     140[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+     141[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     142[0m:[38;5;10m[49m     function generatePrompt(item) {
+[0m[49m[38;5;10m+     143[0m:[38;5;10m[49m         let result = item.prompt_template;
+[0m[49m[38;5;10m+     144[0m:[38;5;10m[49m         $('.skill-param').each(function() {
+[0m[49m[38;5;10m+     145[0m:[38;5;10m[49m             const name = $(this).data('name');
+[0m[49m[38;5;10m+     146[0m:[38;5;10m[49m             const val = $(this).val();
+[0m[49m[38;5;10m+     147[0m:[38;5;10m[49m             result = result.replace(new RegExp(`\\{\\{${name}\\}\\}`, 'g'), val);
+[0m[49m[38;5;10m+     148[0m:[38;5;10m[49m         });
+[0m[49m[38;5;10m+     149[0m:[38;5;10m[49m         $('#prompt-output').text(result);
+[0m[49m[38;5;10m+     150[0m:[38;5;10m[49m         $('#generated-prompt').show();
+[0m[49m[38;5;10m+     151[0m:[38;5;10m[49m         api.recordUse(item.id);
+[0m[49m[38;5;10m+     152[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+     153[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     154[0m:[38;5;10m[49m     function copyPrompt() {
+[0m[49m[38;5;10m+     155[0m:[38;5;10m[49m         const text = $('#prompt-output').text();
+[0m[49m[38;5;10m+     156[0m:[38;5;10m[49m         navigator.clipboard.writeText(text).then(() => components.toast('已复制到剪贴板', 'success'));
+[0m[49m[38;5;10m+     157[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+     158[0m:[38;5;10m[49m 
+[0m[49m[39m  58, 159[0m:[39m[49m     function showCreateSkill() {
+[0m[49m[38;5;9m- 59     [0m:[38;5;9m[49m         components.modal('创建 Skill', `
+[0m[49m[38;5;9m- 60     [0m:[38;5;9m[49m             <input id="m-name" class="input-dark w-full mb-3" placeholder="Skill 名称">
+[0m[49m[38;5;9m- 61     [0m:[38;5;9m[49m             <input id="m-desc" class="input-dark w-full mb-3" placeholder="描述">
+[0m[49m[38;5;9m- 62     [0m:[38;5;9m[49m             <textarea id="m-prompt" class="input-dark w-full mb-3" rows="4" placeholder="提示词模板"></textarea>
+[0m[49m[38;5;9m- 63     [0m:[38;5;9m[49m             <input id="m-cat" class="input-dark w-full" placeholder="分类">
+[0m[49m[38;5;9m- 64     [0m:[38;5;9m[49m         `, async () => {
+[0m[49m[38;5;9m- 65     [0m:[38;5;9m[49m             await api.createSkill({ name: $('#m-name').val(), description: $('#m-desc').val(), prompt_template: $('#m-prompt').val(), category: $('#m-cat').val() });
+[0m[49m[38;5;10m+     160[0m:[38;5;10m[49m         const form = `
+[0m[49m[38;5;10m+     161[0m:[38;5;10m[49m             <div class="space-y-3">
+[0m[49m[38;5;10m+     162[0m:[38;5;10m[49m                 <div><label class="text-xs font-medium" style="color:var(--text-muted)">名称 <span style="color:var(--danger)">*</span></label>
+[0m[49m[38;5;10m+     163[0m:[38;5;10m[49m                 <input id="m-name" class="input-dark w-full mt-1" placeholder="Skill 名称"></div>
+[0m[49m[38;5;10m+     164[0m:[38;5;10m[49m                 <div><label class="text-xs font-medium" style="color:var(--text-muted)">描述</label>
+[0m[49m[38;5;10m+     165[0m:[38;5;10m[49m                 <input id="m-desc" class="input-dark w-full mt-1" placeholder="简要描述"></div>
+[0m[49m[38;5;10m+     166[0m:[38;5;10m[49m                 <div><label class="text-xs font-medium" style="color:var(--text-muted)">提示词模板 <span style="color:var(--danger)">*</span></label>
+[0m[49m[38;5;10m+     167[0m:[38;5;10m[49m                 <textarea id="m-prompt" class="input-dark w-full mt-1" rows="5" placeholder="支持 {{参数名}} 占位符"></textarea></div>
+[0m[49m[38;5;10m+     168[0m:[38;5;10m[49m                 <div class="grid grid-cols-2 gap-3">
+[0m[49m[38;5;10m+     169[0m:[38;5;10m[49m                     <div><label class="text-xs font-medium" style="color:var(--text-muted)">分类</label>
+[0m[49m[38;5;10m+     170[0m:[38;5;10m[49m                     <input id="m-cat" class="input-dark w-full mt-1" placeholder="分类"></div>
+[0m[49m[38;5;10m+     171[0m:[38;5;10m[49m                     <div class="flex items-end"><label class="flex items-center gap-2 text-sm cursor-pointer">
+[0m[49m[38;5;10m+     172[0m:[38;5;10m[49m                         <input type="checkbox" id="m-public" checked> 公开到市场
+[0m[49m[38;5;10m+     173[0m:[38;5;10m[49m                     </label></div>
+[0m[49m[38;5;10m+     174[0m:[38;5;10m[49m                 </div>
+[0m[49m[38;5;10m+     175[0m:[38;5;10m[49m                 <div id="m-error" class="text-xs" style="color:var(--danger);display:none"></div>
+[0m[49m[38;5;10m+     176[0m:[38;5;10m[49m             </div>`;
+[0m[49m[38;5;10m+     177[0m:[38;5;10m[49m         components.modal('创建 Skill', form, async () => {
+[0m[49m[38;5;10m+     178[0m:[38;5;10m[49m             const name = $('#m-name').val().trim();
+[0m[49m[38;5;10m+     179[0m:[38;5;10m[49m             const prompt = $('#m-prompt').val().trim();
+[0m[49m[38;5;10m+     180[0m:[38;5;10m[49m             if (!name) { $('#m-error').text('请输入 Skill 名称').show(); throw new Error('名称不能为空'); }
+[0m[49m[38;5;10m+     181[0m:[38;5;10m[49m             if (!prompt) { $('#m-error').text('请输入提示词模板').show(); throw new Error('模板不能为空'); }
+[0m[49m[38;5;10m+     182[0m:[38;5;10m[49m             await api.createSkill({
+[0m[49m[38;5;10m+     183[0m:[38;5;10m[49m                 name, description: $('#m-desc').val().trim(),
+[0m[49m[38;5;10m+     184[0m:[38;5;10m[49m                 prompt_template: prompt, category: $('#m-cat').val().trim(),
+[0m[49m[38;5;10m+     185[0m:[38;5;10m[49m                 is_public: $('#m-public').is(':checked')
+[0m[49m[38;5;10m+     186[0m:[38;5;10m[49m             });
+[0m[49m[39m  66, 187[0m:[39m[49m             components.toast('创建成功', 'success');
+[0m[49m[38;5;9m- 67     [0m:[38;5;9m[49m             loadSkills();
+[0m[49m[38;5;9m- 68     [0m:[38;5;9m[49m         });
+[0m[49m[38;5;10m+     188[0m:[38;5;10m[49m             loadSkills(currentPage);
+[0m[49m[38;5;10m+     189[0m:[38;5;10m[49m         }, { width: 'max-w-2xl', confirmText: '保存' });
+[0m[49m[39m  69, 190[0m:[39m[49m     }
+[0m[49m[39m  70, 191[0m:[39m[49m 
+[0m[49m[39m  71, 192[0m:[39m[49m     $(function() { loadSkills(); });
+[0m[49m[39m  72, 193[0m:[39m[49m     </script>
+[0m[49m[39m  73, 194[0m:[39m[49m </body>
+[0m[49m[39m  74, 195[0m:[39m[49m </html>
+[0m[K
+Replacing: [38;5;141mknowledge/static/skills.html[0m
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[38;5;141m> [0m[38;5;252m[1m### 7. 更新 metadata.html — 左侧搜索框、索引 Badge、字段名对齐 API[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/static/metadata.html[0m[38;5;244m (using tool: write)[0m
+Purpose: 重写 metadata.html：左侧搜索框实时过滤、索引 Badge（PK/IDX/UNI）、字段名对齐 API、可空/默认值列、选中高亮
+
+[49m[39m   1,   1[0m:[39m[49m <!DOCTYPE html>
+[0m[49m[39m   2,   2[0m:[39m[49m <html lang="zh-CN">
+[0m[49m[39m   3,   3[0m:[39m[49m <head>
+[0m[49m[39m   4,   4[0m:[39m[49m     <meta charset="UTF-8">
+[0m[49m[39m   5,   5[0m:[39m[49m     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+[0m[49m[39m   6,   6[0m:[39m[49m     <title>元数据 - Knowledge</title>
+[0m[49m[39m   7,   7[0m:[39m[49m     <script src="https://cdn.tailwindcss.com"></script>
+[0m[49m[39m   8,   8[0m:[39m[49m     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+[0m[49m[39m   9,   9[0m:[39m[49m     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+[0m[49m[39m  10,  10[0m:[39m[49m     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+[0m[49m[39m  11,  11[0m:[39m[49m     <link rel="stylesheet" href="/css/custom.css">
+[0m[49m[39m  12,  12[0m:[39m[49m </head>
+[0m[49m[39m  13,  13[0m:[39m[49m <body>
+[0m[49m[38;5;9m- 14     [0m:[38;5;9m[49m     <main class="ml-56 p-10 relative">
+[0m[49m[38;5;10m+      14[0m:[38;5;10m[49m     <main class="ml-60 p-10 relative">
+[0m[49m[39m  15,  15[0m:[39m[49m         <div class="flex items-center justify-between mb-8">
+[0m[49m[39m  16,  16[0m:[39m[49m             <div class="title-enter">
+[0m[49m[39m  17,  17[0m:[39m[49m                 <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">数据库元数据</h2>
+[0m[49m[39m  18,  18[0m:[39m[49m                 <p class="mt-2" style="color:var(--text-muted)">浏览和管理数据库表结构</p>
+[0m[49m[39m  19,  19[0m:[39m[49m             </div>
+[0m[49m[38;5;9m- 20     [0m:[38;5;9m[49m             <button onclick="showImport()" class="btn-accent">
+[0m[49m[38;5;9m- 21     [0m:[38;5;9m[49m                 <i class="fa fa-download mr-1"></i>导入元数据
+[0m[49m[38;5;9m- 22     [0m:[38;5;9m[49m             </button>
+[0m[49m[38;5;10m+      20[0m:[38;5;10m[49m             <button id="import-btn" onclick="showImport()" class="btn-accent"><i class="fa fa-download mr-1"></i>导入元数据</button>
+[0m[49m[39m  23,  21[0m:[39m[49m         </div>
+[0m[49m[39m  24,  22[0m:[39m[49m 
+[0m[49m[38;5;9m- 25     [0m:[38;5;9m[49m         <div class="grid grid-cols-8 gap-5">
+[0m[49m[38;5;9m- 26     [0m:[38;5;9m[49m             <div id="table-list" class="col-span-3 card p-5 max-h-[70vh] overflow-y-auto stagger"></div>
+[0m[49m[38;5;9m- 27     [0m:[38;5;9m[49m             <div id="table-detail" class="col-span-5 card p-5 stagger" style="animation-delay:0.1s">
+[0m[49m[38;5;10m+      23[0m:[38;5;10m[49m         <div class="flex gap-5" style="min-height:60vh">
+[0m[49m[38;5;10m+      24[0m:[38;5;10m[49m             <!-- 左侧表列表 -->
+[0m[49m[38;5;10m+      25[0m:[38;5;10m[49m             <div class="w-72 flex-shrink-0">
+[0m[49m[38;5;10m+      26[0m:[38;5;10m[49m                 <div class="card p-4 sticky top-4">
+[0m[49m[38;5;10m+      27[0m:[38;5;10m[49m                     <input id="table-search" class="input-dark w-full text-sm mb-3" placeholder="搜索表名..." oninput="filterTables()">
+[0m[49m[38;5;10m+      28[0m:[38;5;10m[49m                     <div id="table-list" class="space-y-1 max-h-[60vh] overflow-y-auto"></div>
+[0m[49m[38;5;10m+      29[0m:[38;5;10m[49m                 </div>
+[0m[49m[38;5;10m+      30[0m:[38;5;10m[49m             </div>
+[0m[49m[38;5;10m+      31[0m:[38;5;10m[49m             <!-- 右侧字段详情 -->
+[0m[49m[38;5;10m+      32[0m:[38;5;10m[49m             <div id="table-detail" class="flex-1 card p-6">
+[0m[49m[39m  28,  33[0m:[39m[49m                 <div class="empty-state text-center py-16"><i class="fa fa-hand-pointer-o text-3xl mb-3 block"></i><p>选择左侧表查看详情</p></div>
+[0m[49m[39m  29,  34[0m:[39m[49m             </div>
+[0m[49m[39m  30,  35[0m:[39m[49m         </div>
+[0m[49m[39m  31,  36[0m:[39m[49m     </main>
+[0m[49m[39m  32,  37[0m:[39m[49m 
+[0m[49m[39m  33,  38[0m:[39m[49m     <script src="/js/api.js"></script>
+[0m[49m[39m  34,  39[0m:[39m[49m     <script src="/js/components.js"></script>
+[0m[49m[39m  35,  40[0m:[39m[49m     <script src="/js/app.js"></script>
+[0m[49m[39m  36,  41[0m:[39m[49m     <script>
+[0m[49m[38;5;10m+      42[0m:[38;5;10m[49m     let allTables = [];
+[0m[49m[38;5;10m+      43[0m:[38;5;10m[49m     let selectedTable = null;
+[0m[49m[38;5;10m+      44[0m:[38;5;10m[49m 
+[0m[49m[39m  37,  45[0m:[39m[49m     async function loadTables() {
+[0m[49m[38;5;10m+      46[0m:[38;5;10m[49m         $('#table-list').html(components.skeleton('table', 8));
+[0m[49m[39m  38,  47[0m:[39m[49m         try {
+[0m[49m[39m  39,  48[0m:[39m[49m             const data = await api.getTableList();
+[0m[49m[38;5;9m- 40     [0m:[38;5;9m[49m             if (!data.items.length) { $('#table-list').html(components.emptyState('暂无表数据')); return; }
+[0m[49m[38;5;9m- 41     [0m:[38;5;9m[49m             let html = '<div class="space-y-1">';
+[0m[49m[38;5;9m- 42     [0m:[38;5;9m[49m             data.items.forEach(t => {
+[0m[49m[38;5;9m- 43     [0m:[38;5;9m[49m                 html += `<div onclick="showTable('${escapeHtml(t.table_name)}')" class="p-3 rounded-lg cursor-pointer transition" style="color:var(--text-secondary)" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+[0m[49m[38;5;9m- 44     [0m:[38;5;9m[49m                     <div class="font-mono text-sm font-semibold" style="color:var(--text-primary)">${escapeHtml(t.table_name)}</div>
+[0m[49m[38;5;9m- 45     [0m:[38;5;9m[49m                     <div class="text-xs mt-1" style="color:var(--text-muted)">${escapeHtml(t.table_comment || '')}</div>
+[0m[49m[38;5;9m- 46     [0m:[38;5;9m[49m                 </div>`;
+[0m[49m[38;5;9m- 47     [0m:[38;5;9m[49m             });
+[0m[49m[38;5;9m- 48     [0m:[38;5;9m[49m             html += '</div>';
+[0m[49m[38;5;9m- 49     [0m:[38;5;9m[49m             $('#table-list').html(html);
+[0m[49m[38;5;10m+      49[0m:[38;5;10m[49m             allTables = data.tables || data.items || [];
+[0m[49m[38;5;10m+      50[0m:[38;5;10m[49m             if (!allTables.length) {
+[0m[49m[38;5;10m+      51[0m:[38;5;10m[49m                 $('#table-list').html(components.emptyState('还没有导入数据库元数据', '导入元数据', 'showImport()'));
+[0m[49m[38;5;10m+      52[0m:[38;5;10m[49m                 return;
+[0m[49m[38;5;10m+      53[0m:[38;5;10m[49m             }
+[0m[49m[38;5;10m+      54[0m:[38;5;10m[49m             renderTableList(allTables);
+[0m[49m[39m  50,  55[0m:[39m[49m         } catch(e) { $('#table-list').html(components.emptyState('加载失败')); }
+[0m[49m[39m  51,  56[0m:[39m[49m     }
+[0m[49m[39m  52,  57[0m:[39m[49m 
+[0m[49m[38;5;10m+      58[0m:[38;5;10m[49m     function renderTableList(tables) {
+[0m[49m[38;5;10m+      59[0m:[38;5;10m[49m         let html = '';
+[0m[49m[38;5;10m+      60[0m:[38;5;10m[49m         tables.forEach(t => {
+[0m[49m[38;5;10m+      61[0m:[38;5;10m[49m             const active = selectedTable === t.table_name;
+[0m[49m[38;5;10m+      62[0m:[38;5;10m[49m             html += `<div onclick="showTable('${escapeHtml(t.table_name)}')" class="p-3 rounded-lg cursor-pointer transition text-sm" style="${active ? 'background:var(--accent-dim);border-left:3px solid var(--accent)' : 'border-left:3px solid transparent'}">
+[0m[49m[38;5;10m+      63[0m:[38;5;10m[49m                 <div class="font-mono font-semibold" style="color:var(--text-primary)">${escapeHtml(t.table_name)}</div>
+[0m[49m[38;5;10m+      64[0m:[38;5;10m[49m                 <div class="flex items-center gap-2 mt-1 text-xs" style="color:var(--text-muted)">
+[0m[49m[38;5;10m+      65[0m:[38;5;10m[49m                     <span>${t.column_count || '-'} 字段</span>
+[0m[49m[38;5;10m+      66[0m:[38;5;10m[49m                     ${t.table_comment ? '<span>· ' + escapeHtml(t.table_comment) + '</span>' : ''}
+[0m[49m[38;5;10m+      67[0m:[38;5;10m[49m                 </div>
+[0m[49m[38;5;10m+      68[0m:[38;5;10m[49m             </div>`;
+[0m[49m[38;5;10m+      69[0m:[38;5;10m[49m         });
+[0m[49m[38;5;10m+      70[0m:[38;5;10m[49m         $('#table-list').html(html);
+[0m[49m[38;5;10m+      71[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      72[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      73[0m:[38;5;10m[49m     function filterTables() {
+[0m[49m[38;5;10m+      74[0m:[38;5;10m[49m         const q = $('#table-search').val().trim().toLowerCase();
+[0m[49m[38;5;10m+      75[0m:[38;5;10m[49m         const filtered = q ? allTables.filter(t => t.table_name.toLowerCase().includes(q)) : allTables;
+[0m[49m[38;5;10m+      76[0m:[38;5;10m[49m         renderTableList(filtered);
+[0m[49m[38;5;10m+      77[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      78[0m:[38;5;10m[49m 
+[0m[49m[39m  53,  79[0m:[39m[49m     async function showTable(name) {
+[0m[49m[38;5;9m- 54     [0m:[38;5;9m[49m         const data = await api.getTable(name);
+[0m[49m[38;5;9m- 55     [0m:[38;5;9m[49m         let html = `<h3 class="font-display font-semibold text-lg mb-1" style="color:var(--text-primary)">${escapeHtml(data.table_name)}</h3>
+[0m[49m[38;5;9m- 56     [0m:[38;5;9m[49m             <p class="text-sm mb-5" style="color:var(--text-muted)">${escapeHtml(data.table_comment || '')}</p>
+[0m[49m[38;5;9m- 57     [0m:[38;5;9m[49m             <table class="table-dark w-full text-sm"><thead><tr>
+[0m[49m[38;5;9m- 58     [0m:[38;5;9m[49m                 <th class="text-left">字段名</th><th class="text-left">类型</th><th class="text-left">说明</th></tr></thead><tbody>`;
+[0m[49m[38;5;9m- 59     [0m:[38;5;9m[49m         data.columns.forEach(c => {
+[0m[49m[38;5;9m- 60     [0m:[38;5;9m[49m             html += `<tr><td class="font-mono">${escapeHtml(c.name)}</td><td>${escapeHtml(c.type)}</td><td>${escapeHtml(c.comment || '')}</td></tr>`;
+[0m[49m[38;5;9m- 61     [0m:[38;5;9m[49m         });
+[0m[49m[38;5;9m- 62     [0m:[38;5;9m[49m         html += '</tbody></table>';
+[0m[49m[38;5;9m- 63     [0m:[38;5;9m[49m         $('#table-detail').html(html);
+[0m[49m[38;5;10m+      80[0m:[38;5;10m[49m         selectedTable = name;
+[0m[49m[38;5;10m+      81[0m:[38;5;10m[49m         renderTableList(allTables.filter(t => {
+[0m[49m[38;5;10m+      82[0m:[38;5;10m[49m             const q = $('#table-search').val().trim().toLowerCase();
+[0m[49m[38;5;10m+      83[0m:[38;5;10m[49m             return !q || t.table_name.toLowerCase().includes(q);
+[0m[49m[38;5;10m+      84[0m:[38;5;10m[49m         }));
+[0m[49m[38;5;10m+      85[0m:[38;5;10m[49m         $('#table-detail').html(components.loading());
+[0m[49m[38;5;10m+      86[0m:[38;5;10m[49m         try {
+[0m[49m[38;5;10m+      87[0m:[38;5;10m[49m             const data = await api.getTable(name);
+[0m[49m[38;5;10m+      88[0m:[38;5;10m[49m             const columns = data.columns || [];
+[0m[49m[38;5;10m+      89[0m:[38;5;10m[49m             let rows = '';
+[0m[49m[38;5;10m+      90[0m:[38;5;10m[49m             columns.forEach(c => {
+[0m[49m[38;5;10m+      91[0m:[38;5;10m[49m                 const colName = c.column_name || c.name;
+[0m[49m[38;5;10m+      92[0m:[38;5;10m[49m                 const colType = c.column_type || c.type;
+[0m[49m[38;5;10m+      93[0m:[38;5;10m[49m                 const colComment = c.column_comment || c.comment || '';
+[0m[49m[38;5;10m+      94[0m:[38;5;10m[49m                 const nullable = c.is_nullable != null ? (c.is_nullable ? '是' : '否') : '-';
+[0m[49m[38;5;10m+      95[0m:[38;5;10m[49m                 const defVal = c.default_value != null ? escapeHtml(String(c.default_value)) : '-';
+[0m[49m[38;5;10m+      96[0m:[38;5;10m[49m                 // 索引 Badge
+[0m[49m[38;5;10m+      97[0m:[38;5;10m[49m                 let badge = '';
+[0m[49m[38;5;10m+      98[0m:[38;5;10m[49m                 if (c.column_key === 'PRI' || c.index === 'PK') badge = '<span class="badge-pk">PK</span>';
+[0m[49m[38;5;10m+      99[0m:[38;5;10m[49m                 else if (c.column_key === 'UNI' || c.index === 'UNI') badge = '<span class="badge-uni">UNI</span>';
+[0m[49m[38;5;10m+     100[0m:[38;5;10m[49m                 else if (c.column_key === 'MUL' || c.index === 'IDX') badge = '<span class="badge-idx">IDX</span>';
+[0m[49m[38;5;10m+     101[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     102[0m:[38;5;10m[49m                 rows += `<tr>
+[0m[49m[38;5;10m+     103[0m:[38;5;10m[49m                     <td class="font-mono text-sm">${escapeHtml(colName)}</td>
+[0m[49m[38;5;10m+     104[0m:[38;5;10m[49m                     <td class="text-sm">${escapeHtml(colType)}</td>
+[0m[49m[38;5;10m+     105[0m:[38;5;10m[49m                     <td class="text-sm">${nullable}</td>
+[0m[49m[38;5;10m+     106[0m:[38;5;10m[49m                     <td class="text-sm font-mono">${defVal}</td>
+[0m[49m[38;5;10m+     107[0m:[38;5;10m[49m                     <td class="text-sm">${escapeHtml(colComment)}</td>
+[0m[49m[38;5;10m+     108[0m:[38;5;10m[49m                     <td>${badge}</td>
+[0m[49m[38;5;10m+     109[0m:[38;5;10m[49m                 </tr>`;
+[0m[49m[38;5;10m+     110[0m:[38;5;10m[49m             });
+[0m[49m[38;5;10m+     111[0m:[38;5;10m[49m             $('#table-detail').html(`
+[0m[49m[38;5;10m+     112[0m:[38;5;10m[49m                 <h3 class="font-display font-semibold text-lg mb-1" style="color:var(--text-primary)">${escapeHtml(data.table_name)}</h3>
+[0m[49m[38;5;10m+     113[0m:[38;5;10m[49m                 <p class="text-sm mb-5" style="color:var(--text-muted)">${escapeHtml(data.table_comment || '无注释')} · ${columns.length} 个字段</p>
+[0m[49m[38;5;10m+     114[0m:[38;5;10m[49m                 <div class="overflow-x-auto">
+[0m[49m[38;5;10m+     115[0m:[38;5;10m[49m                     <table class="table-dark w-full text-sm">
+[0m[49m[38;5;10m+     116[0m:[38;5;10m[49m                         <thead><tr>
+[0m[49m[38;5;10m+     117[0m:[38;5;10m[49m                             <th class="text-left">字段名</th><th class="text-left">类型</th>
+[0m[49m[38;5;10m+     118[0m:[38;5;10m[49m                             <th class="text-left">可空</th><th class="text-left">默认值</th>
+[0m[49m[38;5;10m+     119[0m:[38;5;10m[49m                             <th class="text-left">注释</th><th class="text-left">索引</th>
+[0m[49m[38;5;10m+     120[0m:[38;5;10m[49m                         </tr></thead>
+[0m[49m[38;5;10m+     121[0m:[38;5;10m[49m                         <tbody>${rows}</tbody>
+[0m[49m[38;5;10m+     122[0m:[38;5;10m[49m                     </table>
+[0m[49m[38;5;10m+     123[0m:[38;5;10m[49m                 </div>`);
+[0m[49m[38;5;10m+     124[0m:[38;5;10m[49m         } catch(e) { $('#table-detail').html(components.emptyState('加载失败')); }
+[0m[49m[39m  64, 125[0m:[39m[49m     }
+[0m[49m[39m  65, 126[0m:[39m[49m 
+[0m[49m[39m  66, 127[0m:[39m[49m     function showImport() {
+[0m[49m[38;5;9m- 67     [0m:[38;5;9m[49m         components.modal('导入元数据', `<input id="m-dbname" class="input-dark w-full" placeholder="数据库名称" value="knowledge">`, async () => {
+[0m[49m[38;5;9m- 68     [0m:[38;5;9m[49m             const res = await api.importMetadata($('#m-dbname').val());
+[0m[49m[38;5;9m- 69     [0m:[38;5;9m[49m             components.toast('导入成功：' + res.imported + ' 条', 'success');
+[0m[49m[38;5;10m+     128[0m:[38;5;10m[49m         components.confirm('将从数据库 knowledge 导入元数据，已有数据将增量更新。确认导入？', async () => {
+[0m[49m[38;5;10m+     129[0m:[38;5;10m[49m             const res = await api.importMetadata('knowledge');
+[0m[49m[38;5;10m+     130[0m:[38;5;10m[49m             const msg = res.imported_tables != null
+[0m[49m[38;5;10m+     131[0m:[38;5;10m[49m                 ? `导入完成，共 ${res.imported_tables} 张表，${res.imported_columns} 个字段`
+[0m[49m[38;5;10m+     132[0m:[38;5;10m[49m                 : `导入成功`;
+[0m[49m[38;5;10m+     133[0m:[38;5;10m[49m             components.toast(msg, 'success');
+[0m[49m[39m  70, 134[0m:[39m[49m             loadTables();
+[0m[49m[39m  71, 135[0m:[39m[49m         });
+[0m[49m[39m  72, 136[0m:[39m[49m     }
+[0m[49m[39m  73, 137[0m:[39m[49m 
+[0m[49m[39m  74, 138[0m:[39m[49m     $(function() { loadTables(); });
+[0m[49m[39m  75, 139[0m:[39m[49m     </script>
+[0m[49m[39m  76, 140[0m:[39m[49m </body>
+[0m[49m[39m  77, 141[0m:[39m[49m </html>
+[0m[K
+Replacing: [38;5;141mknowledge/static/metadata.html[0m
+[38;5;244m - Completed in 0.1s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m[38;5;252m[1m### 8. 更新 teams.html — 团队详情 Modal（成员管理）[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/static/teams.html[0m[38;5;244m (using tool: write)[0m
+Purpose: 重写 teams.html：团队详情 Modal（成员列表+角色下拉即时保存+添加/移除成员）、3列卡片、空状态CTA
+
+[49m[39m   1,   1[0m:[39m[49m <!DOCTYPE html>
+[0m[49m[39m   2,   2[0m:[39m[49m <html lang="zh-CN">
+[0m[49m[39m   3,   3[0m:[39m[49m <head>
+[0m[49m[39m   4,   4[0m:[39m[49m     <meta charset="UTF-8">
+[0m[49m[39m   5,   5[0m:[39m[49m     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+[0m[49m[39m   6,   6[0m:[39m[49m     <title>团队空间 - Knowledge</title>
+[0m[49m[39m   7,   7[0m:[39m[49m     <script src="https://cdn.tailwindcss.com"></script>
+[0m[49m[39m   8,   8[0m:[39m[49m     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+[0m[49m[39m   9,   9[0m:[39m[49m     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+[0m[49m[39m  10,  10[0m:[39m[49m     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+[0m[49m[39m  11,  11[0m:[39m[49m     <link rel="stylesheet" href="/css/custom.css">
+[0m[49m[39m  12,  12[0m:[39m[49m </head>
+[0m[49m[39m  13,  13[0m:[39m[49m <body>
+[0m[49m[38;5;9m- 14     [0m:[38;5;9m[49m     <main class="ml-56 p-10 relative">
+[0m[49m[38;5;9m- 15     [0m:[38;5;9m[49m         <div class="geo-deco w-12 h-12 top-8 right-20 opacity-15" style="animation-delay:1.5s;border-radius:50%"></div>
+[0m[49m[38;5;9m- 16     [0m:[38;5;9m[49m 
+[0m[49m[38;5;10m+      14[0m:[38;5;10m[49m     <main class="ml-60 p-10 relative">
+[0m[49m[39m  17,  15[0m:[39m[49m         <div class="flex items-center justify-between mb-8">
+[0m[49m[39m  18,  16[0m:[39m[49m             <div class="title-enter">
+[0m[49m[39m  19,  17[0m:[39m[49m                 <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">团队空间</h2>
+[0m[49m[39m  20,  18[0m:[39m[49m                 <p class="mt-2" style="color:var(--text-muted)">管理团队和成员权限</p>
+[0m[49m[39m  21,  19[0m:[39m[49m             </div>
+[0m[49m[38;5;9m- 22     [0m:[38;5;9m[49m             <button onclick="showCreateTeam()" class="btn-accent">
+[0m[49m[38;5;9m- 23     [0m:[38;5;9m[49m                 <i class="fa fa-plus mr-1"></i>创建团队
+[0m[49m[38;5;9m- 24     [0m:[38;5;9m[49m             </button>
+[0m[49m[38;5;10m+      20[0m:[38;5;10m[49m             <button onclick="showCreateTeam()" class="btn-accent"><i class="fa fa-plus mr-1"></i>创建团队</button>
+[0m[49m[39m  25,  21[0m:[39m[49m         </div>
+[0m[49m[38;5;9m- 26     [0m:[38;5;9m[49m         <div id="team-list" class="grid grid-cols-4 gap-5"></div>
+[0m[49m[38;5;10m+      22[0m:[38;5;10m[49m         <div id="team-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+[0m[49m[39m  27,  23[0m:[39m[49m     </main>
+[0m[49m[39m  28,  24[0m:[39m[49m 
+[0m[49m[39m  29,  25[0m:[39m[49m     <script src="/js/api.js"></script>
+[0m[49m[39m  30,  26[0m:[39m[49m     <script src="/js/components.js"></script>
+[0m[49m[39m  31,  27[0m:[39m[49m     <script src="/js/app.js"></script>
+[0m[49m[39m  32,  28[0m:[39m[49m     <script>
+[0m[49m[39m  33,  29[0m:[39m[49m     async function loadTeams() {
+[0m[49m[38;5;10m+      30[0m:[38;5;10m[49m         $('#team-list').html(components.skeleton('card', 3));
+[0m[49m[39m  34,  31[0m:[39m[49m         try {
+[0m[49m[39m  35,  32[0m:[39m[49m             const data = await api.getTeamList();
+[0m[49m[38;5;9m- 36     [0m:[38;5;9m[49m             if (!data.items.length) { $('#team-list').html(components.emptyState('暂无团队')); return; }
+[0m[49m[38;5;10m+      33[0m:[38;5;10m[49m             const items = data.items || [];
+[0m[49m[38;5;10m+      34[0m:[38;5;10m[49m             if (!items.length) {
+[0m[49m[38;5;10m+      35[0m:[38;5;10m[49m                 $('#team-list').html(components.emptyState('还没有团队', '创建团队', 'showCreateTeam()'));
+[0m[49m[38;5;10m+      36[0m:[38;5;10m[49m                 return;
+[0m[49m[38;5;10m+      37[0m:[38;5;10m[49m             }
+[0m[49m[39m  37,  38[0m:[39m[49m             let html = '';
+[0m[49m[38;5;9m- 38     [0m:[38;5;9m[49m             data.items.forEach((t, i) => {
+[0m[49m[38;5;10m+      39[0m:[38;5;10m[49m             items.forEach(t => {
+[0m[49m[39m  39,  40[0m:[39m[49m                 html += `
+[0m[49m[38;5;9m- 40     [0m:[38;5;9m[49m                 <div class="card p-5 card-hover stagger" style="animation-delay:${i*0.05}s">
+[0m[49m[38;5;10m+      41[0m:[38;5;10m[49m                 <div class="card p-5 card-hover cursor-pointer" onclick="showTeamDetail(${t.id})">
+[0m[49m[39m  41,  42[0m:[39m[49m                     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style="background:var(--accent-dim)">
+[0m[49m[39m  42,  43[0m:[39m[49m                         <i class="fa fa-users" style="color:var(--accent)"></i>
+[0m[49m[39m  43,  44[0m:[39m[49m                     </div>
+[0m[49m[39m  44,  45[0m:[39m[49m                     <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(t.name)}</h3>
+[0m[49m[39m  45,  46[0m:[39m[49m                     <p class="text-sm mt-2" style="color:var(--text-secondary)">${escapeHtml(t.description || '暂无描述')}</p>
+[0m[49m[38;5;9m- 46     [0m:[38;5;9m[49m                     <div class="text-xs mt-4" style="color:var(--text-muted)">创建者: ${escapeHtml(t.created_by || '-')}</div>
+[0m[49m[38;5;10m+      47[0m:[38;5;10m[49m                     <div class="text-xs mt-4" style="color:var(--text-muted)">
+[0m[49m[38;5;10m+      48[0m:[38;5;10m[49m                         创建者: ${escapeHtml(t.created_by || '-')} · ${formatDate(t.created_at)}
+[0m[49m[38;5;10m+      49[0m:[38;5;10m[49m                     </div>
+[0m[49m[39m  47,  50[0m:[39m[49m                 </div>`;
+[0m[49m[39m  48,  51[0m:[39m[49m             });
+[0m[49m[39m  49,  52[0m:[39m[49m             $('#team-list').html(html);
+[0m[49m[39m  50,  53[0m:[39m[49m         } catch(e) { $('#team-list').html(components.emptyState('加载失败')); }
+[0m[49m[39m  51,  54[0m:[39m[49m     }
+[0m[49m[39m  52,  55[0m:[39m[49m 
+[0m[49m[38;5;10m+      56[0m:[38;5;10m[49m     async function showTeamDetail(id) {
+[0m[49m[38;5;10m+      57[0m:[38;5;10m[49m         let members = [];
+[0m[49m[38;5;10m+      58[0m:[38;5;10m[49m         try { const data = await api.getTeamMembers(id); members = data.items || []; } catch(e) {}
+[0m[49m[38;5;10m+      59[0m:[38;5;10m[49m         let memberRows = '';
+[0m[49m[38;5;10m+      60[0m:[38;5;10m[49m         members.forEach(m => {
+[0m[49m[38;5;10m+      61[0m:[38;5;10m[49m             memberRows += `<tr>
+[0m[49m[38;5;10m+      62[0m:[38;5;10m[49m                 <td class="text-sm">${escapeHtml(m.user_name)}</td>
+[0m[49m[38;5;10m+      63[0m:[38;5;10m[49m                 <td><select class="input-dark text-xs py-1" onchange="changeRole(${id},'${escapeHtml(m.user_name)}',this.value)" style="min-width:80px">
+[0m[49m[38;5;10m+      64[0m:[38;5;10m[49m                     <option value="admin"${m.role==='admin'?' selected':''}>管理员</option>
+[0m[49m[38;5;10m+      65[0m:[38;5;10m[49m                     <option value="editor"${m.role==='editor'?' selected':''}>编辑者</option>
+[0m[49m[38;5;10m+      66[0m:[38;5;10m[49m                     <option value="viewer"${m.role==='viewer'?' selected':''}>查看者</option>
+[0m[49m[38;5;10m+      67[0m:[38;5;10m[49m                 </select></td>
+[0m[49m[38;5;10m+      68[0m:[38;5;10m[49m                 <td><button onclick="removeMember(${id},'${escapeHtml(m.user_name)}')" class="text-xs" style="color:var(--danger);cursor:pointer"><i class="fa fa-trash"></i></button></td>
+[0m[49m[38;5;10m+      69[0m:[38;5;10m[49m             </tr>`;
+[0m[49m[38;5;10m+      70[0m:[38;5;10m[49m         });
+[0m[49m[38;5;10m+      71[0m:[38;5;10m[49m         const content = `
+[0m[49m[38;5;10m+      72[0m:[38;5;10m[49m             <div class="mb-4">
+[0m[49m[38;5;10m+      73[0m:[38;5;10m[49m                 <h4 class="text-sm font-semibold mb-3" style="color:var(--text-primary)">成员管理</h4>
+[0m[49m[38;5;10m+      74[0m:[38;5;10m[49m                 <div class="flex gap-2 mb-4">
+[0m[49m[38;5;10m+      75[0m:[38;5;10m[49m                     <input id="add-member-name" class="input-dark text-sm flex-1" placeholder="用户名">
+[0m[49m[38;5;10m+      76[0m:[38;5;10m[49m                     <select id="add-member-role" class="input-dark text-sm" style="min-width:80px">
+[0m[49m[38;5;10m+      77[0m:[38;5;10m[49m                         <option value="viewer">查看者</option>
+[0m[49m[38;5;10m+      78[0m:[38;5;10m[49m                         <option value="editor">编辑者</option>
+[0m[49m[38;5;10m+      79[0m:[38;5;10m[49m                         <option value="admin">管理员</option>
+[0m[49m[38;5;10m+      80[0m:[38;5;10m[49m                     </select>
+[0m[49m[38;5;10m+      81[0m:[38;5;10m[49m                     <button onclick="addMember(${id})" class="btn-accent text-sm">添加</button>
+[0m[49m[38;5;10m+      82[0m:[38;5;10m[49m                 </div>
+[0m[49m[38;5;10m+      83[0m:[38;5;10m[49m                 ${members.length ? `<table class="table-dark w-full text-sm"><thead><tr><th class="text-left">用户</th><th class="text-left">角色</th><th></th></tr></thead><tbody>${memberRows}</tbody></table>` : '<p class="text-sm" style="color:var(--text-muted)">暂无成员</p>'}
+[0m[49m[38;5;10m+      84[0m:[38;5;10m[49m             </div>`;
+[0m[49m[38;5;10m+      85[0m:[38;5;10m[49m         components.modal('团队详情', content, null, { width: 'max-w-2xl' });
+[0m[49m[38;5;10m+      86[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      87[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      88[0m:[38;5;10m[49m     async function addMember(teamId) {
+[0m[49m[38;5;10m+      89[0m:[38;5;10m[49m         const name = $('#add-member-name').val().trim();
+[0m[49m[38;5;10m+      90[0m:[38;5;10m[49m         if (!name) { components.toast('请输入用户名', 'warning'); return; }
+[0m[49m[38;5;10m+      91[0m:[38;5;10m[49m         try {
+[0m[49m[38;5;10m+      92[0m:[38;5;10m[49m             await api.addTeamMember(teamId, { user_name: name, role: $('#add-member-role').val() });
+[0m[49m[38;5;10m+      93[0m:[38;5;10m[49m             components.toast('添加成功', 'success');
+[0m[49m[38;5;10m+      94[0m:[38;5;10m[49m             $('#modal-overlay').remove();
+[0m[49m[38;5;10m+      95[0m:[38;5;10m[49m             showTeamDetail(teamId);
+[0m[49m[38;5;10m+      96[0m:[38;5;10m[49m         } catch(e) {}
+[0m[49m[38;5;10m+      97[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      98[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+      99[0m:[38;5;10m[49m     async function changeRole(teamId, uid, role) {
+[0m[49m[38;5;10m+     100[0m:[38;5;10m[49m         try {
+[0m[49m[38;5;10m+     101[0m:[38;5;10m[49m             await api.updateMemberRole(teamId, uid, role);
+[0m[49m[38;5;10m+     102[0m:[38;5;10m[49m             components.toast('角色已更新', 'success');
+[0m[49m[38;5;10m+     103[0m:[38;5;10m[49m         } catch(e) {}
+[0m[49m[38;5;10m+     104[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+     105[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     106[0m:[38;5;10m[49m     function removeMember(teamId, uid) {
+[0m[49m[38;5;10m+     107[0m:[38;5;10m[49m         components.confirm(`确定移除成员「${uid}」？`, async () => {
+[0m[49m[38;5;10m+     108[0m:[38;5;10m[49m             await api.removeMember(teamId, uid);
+[0m[49m[38;5;10m+     109[0m:[38;5;10m[49m             components.toast('已移除', 'success');
+[0m[49m[38;5;10m+     110[0m:[38;5;10m[49m             $('#modal-overlay').remove();
+[0m[49m[38;5;10m+     111[0m:[38;5;10m[49m             showTeamDetail(teamId);
+[0m[49m[38;5;10m+     112[0m:[38;5;10m[49m         });
+[0m[49m[38;5;10m+     113[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+     114[0m:[38;5;10m[49m 
+[0m[49m[39m  53, 115[0m:[39m[49m     function showCreateTeam() {
+[0m[49m[38;5;9m- 54     [0m:[38;5;9m[49m         components.modal('创建团队', `
+[0m[49m[38;5;9m- 55     [0m:[38;5;9m[49m             <input id="m-name" class="input-dark w-full mb-3" placeholder="团队名称">
+[0m[49m[38;5;9m- 56     [0m:[38;5;9m[49m             <textarea id="m-desc" class="input-dark w-full" rows="3" placeholder="团队描述"></textarea>
+[0m[49m[38;5;9m- 57     [0m:[38;5;9m[49m         `, async () => {
+[0m[49m[38;5;9m- 58     [0m:[38;5;9m[49m             await api.createTeam({ name: $('#m-name').val(), description: $('#m-desc').val() });
+[0m[49m[38;5;10m+     116[0m:[38;5;10m[49m         const form = `
+[0m[49m[38;5;10m+     117[0m:[38;5;10m[49m             <div class="space-y-3">
+[0m[49m[38;5;10m+     118[0m:[38;5;10m[49m                 <div><label class="text-xs font-medium" style="color:var(--text-muted)">团队名称 <span style="color:var(--danger)">*</span></label>
+[0m[49m[38;5;10m+     119[0m:[38;5;10m[49m                 <input id="m-name" class="input-dark w-full mt-1" placeholder="团队名称"></div>
+[0m[49m[38;5;10m+     120[0m:[38;5;10m[49m                 <div><label class="text-xs font-medium" style="color:var(--text-muted)">描述</label>
+[0m[49m[38;5;10m+     121[0m:[38;5;10m[49m                 <textarea id="m-desc" class="input-dark w-full mt-1" rows="3" placeholder="团队描述"></textarea></div>
+[0m[49m[38;5;10m+     122[0m:[38;5;10m[49m                 <div id="m-error" class="text-xs" style="color:var(--danger);display:none"></div>
+[0m[49m[38;5;10m+     123[0m:[38;5;10m[49m             </div>`;
+[0m[49m[38;5;10m+     124[0m:[38;5;10m[49m         components.modal('创建团队', form, async () => {
+[0m[49m[38;5;10m+     125[0m:[38;5;10m[49m             const name = $('#m-name').val().trim();
+[0m[49m[38;5;10m+     126[0m:[38;5;10m[49m             if (!name) { $('#m-error').text('请输入团队名称').show(); throw new Error('名称不能为空'); }
+[0m[49m[38;5;10m+     127[0m:[38;5;10m[49m             await api.createTeam({ name, description: $('#m-desc').val().trim() });
+[0m[49m[39m  59, 128[0m:[39m[49m             components.toast('创建成功', 'success');
+[0m[49m[39m  60, 129[0m:[39m[49m             loadTeams();
+[0m[49m[38;5;9m- 61     [0m:[38;5;9m[49m         });
+[0m[49m[38;5;10m+     130[0m:[38;5;10m[49m         }, { confirmText: '创建' });
+[0m[49m[39m  62, 131[0m:[39m[49m     }
+[0m[49m[39m  63, 132[0m:[39m[49m 
+[0m[49m[39m  64, 133[0m:[39m[49m     $(function() { loadTeams(); });
+[0m[49m[39m  65, 134[0m:[39m[49m     </script>
+[0m[49m[39m  66, 135[0m:[39m[49m </body>
+[0m[49m[39m  67, 136[0m:[39m[49m </html>
+[0m[K
+Replacing: [38;5;141mknowledge/static/teams.html[0m
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m[38;5;252m[1m### 9. 更新 index.html — 数字递增动画、health API、sidebar 宽度对齐[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/static/index.html[0m[38;5;244m (using tool: write)[0m
+Purpose: 重写 index.html：数字递增动画、health API 调用显示 MySQL/Redis 状态、sidebar 宽度对齐 w-60、响应式 grid
+
+[49m[39m    1,   1[0m:[39m[49m <!DOCTYPE html>
+[0m[49m[39m    2,   2[0m:[39m[49m <html lang="zh-CN">
+[0m[49m[39m    3,   3[0m:[39m[49m <head>
+[0m[49m[39m    4,   4[0m:[39m[49m     <meta charset="UTF-8">
+[0m[49m[39m    5,   5[0m:[39m[49m     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+[0m[49m[39m    6,   6[0m:[39m[49m     <title>Knowledge - AI知识库</title>
+[0m[49m[39m    7,   7[0m:[39m[49m     <script src="https://cdn.tailwindcss.com"></script>
+[0m[49m[39m    8,   8[0m:[39m[49m     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+[0m[49m[39m    9,   9[0m:[39m[49m     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+[0m[49m[39m   10,  10[0m:[39m[49m     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+[0m[49m[39m   11,  11[0m:[39m[49m     <link rel="stylesheet" href="/css/custom.css">
+[0m[49m[39m   12,  12[0m:[39m[49m </head>
+[0m[49m[39m   13,  13[0m:[39m[49m <body>
+[0m[49m[38;5;9m-  14     [0m:[38;5;9m[49m     <main class="ml-56 p-10 relative">
+[0m[49m[38;5;9m-  15     [0m:[38;5;9m[49m         <!-- Decorative elements -->
+[0m[49m[38;5;9m-  16     [0m:[38;5;9m[49m         <div class="geo-deco w-16 h-16 -top-2 right-24 opacity-20" style="animation-delay:0s"></div>
+[0m[49m[38;5;9m-  17     [0m:[38;5;9m[49m         <div class="geo-deco w-10 h-10 top-32 right-8 opacity-10" style="animation-delay:2s;border-radius:50%"></div>
+[0m[49m[38;5;9m-  18     [0m:[38;5;9m[49m         <div class="deco-line top-20 right-40"></div>
+[0m[49m[38;5;9m-  19     [0m:[38;5;9m[49m 
+[0m[49m[38;5;10m+       14[0m:[38;5;10m[49m     <main class="ml-60 p-10 relative">
+[0m[49m[39m   20,  15[0m:[39m[49m         <div class="mb-10 title-enter">
+[0m[49m[39m   21,  16[0m:[39m[49m             <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">仪表盘</h2>
+[0m[49m[39m   22,  17[0m:[39m[49m             <p class="mt-2" style="color:var(--text-muted)">知识库概览与快捷操作</p>
+[0m[49m[39m   23,  18[0m:[39m[49m         </div>
+[0m[49m[39m   24,  19[0m:[39m[49m 
+[0m[49m[38;5;9m-  25     [0m:[38;5;9m[49m         <div class="grid grid-cols-4 gap-5 mb-10">
+[0m[49m[38;5;9m-  26     [0m:[38;5;9m[49m             <div class="card p-6 stagger glow-pulse">
+[0m[49m[38;5;10m+       20[0m:[38;5;10m[49m         <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+[0m[49m[38;5;10m+       21[0m:[38;5;10m[49m             <div class="card p-6">
+[0m[49m[39m   27,  22[0m:[39m[49m                 <div class="flex items-center justify-between">
+[0m[49m[39m   28,  23[0m:[39m[49m                     <div>
+[0m[49m[39m   29,  24[0m:[39m[49m                         <p class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">知识条目</p>
+[0m[49m[39m   30,  25[0m:[39m[49m                         <p id="stat-knowledge" class="text-4xl font-bold font-display mt-2" style="color:var(--text-primary)">-</p>
+[0m[49m[39m   31,  26[0m:[39m[49m                     </div>
+[0m[49m[39m   32,  27[0m:[39m[49m                     <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:var(--accent-dim)">
+[0m[49m[39m   33,  28[0m:[39m[49m                         <i class="fa fa-book text-lg" style="color:var(--accent)"></i>
+[0m[49m[39m   34,  29[0m:[39m[49m                     </div>
+[0m[49m[39m   35,  30[0m:[39m[49m                 </div>
+[0m[49m[39m   36,  31[0m:[39m[49m             </div>
+[0m[49m[38;5;9m-  37     [0m:[38;5;9m[49m             <div class="card p-6 stagger">
+[0m[49m[38;5;10m+       32[0m:[38;5;10m[49m             <div class="card p-6">
+[0m[49m[39m   38,  33[0m:[39m[49m                 <div class="flex items-center justify-between">
+[0m[49m[39m   39,  34[0m:[39m[49m                     <div>
+[0m[49m[39m   40,  35[0m:[39m[49m                         <p class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">Skill 模板</p>
+[0m[49m[39m   41,  36[0m:[39m[49m                         <p id="stat-skills" class="text-4xl font-bold font-display mt-2" style="color:var(--text-primary)">-</p>
+[0m[49m[39m   42,  37[0m:[39m[49m                     </div>
+[0m[49m[39m   43,  38[0m:[39m[49m                     <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(52,211,153,0.12)">
+[0m[49m[39m   44,  39[0m:[39m[49m                         <i class="fa fa-magic text-lg" style="color:var(--success)"></i>
+[0m[49m[39m   45,  40[0m:[39m[49m                     </div>
+[0m[49m[39m   46,  41[0m:[39m[49m                 </div>
+[0m[49m[39m   47,  42[0m:[39m[49m             </div>
+[0m[49m[38;5;9m-  48     [0m:[38;5;9m[49m             <div class="card p-6 stagger">
+[0m[49m[38;5;10m+       43[0m:[38;5;10m[49m             <div class="card p-6">
+[0m[49m[39m   49,  44[0m:[39m[49m                 <div class="flex items-center justify-between">
+[0m[49m[39m   50,  45[0m:[39m[49m                     <div>
+[0m[49m[39m   51,  46[0m:[39m[49m                         <p class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">数据表</p>
+[0m[49m[39m   52,  47[0m:[39m[49m                         <p id="stat-tables" class="text-4xl font-bold font-display mt-2" style="color:var(--text-primary)">-</p>
+[0m[49m[39m   53,  48[0m:[39m[49m                     </div>
+[0m[49m[39m   54,  49[0m:[39m[49m                     <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(96,165,250,0.12)">
+[0m[49m[39m   55,  50[0m:[39m[49m                         <i class="fa fa-database text-lg" style="color:var(--info)"></i>
+[0m[49m[39m   56,  51[0m:[39m[49m                     </div>
+[0m[49m[39m   57,  52[0m:[39m[49m                 </div>
+[0m[49m[39m   58,  53[0m:[39m[49m             </div>
+[0m[49m[38;5;9m-  59     [0m:[38;5;9m[49m             <div class="card p-6 stagger">
+[0m[49m[38;5;10m+       54[0m:[38;5;10m[49m             <div class="card p-6">
+[0m[49m[39m   60,  55[0m:[39m[49m                 <div class="flex items-center justify-between">
+[0m[49m[39m   61,  56[0m:[39m[49m                     <div>
+[0m[49m[39m   62,  57[0m:[39m[49m                         <p class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">系统状态</p>
+[0m[49m[38;5;9m-  63     [0m:[38;5;9m[49m                         <p class="text-lg font-bold mt-2" style="color:var(--success)"><i class="fa fa-circle text-xs mr-1"></i>运行中</p>
+[0m[49m[38;5;10m+       58[0m:[38;5;10m[49m                         <p id="stat-health" class="text-lg font-bold mt-2" style="color:var(--text-muted)">检测中...</p>
+[0m[49m[39m   64,  59[0m:[39m[49m                     </div>
+[0m[49m[39m   65,  60[0m:[39m[49m                     <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(52,211,153,0.12)">
+[0m[49m[39m   66,  61[0m:[39m[49m                         <i class="fa fa-heartbeat text-lg" style="color:var(--success)"></i>
+[0m[49m[39m   67,  62[0m:[39m[49m                     </div>
+[0m[49m[39m   68,  63[0m:[39m[49m                 </div>
+[0m[49m[39m   69,  64[0m:[39m[49m             </div>
+[0m[49m[39m   70,  65[0m:[39m[49m         </div>
+[0m[49m[39m   71,  66[0m:[39m[49m 
+[0m[49m[38;5;9m-  72     [0m:[38;5;9m[49m         <div class="grid grid-cols-2 gap-5">
+[0m[49m[38;5;9m-  73     [0m:[38;5;9m[49m             <div class="card p-6 stagger">
+[0m[49m[38;5;10m+       67[0m:[38;5;10m[49m         <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+[0m[49m[38;5;10m+       68[0m:[38;5;10m[49m             <div class="card p-6">
+[0m[49m[39m   74,  69[0m:[39m[49m                 <h3 class="font-display font-semibold mb-5" style="color:var(--text-primary)"><i class="fa fa-bolt mr-2" style="color:var(--accent)"></i>快捷操作</h3>
+[0m[49m[39m   75,  70[0m:[39m[49m                 <div class="grid grid-cols-2 gap-3">
+[0m[49m[38;5;9m-  76     [0m:[38;5;9m[49m                     <a href="/knowledge.html" class="flex items-center gap-3 p-3 rounded-xl transition" style="background:var(--accent-dim);color:var(--accent)">
+[0m[49m[38;5;10m+       71[0m:[38;5;10m[49m                     <a href="/knowledge.html" class="flex items-center gap-3 p-3 rounded-xl transition card-hover" style="background:var(--accent-dim);color:var(--accent)">
+[0m[49m[39m   77,  72[0m:[39m[49m                         <i class="fa fa-plus-circle"></i><span class="font-medium text-sm">新建知识</span>
+[0m[49m[39m   78,  73[0m:[39m[49m                     </a>
+[0m[49m[38;5;9m-  79     [0m:[38;5;9m[49m                     <a href="/search.html" class="flex items-center gap-3 p-3 rounded-xl transition" style="background:rgba(52,211,153,0.1);color:var(--success)">
+[0m[49m[38;5;10m+       74[0m:[38;5;10m[49m                     <a href="/search.html" class="flex items-center gap-3 p-3 rounded-xl transition card-hover" style="background:rgba(52,211,153,0.1);color:var(--success)">
+[0m[49m[39m   80,  75[0m:[39m[49m                         <i class="fa fa-search"></i><span class="font-medium text-sm">搜索知识</span>
+[0m[49m[39m   81,  76[0m:[39m[49m                     </a>
+[0m[49m[38;5;9m-  82     [0m:[38;5;9m[49m                     <a href="/skills.html" class="flex items-center gap-3 p-3 rounded-xl transition" style="background:rgba(96,165,250,0.1);color:var(--info)">
+[0m[49m[38;5;10m+       77[0m:[38;5;10m[49m                     <a href="/skills.html" class="flex items-center gap-3 p-3 rounded-xl transition card-hover" style="background:rgba(96,165,250,0.1);color:var(--info)">
+[0m[49m[39m   83,  78[0m:[39m[49m                         <i class="fa fa-magic"></i><span class="font-medium text-sm">浏览 Skill</span>
+[0m[49m[39m   84,  79[0m:[39m[49m                     </a>
+[0m[49m[38;5;9m-  85     [0m:[38;5;9m[49m                     <a href="/metadata.html" class="flex items-center gap-3 p-3 rounded-xl transition" style="background:rgba(251,146,60,0.1);color:#fb923c">
+[0m[49m[38;5;10m+       80[0m:[38;5;10m[49m                     <a href="/metadata.html" class="flex items-center gap-3 p-3 rounded-xl transition card-hover" style="background:rgba(251,146,60,0.1);color:#fb923c">
+[0m[49m[39m   86,  81[0m:[39m[49m                         <i class="fa fa-database"></i><span class="font-medium text-sm">导入元数据</span>
+[0m[49m[39m   87,  82[0m:[39m[49m                     </a>
+[0m[49m[39m   88,  83[0m:[39m[49m                 </div>
+[0m[49m[39m   89,  84[0m:[39m[49m             </div>
+[0m[49m[38;5;9m-  90     [0m:[38;5;9m[49m             <div class="card p-6 stagger">
+[0m[49m[38;5;10m+       85[0m:[38;5;10m[49m             <div class="card p-6">
+[0m[49m[39m   91,  86[0m:[39m[49m                 <h3 class="font-display font-semibold mb-5" style="color:var(--text-primary)"><i class="fa fa-info-circle mr-2" style="color:var(--info)"></i>系统信息</h3>
+[0m[49m[39m   92,  87[0m:[39m[49m                 <div class="space-y-4 text-sm">
+[0m[49m[38;5;9m-  93     [0m:[38;5;9m[49m                     <div class="flex justify-between"><span style="color:var(--text-muted)">平台版本</span><span class="font-mono" style="color:var(--text-secondary)">v1.0.0</span></div>
+[0m[49m[38;5;10m+       88[0m:[38;5;10m[49m                     <div class="flex justify-between"><span style="color:var(--text-muted)">平台版本</span><span id="sys-version" class="font-mono" style="color:var(--text-secondary)">-</span></div>
+[0m[49m[39m   94,  89[0m:[39m[49m                     <div class="flex justify-between"><span style="color:var(--text-muted)">后端框架</span><span style="color:var(--text-secondary)">FastAPI + MySQL + Redis</span></div>
+[0m[49m[38;5;9m-  95     [0m:[38;5;9m[49m                     <div class="flex justify-between"><span style="color:var(--text-muted)">向量引擎</span><span style="color:var(--text-secondary)">内置 (可扩展)</span></div>
+[0m[49m[38;5;10m+       90[0m:[38;5;10m[49m                     <div class="flex justify-between"><span style="color:var(--text-muted)">MySQL</span><span id="sys-mysql" style="color:var(--text-secondary)">-</span></div>
+[0m[49m[38;5;10m+       91[0m:[38;5;10m[49m                     <div class="flex justify-between"><span style="color:var(--text-muted)">Redis</span><span id="sys-redis" style="color:var(--text-secondary)">-</span></div>
+[0m[49m[39m   96,  92[0m:[39m[49m                 </div>
+[0m[49m[39m   97,  93[0m:[39m[49m             </div>
+[0m[49m[39m   98,  94[0m:[39m[49m         </div>
+[0m[49m[39m   99,  95[0m:[39m[49m     </main>
+[0m[49m[39m  100,  96[0m:[39m[49m 
+[0m[49m[39m  101,  97[0m:[39m[49m     <script src="/js/api.js"></script>
+[0m[49m[39m  102,  98[0m:[39m[49m     <script src="/js/components.js"></script>
+[0m[49m[39m  103,  99[0m:[39m[49m     <script src="/js/app.js"></script>
+[0m[49m[39m  104, 100[0m:[39m[49m     <script>
+[0m[49m[38;5;10m+      101[0m:[38;5;10m[49m     // 数字递增动画
+[0m[49m[38;5;10m+      102[0m:[38;5;10m[49m     function animateNumber(el, target, duration = 300) {
+[0m[49m[38;5;10m+      103[0m:[38;5;10m[49m         if (isNaN(target)) { el.text(target); return; }
+[0m[49m[38;5;10m+      104[0m:[38;5;10m[49m         const start = 0;
+[0m[49m[38;5;10m+      105[0m:[38;5;10m[49m         const startTime = performance.now();
+[0m[49m[38;5;10m+      106[0m:[38;5;10m[49m         function step(now) {
+[0m[49m[38;5;10m+      107[0m:[38;5;10m[49m             const progress = Math.min((now - startTime) / duration, 1);
+[0m[49m[38;5;10m+      108[0m:[38;5;10m[49m             const eased = 1 - Math.pow(1 - progress, 3); // ease-out
+[0m[49m[38;5;10m+      109[0m:[38;5;10m[49m             el.text(Math.round(start + (target - start) * eased));
+[0m[49m[38;5;10m+      110[0m:[38;5;10m[49m             if (progress < 1) requestAnimationFrame(step);
+[0m[49m[38;5;10m+      111[0m:[38;5;10m[49m         }
+[0m[49m[38;5;10m+      112[0m:[38;5;10m[49m         requestAnimationFrame(step);
+[0m[49m[38;5;10m+      113[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+      114[0m:[38;5;10m[49m 
+[0m[49m[39m  105, 115[0m:[39m[49m     $(async function() {
+[0m[49m[38;5;10m+      116[0m:[38;5;10m[49m         // 加载统计
+[0m[49m[39m  106, 117[0m:[39m[49m         try {
+[0m[49m[39m  107, 118[0m:[39m[49m             const stats = await api.getStats();
+[0m[49m[38;5;9m- 108     [0m:[38;5;9m[49m             $('#stat-knowledge').text(stats.knowledge_count);
+[0m[49m[38;5;9m- 109     [0m:[38;5;9m[49m             $('#stat-skills').text(stats.skill_count);
+[0m[49m[38;5;9m- 110     [0m:[38;5;9m[49m             $('#stat-tables').text(stats.table_count);
+[0m[49m[38;5;10m+      119[0m:[38;5;10m[49m             animateNumber($('#stat-knowledge'), stats.knowledge_count);
+[0m[49m[38;5;10m+      120[0m:[38;5;10m[49m             animateNumber($('#stat-skills'), stats.skill_count);
+[0m[49m[38;5;10m+      121[0m:[38;5;10m[49m             animateNumber($('#stat-tables'), stats.table_count);
+[0m[49m[38;5;10m+      122[0m:[38;5;10m[49m         } catch(e) {
+[0m[49m[38;5;10m+      123[0m:[38;5;10m[49m             console.log('Stats API not available');
+[0m[49m[38;5;10m+      124[0m:[38;5;10m[49m         }
+[0m[49m[38;5;10m+      125[0m:[38;5;10m[49m         // 健康检查
+[0m[49m[38;5;10m+      126[0m:[38;5;10m[49m         try {
+[0m[49m[38;5;10m+      127[0m:[38;5;10m[49m             const health = await api.healthCheck();
+[0m[49m[38;5;10m+      128[0m:[38;5;10m[49m             const ok = health.status === 'healthy';
+[0m[49m[38;5;10m+      129[0m:[38;5;10m[49m             $('#stat-health').html(`<i class="fa fa-circle text-xs mr-1" style="color:${ok?'var(--success)':'var(--danger)'}"></i>${ok?'运行中':'异常'}`).css('color', ok?'var(--success)':'var(--danger)');
+[0m[49m[38;5;10m+      130[0m:[38;5;10m[49m             $('#sys-version').text(health.version || 'v1.0.0');
+[0m[49m[38;5;10m+      131[0m:[38;5;10m[49m             $('#sys-mysql').html(health.mysql ? '<span style="color:var(--success)">● 已连接</span>' : '<span style="color:var(--danger)">● 未连接</span>');
+[0m[49m[38;5;10m+      132[0m:[38;5;10m[49m             $('#sys-redis').html(health.redis ? '<span style="color:var(--success)">● 已连接</span>' : '<span style="color:var(--danger)">● 未连接</span>');
+[0m[49m[39m  111, 133[0m:[39m[49m         } catch(e) {
+[0m[49m[38;5;9m- 112     [0m:[38;5;9m[49m             console.log('Stats API not available yet');
+[0m[49m[38;5;10m+      134[0m:[38;5;10m[49m             $('#stat-health').html('<i class="fa fa-circle text-xs mr-1" style="color:var(--danger)"></i>无法连接').css('color', 'var(--danger)');
+[0m[49m[39m  113, 135[0m:[39m[49m         }
+[0m[49m[39m  114, 136[0m:[39m[49m     });
+[0m[49m[39m  115, 137[0m:[39m[49m     </script>
+[0m[49m[39m  116, 138[0m:[39m[49m </body>
+[0m[49m[39m  117, 139[0m:[39m[49m </html>
+[0m[K
+Replacing: [38;5;141mknowledge/static/index.html[0m
+[38;5;244m - Completed in 0.1s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[38;5;141m> [0m[38;5;252m[1m### 10. 更新 app.js — sidebar 宽度对齐 w-60[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll create the following file: [38;5;141mknowledge/static/js/app.js[0m[38;5;244m (using tool: write)[0m
+Purpose: 更新 app.js：添加全局 / 快捷键聚焦搜索框
+
+[49m[39m   1,  1[0m:[39m[49m /**
+[0m[49m[39m   2,  2[0m:[39m[49m  * 全局初始化 & 工具函数
+[0m[49m[39m   3,  3[0m:[39m[49m  */
+[0m[49m[39m   4,  4[0m:[39m[49m 
+[0m[49m[39m   5,  5[0m:[39m[49m function escapeHtml(str) {
+[0m[49m[39m   6,  6[0m:[39m[49m     if (!str) return '';
+[0m[49m[39m   7,  7[0m:[39m[49m     return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+[0m[49m[39m   8,  8[0m:[39m[49m }
+[0m[49m[39m   9,  9[0m:[39m[49m 
+[0m[49m[39m  10, 10[0m:[39m[49m function formatDate(iso) {
+[0m[49m[39m  11, 11[0m:[39m[49m     if (!iso) return '-';
+[0m[49m[39m  12, 12[0m:[39m[49m     const d = new Date(iso);
+[0m[49m[39m  13, 13[0m:[39m[49m     return d.toLocaleDateString('zh-CN') + ' ' + d.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+[0m[49m[39m  14, 14[0m:[39m[49m }
+[0m[49m[39m  15, 15[0m:[39m[49m 
+[0m[49m[39m  16, 16[0m:[39m[49m function truncate(str, len = 100) {
+[0m[49m[39m  17, 17[0m:[39m[49m     if (!str) return '';
+[0m[49m[39m  18, 18[0m:[39m[49m     const safe = escapeHtml(str);
+[0m[49m[39m  19, 19[0m:[39m[49m     return safe.length > len ? safe.substring(0, len) + '...' : safe;
+[0m[49m[39m  20, 20[0m:[39m[49m }
+[0m[49m[39m  21, 21[0m:[39m[49m 
+[0m[49m[39m  22, 22[0m:[39m[49m $(function () {
+[0m[49m[39m  23, 23[0m:[39m[49m     if (typeof components !== 'undefined' && components.renderNav) {
+[0m[49m[39m  24, 24[0m:[39m[49m         components.renderNav();
+[0m[49m[39m  25, 25[0m:[39m[49m     }
+[0m[49m[39m  26, 26[0m:[39m[49m     // 高亮当前导航
+[0m[49m[39m  27, 27[0m:[39m[49m     const path = location.pathname.replace(/\/$/, '') || '/';
+[0m[49m[39m  28, 28[0m:[39m[49m     $(`nav.sidebar a[href="${path}"]`).addClass('active');
+[0m[49m[38;5;10m+     29[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     30[0m:[38;5;10m[49m     // 全局快捷键: / 聚焦搜索框
+[0m[49m[38;5;10m+     31[0m:[38;5;10m[49m     $(document).on('keydown', function(e) {
+[0m[49m[38;5;10m+     32[0m:[38;5;10m[49m         if (e.key === '/' && !$(e.target).is('input,textarea,select')) {
+[0m[49m[38;5;10m+     33[0m:[38;5;10m[49m             e.preventDefault();
+[0m[49m[38;5;10m+     34[0m:[38;5;10m[49m             const searchInput = $('#search-input, #search-input-compact, #filter-keyword').filter(':visible').first();
+[0m[49m[38;5;10m+     35[0m:[38;5;10m[49m             if (searchInput.length) searchInput.focus();
+[0m[49m[38;5;10m+     36[0m:[38;5;10m[49m         }
+[0m[49m[38;5;10m+     37[0m:[38;5;10m[49m     });
+[0m[49m[39m  29, 38[0m:[39m[49m });
+[0m[K
+Replacing: [38;5;141mknowledge/static/js/app.js[0m
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m[38;5;252m[1m### 11. 更新 CSS — sidebar 宽度从 w-56 改为 w-60 (240px)[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll modify the following file: [38;5;141mknowledge/static/css/custom.css[0m[38;5;244m (using tool: write)[0m
+Purpose: CSS 中固定 sidebar 宽度为 240px 对齐 ui-design.md
+
+[49m[39m  60, 60[0m:[39m[49m nav.sidebar a.active::before {
+[0m[49m[39m  61, 61[0m:[39m[49m   content: '';
+[0m[49m[39m  62, 62[0m:[39m[49m   position: absolute;
+[0m[49m[39m  63, 63[0m:[39m[49m   left: 0;
+[0m[49m[39m  64, 64[0m:[39m[49m   top: 25%;
+[0m[49m[39m  65, 65[0m:[39m[49m   height: 50%;
+[0m[49m[39m  66, 66[0m:[39m[49m   width: 3px;
+[0m[49m[39m  67, 67[0m:[39m[49m   background: var(--accent);
+[0m[49m[39m  68, 68[0m:[39m[49m   border-radius: 0 2px 2px 0;
+[0m[49m[38;5;9m- 69    [0m:[38;5;9m[49m }
+[0m[49m[38;5;10m+     69[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+     70[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     71[0m:[38;5;10m[49m /* Sidebar width = 240px (w-60) */
+[0m[49m[38;5;10m+     72[0m:[38;5;10m[49m nav.sidebar { width: 240px; }
+[0m[K
+Updating: [38;5;141mknowledge/static/css/custom.css[0m
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m现在检查 restart.sh 是否存在：[0m[0m
+[?25l[0m[0mReading file: [38;5;141mknowledge/restart.sh[0m, all lines[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m697 bytes[0m from knowledge/restart.sh
+[38;5;244m - Completed in 0.0s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[38;5;141m> [0mrestart.sh 已存在。现在更新 frontend-design.md 以反映实际实现：[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI'll modify the following file: [38;5;141m.kiro/specs/knowledge/frontend-design.md[0m[38;5;244m (using tool: write)[0m
+Purpose: 更新 frontend-design.md 标记实现状态已同步
+
+[49m[39m  3, 3[0m:[39m[49m > 版本: 2.0 | 更新: 2026-03-28 | 技术栈: HTML + TailwindCSS CDN + jQuery 3.7.1
+[0m[49m[39m  4, 4[0m:[39m[49m > 变更: 整合 ui-design.md v2.0 交互规范，补充设计系统、组件规范、动效、响应式设计
+[0m[49m[38;5;9m- 5   [0m:[38;5;9m[49m > 交互设计权威来源: `ui-design.md`（前端 agent 实现时以此为准）
+[0m[49m[38;5;10m+    5[0m:[38;5;10m[49m > 交互设计权威来源: `ui-design.md`（前端 agent 实现时以此为准）
+[0m[49m[38;5;10m+    6[0m:[38;5;10m[49m > 实现状态: ✅ 已同步 ui-design.md v2.0 全部交互规范（2026-03-28 11:12 迭代完成）
+[0m[K
+Updating: [38;5;141m.kiro/specs/knowledge/frontend-design.md[0m
+[38;5;244m - Completed in 0.1s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m现在重启服务并验证：[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI will run the following command: [38;5;141mcd knowledge && bash restart.sh[0m[38;5;244m (using tool: shell)[0m
+Purpose: 重启前后端服务
+
+Killing processes on port 9998: 26017
+Killing processes on port 9999: 26016
+Backend started (PID: 27375)
+Frontend started (PID: 27376)
+Done. Backend: http://localhost:9999  Frontend: http://localhost:9998
+[38;5;244m - Completed in 4.107s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0m[?25l[0m[?25l[0m[0mRunning tool [38;5;141mbrowser_navigate[0m with the param[38;5;244m (from mcp server: browsermcp)[0m
+ ⋮  {
+ ⋮    "url": "http://localhost:9998"
+ ⋮  }
+[0m[38;5;244m - Completed in 0.8s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⠄⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.17 s
+[0mI will run the following command: [38;5;141msleep 2 && curl -s http://localhost:9998/ | head -20[0m[38;5;244m (using tool: shell)[0m
+Purpose: 验证前端页面是否正常加载
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge - AI知识库</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+    <main class="ml-60 p-10 relative">
+        <div class="mb-10 title-enter">
+            <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">仪表盘</h2>
+            <p class="mt-2" style="color:var(--text-muted)">知识库概览与快捷操作</p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+[38;5;244m - Completed in 2.58s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0m[?25l[0m[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0mI will run the following command: [38;5;141mcurl -s http://localhost:9999/api/v1/health 2>/dev/null || echo "Backend health check failed"
+curl -s http://localhost:9999/api/v1/dashboard/stats 2>/dev/null || echo "Stats API failed"[0m[38;5;244m (using tool: shell)[0m
+Purpose: 验证后端 API 是否正常
+
+{"status":"healthy","mysql":true,"redis":true,"version":"1.1.0"}{"knowledge_count":0,"skill_count":0,"table_count":0}[38;5;244m - Completed in 0.72s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m前后端都正常运行。后端 API 返回正常，health check 显示 MySQL 和 Redis 都已连接。[0m[0m
+[0m[0m
+让我验证所有页面都能正常加载：[0m[0m
+[?25l[0m[0m⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.08 s
+[0mI will run the following command: [38;5;141mfor page in "" knowledge.html search.html skills.html metadata.html teams.html; do
+    status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:9998/$page)
+    echo "$page → $status"
+done[0m[38;5;244m (using tool: shell)[0m
+Purpose: 验证所有页面 HTTP 状态码
+
+ → 200
+knowledge.html → 200
+search.html → 200
+skills.html → 200
+metadata.html → 200
+teams.html → 200
+[38;5;244m - Completed in 0.61s[0m
+
+⢀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished⡀⠀ [38;5;12m0[39m of [38;5;12m1[39m hooks finished[1G[2K[?25l[38;5;12m[38;5;10m✓[39m [38;5;12m1[39m of [38;5;12m1[39m hooks finished in [38;5;11m0.09 s
+[0m[?25l[0m[38;5;141m> [0m所有页面都返回 200。[0m[0m
+[0m[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0m[0m
+[0m[0m
+迭代完成。以下是本次更新的完整变更清单：[0m[0m
+[0m[0m
+[38;5;252m[1m### 变更总结[0m[0m
+[0m[0m
+[1mapi.js[22m[0m[0m
+- 搜索接口新增 [38;5;10msource_type[0m、[38;5;10mtime_range[0m、[38;5;10mtags[0m 过滤参数[0m[0m
+- 知识列表新增 [38;5;10mkeyword[0m、[38;5;10mtags[0m 筛选参数[0m[0m
+- 新增 [38;5;10mrecordUse[0m（Skill 使用记录）、[38;5;10mhealthCheck[0m（健康检查）[0m[0m
+- 新增 [38;5;10mupdateMemberRole[0m、[38;5;10mremoveMember[0m（团队成员管理）[0m[0m
+[0m[0m
+[1mcomponents.js[22m[0m[0m
+- Toast 重做：左边框 + 图标 + 颜色分类（success/error/warning/info），按 ui-design.md 4.4 规范[0m[0m
+- Modal 支持自定义宽度、打开/关闭动画（fadeIn + translateY）、关闭按钮[0m[0m
+- emptyState 支持 CTA 按钮[0m[0m
+- 新增 skeleton 骨架屏组件[0m[0m
+- pagination 新增上一页/下一页按钮、页码省略[0m[0m
+[0m[0m
+[1mknowledge.html[22m[0m[0m
+- 新增操作栏：分类下拉 + 标签筛选（Enter 添加 chip）+ 关键词搜索（300ms 防抖）[0m[0m
+- 卡片网格改为 3 列（desktop）/ 2 列（tablet）/ 1 列（mobile）[0m[0m
+- 新增详情 Modal（720px，Markdown 渲染 + 编辑/删除按钮）[0m[0m
+- 表单新增标签输入、必填校验[0m[0m
+[0m[0m
+[1msearch.html[22m[0m[0m
+- 初始状态：居中大搜索框（56px 高，圆角 28px）[0m[0m
+- 有结果状态：搜索框上移 + 左侧过滤面板（来源类型 checkbox + 时间范围下拉）[0m[0m
+- 结果卡片显示 source_type 标签 + score 百分比[0m[0m
+- 支持 URL 参数 [38;5;10m?q=xxx[0m[0m[0m
+- 清除搜索回到初始状态[0m[0m
+[0m[0m
+[1mskills.html[22m[0m[0m
+- 新增分类 Tab（动态填充）[0m[0m
+- 卡片改为 3 列[0m[0m
+- 新增详情 Modal（提示词模板 + 参数填写 + 生成 + 一键复制）[0m[0m
+- 新增分页[0m[0m
+- 创建表单新增公开/私有 toggle、必填校验[0m[0m
+[0m[0m
+[1mmetadata.html[22m[0m[0m
+- 左侧新增搜索框（实时前端过滤表名）[0m[0m
+- 选中表左侧 3px accent 指示线[0m[0m
+- 字段表格新增可空、默认值列[0m[0m
+- 索引 Badge：PK 红色、IDX 蓝色、UNI 绿色[0m[0m
+- 字段名对齐 API（column_name/column_type/column_comment）[0m[0m
+[0m[0m
+[1mteams.html[22m[0m[0m
+- 新增团队详情 Modal（成员列表 + 角色下拉即时保存 + 添加/移除成员）[0m[0m
+- 卡片改为 3 列[0m[0m
+[0m[0m
+[1mindex.html[22m[0m[0m
+- 统计数字递增动画（300ms ease-out）[0m[0m
+- 调用 health API 显示 MySQL/Redis 连接状态和版本号[0m[0m
+- 响应式 grid（2 列 mobile / 4 列 desktop）[0m[0m
+[0m[0m
+[1mcustom.css[22m[0m[0m
+- 新增骨架屏 shimmer 动画[0m[0m
+- 新增 [38;5;10mprefers-reduced-motion[0m 支持[0m[0m
+- 新增索引 Badge（badge-pk/idx/uni）[0m[0m
+- 新增分类 Tab、标签 chip、分数条样式[0m[0m
+- Sidebar 宽度固定 240px[0m[0m
+[0m[0m
+[1mapp.js[22m[0m[0m
+- 新增全局 [38;5;10m/[0m 快捷键聚焦搜索框[0m[0m
+⢀⠀ [38;5;12m0[39m of [38;5;12m2[39m hooks finished

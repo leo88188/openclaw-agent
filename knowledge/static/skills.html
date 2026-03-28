@@ -11,40 +11,64 @@
     <link rel="stylesheet" href="/css/custom.css">
 </head>
 <body>
-    <main class="ml-56 p-10 relative">
-        <div class="deco-line top-16 right-48"></div>
-
-        <div class="flex items-center justify-between mb-8">
+    <main class="ml-60 p-10 relative">
+        <div class="flex items-center justify-between mb-6">
             <div class="title-enter">
                 <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">Skill 市场</h2>
                 <p class="mt-2" style="color:var(--text-muted)">浏览和分享提示词模板</p>
             </div>
-            <button onclick="showCreateSkill()" class="btn-accent">
-                <i class="fa fa-plus mr-1"></i>创建 Skill
-            </button>
+            <button onclick="showCreateSkill()" class="btn-accent"><i class="fa fa-plus mr-1"></i>创建 Skill</button>
         </div>
-        <div id="skill-list" class="grid grid-cols-4 gap-5"></div>
+
+        <!-- 分类 Tab -->
+        <div id="category-tabs" class="flex gap-1 mb-6 border-b" style="border-color:var(--border)">
+            <span class="cat-tab active" data-cat="" onclick="switchCategory(this)">全部</span>
+        </div>
+
+        <div id="skill-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        <div id="pagination"></div>
     </main>
 
     <script src="/js/api.js"></script>
     <script src="/js/components.js"></script>
     <script src="/js/app.js"></script>
     <script>
-    async function loadSkills() {
-        $('#skill-list').html(components.loading());
+    let currentPage = 1, currentCategory = '', knownCategories = new Set();
+
+    function switchCategory(el) {
+        currentCategory = $(el).data('cat') || '';
+        $('.cat-tab').removeClass('active');
+        $(el).addClass('active');
+        loadSkills(1);
+    }
+
+    async function loadSkills(page) {
+        currentPage = page || 1;
+        $('#skill-list').html(components.skeleton('card', 6));
         try {
-            const data = await api.getSkillList();
-            if (!data.items.length) { $('#skill-list').html(components.emptyState('暂无 Skill')); return; }
+            const data = await api.getSkillList(currentPage, { category: currentCategory });
+            if (!data.items || !data.items.length) {
+                const msg = currentCategory ? '该分类下暂无 Skill' : '还没有 Skill，成为第一个贡献者';
+                $('#skill-list').html(components.emptyState(msg, '创建 Skill', 'showCreateSkill()'));
+                $('#pagination').html('');
+                return;
+            }
+            // 动态填充分类 Tab
+            data.items.forEach(s => { if (s.category) knownCategories.add(s.category); });
+            renderCategoryTabs();
+
             let html = '';
-            data.items.forEach((item, i) => {
+            data.items.forEach(item => {
                 html += `
-                <div class="card p-5 card-hover stagger" style="animation-delay:${i*0.05}s">
+                <div class="card p-5 card-hover cursor-pointer" onclick="showSkillDetail(${item.id})">
                     <div class="flex items-center justify-between mb-3">
                         <span class="tag">${escapeHtml(item.category || '通用')}</span>
-                        <button onclick="api.toggleFavorite(${item.id}).then(loadSkills)" style="color:var(--text-muted)" class="hover:opacity-80"><i class="fa fa-heart-o"></i></button>
+                        <button onclick="event.stopPropagation();toggleFav(${item.id})" style="color:${item.favorited?'var(--danger)':'var(--text-muted)'}" class="hover:opacity-80">
+                            <i class="fa ${item.favorited?'fa-heart':'fa-heart-o'}"></i>
+                        </button>
                     </div>
                     <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(item.name)}</h3>
-                    <p class="text-sm mt-2" style="color:var(--text-secondary)">${truncate(item.description, 80)}</p>
+                    <p class="text-sm mt-2 line-clamp-2" style="color:var(--text-secondary)">${truncate(item.description, 80)}</p>
                     <div class="flex items-center gap-4 mt-4 text-xs" style="color:var(--text-muted)">
                         <span><i class="fa fa-heart mr-1"></i>${item.favorite_count || 0}</span>
                         <span><i class="fa fa-play mr-1"></i>${item.use_count || 0}</span>
@@ -52,20 +76,117 @@
                 </div>`;
             });
             $('#skill-list').html(html);
+            $('#pagination').html(components.pagination(data.total, currentPage, data.page_size || 20, 'loadSkills'));
         } catch(e) { $('#skill-list').html(components.emptyState('加载失败')); }
     }
 
-    function showCreateSkill() {
-        components.modal('创建 Skill', `
-            <input id="m-name" class="input-dark w-full mb-3" placeholder="Skill 名称">
-            <input id="m-desc" class="input-dark w-full mb-3" placeholder="描述">
-            <textarea id="m-prompt" class="input-dark w-full mb-3" rows="4" placeholder="提示词模板"></textarea>
-            <input id="m-cat" class="input-dark w-full" placeholder="分类">
-        `, async () => {
-            await api.createSkill({ name: $('#m-name').val(), description: $('#m-desc').val(), prompt_template: $('#m-prompt').val(), category: $('#m-cat').val() });
-            components.toast('创建成功', 'success');
-            loadSkills();
+    function renderCategoryTabs() {
+        const tabs = $('#category-tabs');
+        if (tabs.find('.cat-tab').length - 1 >= knownCategories.size) return;
+        let html = `<span class="cat-tab${!currentCategory?' active':''}" data-cat="" onclick="switchCategory(this)">全部</span>`;
+        knownCategories.forEach(c => {
+            html += `<span class="cat-tab${currentCategory===c?' active':''}" data-cat="${escapeHtml(c)}" onclick="switchCategory(this)">${escapeHtml(c)}</span>`;
         });
+        tabs.html(html);
+    }
+
+    async function toggleFav(id) {
+        await api.toggleFavorite(id);
+        loadSkills(currentPage);
+    }
+
+    async function showSkillDetail(id) {
+        const item = await api.getSkill(id);
+        const params = item.params || [];
+        let paramsHtml = '';
+        if (params.length) {
+            paramsHtml = '<div class="mt-4"><h4 class="text-xs font-semibold uppercase mb-2" style="color:var(--text-muted)">参数填写</h4>';
+            params.forEach(p => {
+                paramsHtml += `<div class="mb-2"><label class="text-xs" style="color:var(--text-muted)">${escapeHtml(p.name)}${p.required?' *':''}</label>
+                    <input class="input-dark w-full mt-1 text-sm skill-param" data-name="${escapeHtml(p.name)}" placeholder="${escapeHtml(p.name)}"></div>`;
+            });
+            paramsHtml += '</div>';
+        }
+        const content = `
+            <p class="text-sm mb-4" style="color:var(--text-secondary)">${escapeHtml(item.description || '')}</p>
+            <div class="mb-3"><span class="text-xs font-semibold uppercase" style="color:var(--text-muted)">提示词模板</span></div>
+            <pre class="p-4 rounded-lg text-sm overflow-x-auto" style="background:var(--bg-deep);color:var(--text-secondary);white-space:pre-wrap">${escapeHtml(item.prompt_template)}</pre>
+            ${paramsHtml}
+            <div id="generated-prompt" class="mt-4" style="display:none">
+                <div class="text-xs font-semibold uppercase mb-2" style="color:var(--text-muted)">生成结果</div>
+                <pre id="prompt-output" class="p-4 rounded-lg text-sm" style="background:var(--bg-deep);color:var(--text-primary);white-space:pre-wrap"></pre>
+                <button onclick="copyPrompt()" class="btn-ghost text-xs mt-2"><i class="fa fa-copy mr-1"></i>复制</button>
+            </div>
+            <div class="flex items-center gap-3 mt-4 text-xs" style="color:var(--text-muted)">
+                <span><i class="fa fa-heart mr-1"></i>${item.favorite_count || 0} 收藏</span>
+                <span><i class="fa fa-play mr-1"></i>${item.use_count || 0} 使用</span>
+            </div>`;
+        components.modal(item.name, content, params.length ? async () => {
+            generatePrompt(item);
+            throw new Error('__keep_open__');
+        } : null, { width: 'max-w-2xl', confirmText: params.length ? '生成提示词' : undefined });
+
+        // 如果没有参数，直接显示使用按钮
+        if (!params.length) {
+            $('#modal-overlay .btn-cancel').text('关闭');
+            const useBtn = $(`<button class="btn-accent text-sm"><i class="fa fa-play mr-1"></i>使用并复制</button>`);
+            useBtn.click(async () => {
+                await api.recordUse(id);
+                await navigator.clipboard.writeText(item.prompt_template).catch(() => {});
+                components.toast('已复制到剪贴板', 'success');
+            });
+            $('#modal-overlay .flex.justify-end').prepend(useBtn);
+        }
+    }
+
+    function generatePrompt(item) {
+        let result = item.prompt_template;
+        $('.skill-param').each(function() {
+            const name = $(this).data('name');
+            const val = $(this).val();
+            result = result.replace(new RegExp(`\\{\\{${name}\\}\\}`, 'g'), val);
+        });
+        $('#prompt-output').text(result);
+        $('#generated-prompt').show();
+        api.recordUse(item.id);
+    }
+
+    function copyPrompt() {
+        const text = $('#prompt-output').text();
+        navigator.clipboard.writeText(text).then(() => components.toast('已复制到剪贴板', 'success'));
+    }
+
+    function showCreateSkill() {
+        const form = `
+            <div class="space-y-3">
+                <div><label class="text-xs font-medium" style="color:var(--text-muted)">名称 <span style="color:var(--danger)">*</span></label>
+                <input id="m-name" class="input-dark w-full mt-1" placeholder="Skill 名称"></div>
+                <div><label class="text-xs font-medium" style="color:var(--text-muted)">描述</label>
+                <input id="m-desc" class="input-dark w-full mt-1" placeholder="简要描述"></div>
+                <div><label class="text-xs font-medium" style="color:var(--text-muted)">提示词模板 <span style="color:var(--danger)">*</span></label>
+                <textarea id="m-prompt" class="input-dark w-full mt-1" rows="5" placeholder="支持 {{参数名}} 占位符"></textarea></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="text-xs font-medium" style="color:var(--text-muted)">分类</label>
+                    <input id="m-cat" class="input-dark w-full mt-1" placeholder="分类"></div>
+                    <div class="flex items-end"><label class="flex items-center gap-2 text-sm cursor-pointer">
+                        <input type="checkbox" id="m-public" checked> 公开到市场
+                    </label></div>
+                </div>
+                <div id="m-error" class="text-xs" style="color:var(--danger);display:none"></div>
+            </div>`;
+        components.modal('创建 Skill', form, async () => {
+            const name = $('#m-name').val().trim();
+            const prompt = $('#m-prompt').val().trim();
+            if (!name) { $('#m-error').text('请输入 Skill 名称').show(); throw new Error('名称不能为空'); }
+            if (!prompt) { $('#m-error').text('请输入提示词模板').show(); throw new Error('模板不能为空'); }
+            await api.createSkill({
+                name, description: $('#m-desc').val().trim(),
+                prompt_template: prompt, category: $('#m-cat').val().trim(),
+                is_public: $('#m-public').is(':checked')
+            });
+            components.toast('创建成功', 'success');
+            loadSkills(currentPage);
+        }, { width: 'max-w-2xl', confirmText: '保存' });
     }
 
     $(function() { loadSkills(); });

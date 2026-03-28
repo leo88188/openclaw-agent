@@ -68,6 +68,9 @@ nav.sidebar a.active::before {
   border-radius: 0 2px 2px 0;
 }
 
+/* Sidebar width = 240px (w-60) */
+nav.sidebar { width: 240px; }
+
 /* ===== Cards ===== */
 .card {
   background: var(--bg-card);

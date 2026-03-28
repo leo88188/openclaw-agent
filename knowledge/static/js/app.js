@@ -26,4 +26,13 @@ $(function () {
     // 高亮当前导航
     const path = location.pathname.replace(/\/$/, '') || '/';
     $(`nav.sidebar a[href="${path}"]`).addClass('active');
+
+    // 全局快捷键: / 聚焦搜索框
+    $(document).on('keydown', function(e) {
+        if (e.key === '/' && !$(e.target).is('input,textarea,select')) {
+            e.preventDefault();
+            const searchInput = $('#search-input, #search-input-compact, #filter-keyword').filter(':visible').first();
+            if (searchInput.length) searchInput.focus();
+        }
+    });
 });

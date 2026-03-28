@@ -11,20 +11,25 @@
     <link rel="stylesheet" href="/css/custom.css">
 </head>
 <body>
-    <main class="ml-56 p-10 relative">
+    <main class="ml-60 p-10 relative">
         <div class="flex items-center justify-between mb-8">
             <div class="title-enter">
                 <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">数据库元数据</h2>
                 <p class="mt-2" style="color:var(--text-muted)">浏览和管理数据库表结构</p>
             </div>
-            <button onclick="showImport()" class="btn-accent">
-                <i class="fa fa-download mr-1"></i>导入元数据
-            </button>
+            <button id="import-btn" onclick="showImport()" class="btn-accent"><i class="fa fa-download mr-1"></i>导入元数据</button>
         </div>
 
-        <div class="grid grid-cols-8 gap-5">
-            <div id="table-list" class="col-span-3 card p-5 max-h-[70vh] overflow-y-auto stagger"></div>
-            <div id="table-detail" class="col-span-5 card p-5 stagger" style="animation-delay:0.1s">
+        <div class="flex gap-5" style="min-height:60vh">
+            <!-- 左侧表列表 -->
+            <div class="w-72 flex-shrink-0">
+                <div class="card p-4 sticky top-4">
+                    <input id="table-search" class="input-dark w-full text-sm mb-3" placeholder="搜索表名..." oninput="filterTables()">
+                    <div id="table-list" class="space-y-1 max-h-[60vh] overflow-y-auto"></div>
+                </div>
+            </div>
+            <!-- 右侧字段详情 -->
+            <div id="table-detail" class="flex-1 card p-6">
                 <div class="empty-state text-center py-16"><i class="fa fa-hand-pointer-o text-3xl mb-3 block"></i><p>选择左侧表查看详情</p></div>
             </div>
         </div>
@@ -34,39 +39,98 @@
     <script src="/js/components.js"></script>
     <script src="/js/app.js"></script>
     <script>
+    let allTables = [];
+    let selectedTable = null;
+
     async function loadTables() {
+        $('#table-list').html(components.skeleton('table', 8));
         try {
             const data = await api.getTableList();
-            if (!data.items.length) { $('#table-list').html(components.emptyState('暂无表数据')); return; }
-            let html = '<div class="space-y-1">';
-            data.items.forEach(t => {
-                html += `<div onclick="showTable('${escapeHtml(t.table_name)}')" class="p-3 rounded-lg cursor-pointer transition" style="color:var(--text-secondary)" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
-                    <div class="font-mono text-sm font-semibold" style="color:var(--text-primary)">${escapeHtml(t.table_name)}</div>
-                    <div class="text-xs mt-1" style="color:var(--text-muted)">${escapeHtml(t.table_comment || '')}</div>
-                </div>`;
-            });
-            html += '</div>';
-            $('#table-list').html(html);
+            allTables = data.tables || data.items || [];
+            if (!allTables.length) {
+                $('#table-list').html(components.emptyState('还没有导入数据库元数据', '导入元数据', 'showImport()'));
+                return;
+            }
+            renderTableList(allTables);
         } catch(e) { $('#table-list').html(components.emptyState('加载失败')); }
     }
 
-    async function showTable(name) {
-        const data = await api.getTable(name);
-        let html = `<h3 class="font-display font-semibold text-lg mb-1" style="color:var(--text-primary)">${escapeHtml(data.table_name)}</h3>
-            <p class="text-sm mb-5" style="color:var(--text-muted)">${escapeHtml(data.table_comment || '')}</p>
-            <table class="table-dark w-full text-sm"><thead><tr>
-                <th class="text-left">字段名</th><th class="text-left">类型</th><th class="text-left">说明</th></tr></thead><tbody>`;
-        data.columns.forEach(c => {
-            html += `<tr><td class="font-mono">${escapeHtml(c.name)}</td><td>${escapeHtml(c.type)}</td><td>${escapeHtml(c.comment || '')}</td></tr>`;
+    function renderTableList(tables) {
+        let html = '';
+        tables.forEach(t => {
+            const active = selectedTable === t.table_name;
+            html += `<div onclick="showTable('${escapeHtml(t.table_name)}')" class="p-3 rounded-lg cursor-pointer transition text-sm" style="${active ? 'background:var(--accent-dim);border-left:3px solid var(--accent)' : 'border-left:3px solid transparent'}">
+                <div class="font-mono font-semibold" style="color:var(--text-primary)">${escapeHtml(t.table_name)}</div>
+                <div class="flex items-center gap-2 mt-1 text-xs" style="color:var(--text-muted)">
+                    <span>${t.column_count || '-'} 字段</span>
+                    ${t.table_comment ? '<span>· ' + escapeHtml(t.table_comment) + '</span>' : ''}
+                </div>
+            </div>`;
         });
-        html += '</tbody></table>';
-        $('#table-detail').html(html);
+        $('#table-list').html(html);
+    }
+
+    function filterTables() {
+        const q = $('#table-search').val().trim().toLowerCase();
+        const filtered = q ? allTables.filter(t => t.table_name.toLowerCase().includes(q)) : allTables;
+        renderTableList(filtered);
+    }
+
+    async function showTable(name) {
+        selectedTable = name;
+        renderTableList(allTables.filter(t => {
+            const q = $('#table-search').val().trim().toLowerCase();
+            return !q || t.table_name.toLowerCase().includes(q);
+        }));
+        $('#table-detail').html(components.loading());
+        try {
+            const data = await api.getTable(name);
+            const columns = data.columns || [];
+            let rows = '';
+            columns.forEach(c => {
+                const colName = c.column_name || c.name;
+                const colType = c.column_type || c.type;
+                const colComment = c.column_comment || c.comment || '';
+                const nullable = c.is_nullable != null ? (c.is_nullable ? '是' : '否') : '-';
+                const defVal = c.default_value != null ? escapeHtml(String(c.default_value)) : '-';
+                // 索引 Badge
+                let badge = '';
+                if (c.column_key === 'PRI' || c.index === 'PK') badge = '<span class="badge-pk">PK</span>';
+                else if (c.column_key === 'UNI' || c.index === 'UNI') badge = '<span class="badge-uni">UNI</span>';
+                else if (c.column_key === 'MUL' || c.index === 'IDX') badge = '<span class="badge-idx">IDX</span>';
+
+                rows += `<tr>
+                    <td class="font-mono text-sm">${escapeHtml(colName)}</td>
+                    <td class="text-sm">${escapeHtml(colType)}</td>
+                    <td class="text-sm">${nullable}</td>
+                    <td class="text-sm font-mono">${defVal}</td>
+                    <td class="text-sm">${escapeHtml(colComment)}</td>
+                    <td>${badge}</td>
+                </tr>`;
+            });
+            $('#table-detail').html(`
+                <h3 class="font-display font-semibold text-lg mb-1" style="color:var(--text-primary)">${escapeHtml(data.table_name)}</h3>
+                <p class="text-sm mb-5" style="color:var(--text-muted)">${escapeHtml(data.table_comment || '无注释')} · ${columns.length} 个字段</p>
+                <div class="overflow-x-auto">
+                    <table class="table-dark w-full text-sm">
+                        <thead><tr>
+                            <th class="text-left">字段名</th><th class="text-left">类型</th>
+                            <th class="text-left">可空</th><th class="text-left">默认值</th>
+                            <th class="text-left">注释</th><th class="text-left">索引</th>
+                        </tr></thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                </div>`);
+        } catch(e) { $('#table-detail').html(components.emptyState('加载失败')); }
     }
 
     function showImport() {
-        components.modal('导入元数据', `<input id="m-dbname" class="input-dark w-full" placeholder="数据库名称" value="knowledge">`, async () => {
-            const res = await api.importMetadata($('#m-dbname').val());
-            components.toast('导入成功：' + res.imported + ' 条', 'success');
+        components.confirm('将从数据库 knowledge 导入元数据，已有数据将增量更新。确认导入？', async () => {
+            const res = await api.importMetadata('knowledge');
+            const msg = res.imported_tables != null
+                ? `导入完成，共 ${res.imported_tables} 张表，${res.imported_columns} 个字段`
+                : `导入成功`;
+            components.toast(msg, 'success');
             loadTables();
         });
     }

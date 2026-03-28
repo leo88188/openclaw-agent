@@ -11,19 +11,15 @@
     <link rel="stylesheet" href="/css/custom.css">
 </head>
 <body>
-    <main class="ml-56 p-10 relative">
-        <div class="geo-deco w-12 h-12 top-8 right-20 opacity-15" style="animation-delay:1.5s;border-radius:50%"></div>
-
+    <main class="ml-60 p-10 relative">
         <div class="flex items-center justify-between mb-8">
             <div class="title-enter">
                 <h2 class="text-3xl font-bold font-display tracking-tight" style="color:var(--text-primary)">团队空间</h2>
                 <p class="mt-2" style="color:var(--text-muted)">管理团队和成员权限</p>
             </div>
-            <button onclick="showCreateTeam()" class="btn-accent">
-                <i class="fa fa-plus mr-1"></i>创建团队
-            </button>
+            <button onclick="showCreateTeam()" class="btn-accent"><i class="fa fa-plus mr-1"></i>创建团队</button>
         </div>
-        <div id="team-list" class="grid grid-cols-4 gap-5"></div>
+        <div id="team-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </main>
 
     <script src="/js/api.js"></script>
@@ -31,34 +27,107 @@
     <script src="/js/app.js"></script>
     <script>
     async function loadTeams() {
+        $('#team-list').html(components.skeleton('card', 3));
         try {
             const data = await api.getTeamList();
-            if (!data.items.length) { $('#team-list').html(components.emptyState('暂无团队')); return; }
+            const items = data.items || [];
+            if (!items.length) {
+                $('#team-list').html(components.emptyState('还没有团队', '创建团队', 'showCreateTeam()'));
+                return;
+            }
             let html = '';
-            data.items.forEach((t, i) => {
+            items.forEach(t => {
                 html += `
-                <div class="card p-5 card-hover stagger" style="animation-delay:${i*0.05}s">
+                <div class="card p-5 card-hover cursor-pointer" onclick="showTeamDetail(${t.id})">
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style="background:var(--accent-dim)">
                         <i class="fa fa-users" style="color:var(--accent)"></i>
                     </div>
                     <h3 class="font-display font-semibold" style="color:var(--text-primary)">${escapeHtml(t.name)}</h3>
                     <p class="text-sm mt-2" style="color:var(--text-secondary)">${escapeHtml(t.description || '暂无描述')}</p>
-                    <div class="text-xs mt-4" style="color:var(--text-muted)">创建者: ${escapeHtml(t.created_by || '-')}</div>
+                    <div class="text-xs mt-4" style="color:var(--text-muted)">
+                        创建者: ${escapeHtml(t.created_by || '-')} · ${formatDate(t.created_at)}
+                    </div>
                 </div>`;
             });
             $('#team-list').html(html);
         } catch(e) { $('#team-list').html(components.emptyState('加载失败')); }
     }
 
+    async function showTeamDetail(id) {
+        let members = [];
+        try { const data = await api.getTeamMembers(id); members = data.items || []; } catch(e) {}
+        let memberRows = '';
+        members.forEach(m => {
+            memberRows += `<tr>
+                <td class="text-sm">${escapeHtml(m.user_name)}</td>
+                <td><select class="input-dark text-xs py-1" onchange="changeRole(${id},'${escapeHtml(m.user_name)}',this.value)" style="min-width:80px">
+                    <option value="admin"${m.role==='admin'?' selected':''}>管理员</option>
+                    <option value="editor"${m.role==='editor'?' selected':''}>编辑者</option>
+                    <option value="viewer"${m.role==='viewer'?' selected':''}>查看者</option>
+                </select></td>
+                <td><button onclick="removeMember(${id},'${escapeHtml(m.user_name)}')" class="text-xs" style="color:var(--danger);cursor:pointer"><i class="fa fa-trash"></i></button></td>
+            </tr>`;
+        });
+        const content = `
+            <div class="mb-4">
+                <h4 class="text-sm font-semibold mb-3" style="color:var(--text-primary)">成员管理</h4>
+                <div class="flex gap-2 mb-4">
+                    <input id="add-member-name" class="input-dark text-sm flex-1" placeholder="用户名">
+                    <select id="add-member-role" class="input-dark text-sm" style="min-width:80px">
+                        <option value="viewer">查看者</option>
+                        <option value="editor">编辑者</option>
+                        <option value="admin">管理员</option>
+                    </select>
+                    <button onclick="addMember(${id})" class="btn-accent text-sm">添加</button>
+                </div>
+                ${members.length ? `<table class="table-dark w-full text-sm"><thead><tr><th class="text-left">用户</th><th class="text-left">角色</th><th></th></tr></thead><tbody>${memberRows}</tbody></table>` : '<p class="text-sm" style="color:var(--text-muted)">暂无成员</p>'}
+            </div>`;
+        components.modal('团队详情', content, null, { width: 'max-w-2xl' });
+    }
+
+    async function addMember(teamId) {
+        const name = $('#add-member-name').val().trim();
+        if (!name) { components.toast('请输入用户名', 'warning'); return; }
+        try {
+            await api.addTeamMember(teamId, { user_name: name, role: $('#add-member-role').val() });
+            components.toast('添加成功', 'success');
+            $('#modal-overlay').remove();
+            showTeamDetail(teamId);
+        } catch(e) {}
+    }
+
+    async function changeRole(teamId, uid, role) {
+        try {
+            await api.updateMemberRole(teamId, uid, role);
+            components.toast('角色已更新', 'success');
+        } catch(e) {}
+    }
+
+    function removeMember(teamId, uid) {
+        components.confirm(`确定移除成员「${uid}」？`, async () => {
+            await api.removeMember(teamId, uid);
+            components.toast('已移除', 'success');
+            $('#modal-overlay').remove();
+            showTeamDetail(teamId);
+        });
+    }
+
     function showCreateTeam() {
-        components.modal('创建团队', `
-            <input id="m-name" class="input-dark w-full mb-3" placeholder="团队名称">
-            <textarea id="m-desc" class="input-dark w-full" rows="3" placeholder="团队描述"></textarea>
-        `, async () => {
-            await api.createTeam({ name: $('#m-name').val(), description: $('#m-desc').val() });
+        const form = `
+            <div class="space-y-3">
+                <div><label class="text-xs font-medium" style="color:var(--text-muted)">团队名称 <span style="color:var(--danger)">*</span></label>
+                <input id="m-name" class="input-dark w-full mt-1" placeholder="团队名称"></div>
+                <div><label class="text-xs font-medium" style="color:var(--text-muted)">描述</label>
+                <textarea id="m-desc" class="input-dark w-full mt-1" rows="3" placeholder="团队描述"></textarea></div>
+                <div id="m-error" class="text-xs" style="color:var(--danger);display:none"></div>
+            </div>`;
+        components.modal('创建团队', form, async () => {
+            const name = $('#m-name').val().trim();
+            if (!name) { $('#m-error').text('请输入团队名称').show(); throw new Error('名称不能为空'); }
+            await api.createTeam({ name, description: $('#m-desc').val().trim() });
             components.toast('创建成功', 'success');
             loadTeams();
-        });
+        }, { confirmText: '创建' });
     }
 
     $(function() { loadTeams(); });
