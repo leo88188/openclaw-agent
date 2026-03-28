@@ -1,6 +1,7 @@
 # Knowledge — 系统架构设计
 
-> 版本: 2.0 | 更新: 2026-03-27 | 状态: approved
+> 版本: 2.1 | 更新: 2026-03-28 | 状态: approved
+> 变更: 同步 ui-design.md v2.0 交互设计，补充前端设计系统约束
 
 ---
 
@@ -322,8 +323,9 @@ sequenceDiagram
 | 文档 | 约束 |
 |------|------|
 | `db-design.md` | 表名必须和 `server/models/` 中的 `__tablename__` 一致；索引必须有查询场景支撑 |
-| `frontend-design.md` | 设计风格/配色/字体必须从 config.json 读取；API 调用只引用 api-spec.yaml 的 operationId |
-| `api-spec.yaml` | 字段命名统一 snake_case；分页参数统一 page/page_size；错误响应统一 ErrorResponse |
+| `frontend-design.md` | 设计风格/配色/字体必须从 config.json 读取；API 调用只引用 api-spec.yaml 的 operationId；交互细节必须对齐 ui-design.md |
+| `ui-design.md` | 交互设计的权威来源；frontend-design.md 引用其设计系统和交互规范；前端 agent 实现时以此为准 |
+| `api-spec.yaml` | 字段命名统一 snake_case；分页参数统一 page/page_size；错误响应统一 ErrorResponse；搜索结果包含 source_type 和 score |
 | `execution-plan.md` | 任务粒度 1-2 小时；标注前后端并行关系 |
 
 ---

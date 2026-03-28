@@ -22,3 +22,7 @@ Killing processes on port 9999: 91606
 Backend started (PID: 98705)
 Frontend started (PID: 98706)
 Done. Backend: http://localhost:9999  Frontend: http://localhost:9998
+[2026年 3月28日 星期六 11时03分45秒 CST] 执行 knowledge/restart.sh (by uxui-designer)
+Backend started (PID: 19490)
+Frontend started (PID: 19491)
+Done. Backend: http://localhost:9999  Frontend: http://localhost:9998

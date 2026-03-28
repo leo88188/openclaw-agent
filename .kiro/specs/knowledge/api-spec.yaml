@@ -1,8 +1,8 @@
 openapi: "3.0.3"
 info:
   title: Knowledge API
-  version: "1.0.0"
-  description: AI知识库管理系统 API — OpenClaw 龙虾团队
+  version: "1.1.0"
+  description: AI知识库管理系统 API — OpenClaw 龙虾团队（同步 ui-design.md v2.0）
 
 servers:
   - url: http://localhost:9999
@@ -43,6 +43,10 @@ paths:
           in: query
           schema: { type: string }
           description: 关键词搜索
+        - name: tags
+          in: query
+          schema: { type: string }
+          description: 按标签筛选（逗号分隔，如 "mysql,性能"）
       responses:
         "200":
           description: 分页列表
@@ -337,6 +341,37 @@ paths:
                   favorited: { type: boolean }
                   favorite_count: { type: integer }
 
+  /api/v1/skills/{id}/use:
+    post:
+      tags: [skills]
+      operationId: recordSkillUse
+      summary: 记录 Skill 使用次数（+1）
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_name:
+                  type: string
+                  description: 使用者标识
+      responses:
+        "200":
+          description: 记录成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  use_count: { type: integer }
+        "404":
+          $ref: "#/components/responses/NotFound"
+
   /api/v1/metadata/tables:
     get:
       tags: [metadata]
@@ -513,6 +548,67 @@ paths:
         "409":
           $ref: "#/components/responses/Conflict"
 
+  /api/v1/teams/{id}/members/{uid}:
+    put:
+      tags: [teams]
+      operationId: updateTeamMemberRole
+      summary: 更新成员角色
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+        - name: uid
+          in: path
+          required: true
+          schema: { type: string }
+          description: 成员 user_name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [role]
+              properties:
+                role:
+                  type: string
+                  enum: [admin, editor, viewer]
+      responses:
+        "200":
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamMember"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags: [teams]
+      operationId: removeTeamMember
+      summary: 移除团队成员（幂等）
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+        - name: uid
+          in: path
+          required: true
+          schema: { type: string }
+          description: 成员 user_name
+      responses:
+        "200":
+          description: 移除成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean, example: true }
+        "404":
+          $ref: "#/components/responses/NotFound"
+
   /api/v1/dashboard/stats:
     get:
       tags: [dashboard]
@@ -529,6 +625,29 @@ paths:
                 knowledge_count: 128
                 skill_count: 45
                 table_count: 12
+
+  /api/v1/health:
+    get:
+      tags: [dashboard]
+      operationId: healthCheck
+      summary: 系统健康检查
+      responses:
+        "200":
+          description: 系统健康
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, enum: [healthy, degraded, unhealthy] }
+                  mysql: { type: boolean, description: "MySQL 连接状态" }
+                  redis: { type: boolean, description: "Redis 连接状态" }
+                  version: { type: string }
+              example:
+                status: "healthy"
+                mysql: true
+                redis: true
+                version: "1.1.0"
 
 components:
   schemas:
@@ -583,6 +702,16 @@ components:
       properties:
         query: { type: string, minLength: 1 }
         category: { type: string, nullable: true }
+        source_type:
+          type: string
+          nullable: true
+          enum: [knowledge, metadata, skill]
+          description: 按来源类型过滤
+        time_range:
+          type: string
+          nullable: true
+          enum: [all, 7d, 30d, 90d]
+          description: 时间范围过滤
         limit: { type: integer, default: 20, maximum: 100 }
 
     SearchResponse:
@@ -599,6 +728,14 @@ components:
               content: { type: string, description: "截取前200字符" }
               category: { type: string, nullable: true }
               tags: { type: array, items: { type: string }, nullable: true }
+              source_type:
+                type: string
+                enum: [knowledge, metadata, skill]
+                description: 结果来源类型
+              score:
+                type: number
+                format: float
+                description: 相关度分数（0-100）
               created_at: { type: string, format: date-time }
 
     # ── Skill ──
