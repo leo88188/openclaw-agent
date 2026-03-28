@@ -1,14 +1,14 @@
 {
   "id": "feature-knowledge-20260325204315",
   "feature": "knowledge",
-  "stage": "pm",
-  "updated_at": "2026-03-27T18:56:50.505212",
+  "stage": "uxui",
+  "updated_at": "2026-03-28T10:57:08.389765",
   "steps": {
     "pm": {
-      "status": "pending",
-      "retries": 0,
-      "startTime": null,
-      "output": null,
+      "status": "completed",
+      "retries": 1,
+      "startTime": "2026-03-27T18:57:22.919000",
+      "output": ".kiro/specs/knowledge/requirements.md",
       "error": null
     },
     "uxui": {

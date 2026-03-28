@@ -1,21 +1,21 @@
 {
   "id": "feature-knowledge-20260325204315",
   "feature": "knowledge",
-  "stage": "pm",
-  "updated_at": "2026-03-27T18:57:22.919000",
+  "stage": "uxui",
+  "updated_at": "2026-03-28T10:58:00.000000",
   "steps": {
     "pm": {
-      "status": "in_progress",
+      "status": "completed",
       "retries": 1,
       "startTime": "2026-03-27T18:57:22.919000",
-      "output": null,
+      "output": ".kiro/specs/knowledge/requirements.md",
       "error": null
     },
     "uxui": {
-      "status": "pending",
-      "retries": 0,
-      "startTime": null,
-      "output": null,
+      "status": "completed",
+      "retries": 2,
+      "startTime": "2026-03-28T10:58:00.000000",
+      "output": ".kiro/specs/knowledge/ui-design.md",
       "error": null
     },
     "architect": {
