@@ -38,3 +38,9 @@ Killing processes on port 9999: 25296
 Backend started (PID: 26016)
 Frontend started (PID: 26017)
 Done. Backend: http://localhost:9999  Frontend: http://localhost:9998
+[2026年 3月28日 星期六 11时25分59秒 CST] 执行 knowledge/restart.sh (by frontend-dev-agent)
+Killing processes on port 9998: 27376
+Killing processes on port 9999: 27375
+Backend started (PID: 27971)
+Frontend started (PID: 27972)
+Done. Backend: http://localhost:9999  Frontend: http://localhost:9998

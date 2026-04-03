@@ -1,72 +1,18 @@
 {
   "id": "feature-knowledge-20260325204315",
   "feature": "knowledge",
-  "stage": "frontend+backend",
-  "updated_at": "2026-03-28T11:10:00.000000",
+  "stage": "qa",
+  "updated_at": "2026-03-28T11:25:00.000000",
   "steps": {
-    "pm": {
-      "status": "completed",
-      "retries": 1,
-      "startTime": "2026-03-27T18:57:22.919000",
-      "output": ".kiro/specs/knowledge/requirements.md",
-      "error": null
-    },
-    "uxui": {
-      "status": "completed",
-      "retries": 2,
-      "startTime": "2026-03-28T10:58:00.000000",
-      "output": ".kiro/specs/knowledge/ui-design.md",
-      "error": null
-    },
-    "architect": {
-      "status": "completed",
-      "retries": 1,
-      "startTime": "2026-03-28T11:02:00.000000",
-      "output": ".kiro/specs/knowledge/design.md",
-      "error": null
-    },
-    "frontend": {
-      "status": "in_progress",
-      "retries": 1,
-      "startTime": "2026-03-28T11:10:00.000000",
-      "output": null,
-      "error": null
-    },
-    "backend": {
-      "status": "in_progress",
-      "retries": 1,
-      "startTime": "2026-03-28T11:10:00.000000",
-      "output": null,
-      "error": null
-    },
-    "client": {
-      "status": "pending",
-      "retries": 0,
-      "startTime": null,
-      "output": null,
-      "error": null
-    },
-    "qa": {
-      "status": "pending",
-      "retries": 0,
-      "startTime": null,
-      "output": null,
-      "error": null
-    },
-    "review": {
-      "status": "pending",
-      "retries": 0,
-      "startTime": null,
-      "output": null,
-      "error": null
-    },
-    "devops": {
-      "status": "pending",
-      "retries": 0,
-      "startTime": null,
-      "output": null,
-      "error": null
-    }
+    "pm": {"status": "completed", "retries": 1, "startTime": "2026-03-27T18:57:22.919000", "output": ".kiro/specs/knowledge/requirements.md", "error": null},
+    "uxui": {"status": "completed", "retries": 2, "startTime": "2026-03-28T10:58:00.000000", "output": ".kiro/specs/knowledge/ui-design.md", "error": null},
+    "architect": {"status": "completed", "retries": 1, "startTime": "2026-03-28T11:02:00.000000", "output": ".kiro/specs/knowledge/design.md", "error": null},
+    "frontend": {"status": "completed", "retries": 1, "startTime": "2026-03-28T11:10:00.000000", "output": "knowledge/static/", "error": null},
+    "backend": {"status": "completed", "retries": 1, "startTime": "2026-03-28T11:10:00.000000", "output": "knowledge/server/", "error": null},
+    "client": {"status": "pending", "retries": 0, "startTime": null, "output": null, "error": null},
+    "qa": {"status": "in_progress", "retries": 1, "startTime": "2026-03-28T11:25:00.000000", "output": null, "error": null},
+    "review": {"status": "pending", "retries": 0, "startTime": null, "output": null, "error": null},
+    "devops": {"status": "pending", "retries": 0, "startTime": null, "output": null, "error": null}
   },
   "errors": []
 }

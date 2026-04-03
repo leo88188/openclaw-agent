@@ -1,7 +1,0 @@
-::1 - - [28/Mar/2026 11:25:17] "GET / HTTP/1.1" 200 -
-::1 - - [28/Mar/2026 11:25:34] "GET / HTTP/1.1" 200 -
-::1 - - [28/Mar/2026 11:25:34] "GET /knowledge.html HTTP/1.1" 200 -
-::1 - - [28/Mar/2026 11:25:34] "GET /search.html HTTP/1.1" 200 -
-::1 - - [28/Mar/2026 11:25:34] "GET /skills.html HTTP/1.1" 200 -
-::1 - - [28/Mar/2026 11:25:34] "GET /metadata.html HTTP/1.1" 200 -
-::1 - - [28/Mar/2026 11:25:34] "GET /teams.html HTTP/1.1" 200 -
