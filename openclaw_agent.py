@@ -238,6 +238,7 @@ async def gateway_restart():
 SAFE_COMMANDS = {
     "status": "openclaw status",
     "doctor": "openclaw doctor --deep --yes",
+    "doctor-fix": "openclaw doctor --fix --yes",
     "channels-status": "openclaw channels status --probe",
     "models-status": "openclaw models status --probe",
     "models-list": "openclaw models list --all",

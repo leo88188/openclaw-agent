@@ -5,3 +5,5 @@ __pycache__/
 *.bak.*
 .idea/
 .vscode/
+.kiro/pipeline-config.json
+.kiro/specs/knowledge/config.json
